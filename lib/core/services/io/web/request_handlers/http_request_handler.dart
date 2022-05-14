@@ -7,7 +7,8 @@ import 'package:hemend/crash_handler/crash_handler.dart';
 import 'package:http/http.dart' as _client;
 
 import '../../../../contracts/interfaces/http_request_handler/https_request_handler.dart' show IWebRequestHandler;
-import '../../../../contracts/typedefs/sub_map_types.dart' show Json, ResponseJson, StringMap;
+import '../../../../contracts/typedefs/request_result_types.dart';
+import '../../../../contracts/typedefs/sub_map_types.dart' show Json, StringMap;
 
 class HttpRequestHandler extends IWebRequestHandler {
   ///can be list or jsonObject
