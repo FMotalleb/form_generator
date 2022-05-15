@@ -1,13 +1,11 @@
 import 'dart:convert';
-
-import 'package:equatable/equatable.dart';
-
 import '../../../contracts/typedefs/form_enums/field_types.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
+import '../base_model/base_model.dart';
 
 // ignore: must_be_immutable
-class FormFieldModel extends FormField with EquatableMixin {
+class FormFieldModel extends FormField implements BaseModel {
   FormFieldModel({
     super.key = '',
     super.type = FieldType.int,
@@ -16,6 +14,7 @@ class FormFieldModel extends FormField with EquatableMixin {
     super.error = '',
     super.isValid = '',
   });
+  @override
   IsarFormField get asIsarModel => IsarFormField(
         key: key,
         type: type,
@@ -25,8 +24,6 @@ class FormFieldModel extends FormField with EquatableMixin {
         isValid: isValid,
       );
   @override
-  List<Object?> get props => [key, type, label, hint, error, isValid];
-
   Map<String, dynamic> toMap() {
     return {
       'key': key,
@@ -38,6 +35,7 @@ class FormFieldModel extends FormField with EquatableMixin {
     };
   }
 
+  @override
   factory FormFieldModel.fromMap(Map<String, dynamic> map) {
     return FormFieldModel(
       key: (map['key'] ?? '').toString(),
@@ -48,10 +46,21 @@ class FormFieldModel extends FormField with EquatableMixin {
       isValid: (map['isValid'] ?? '').toString(),
     );
   }
-
+  @override
   String toJson() => json.encode(toMap());
-
+  @override
   factory FormFieldModel.fromJson(String source) => FormFieldModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
       );
+  @override
+  factory FormFieldModel.fromEntity(FormField entity) {
+    return FormFieldModel(
+      key: entity.key,
+      type: entity.type,
+      label: entity.label,
+      hint: entity.hint,
+      error: entity.error,
+      isValid: entity.isValid,
+    );
+  }
 }

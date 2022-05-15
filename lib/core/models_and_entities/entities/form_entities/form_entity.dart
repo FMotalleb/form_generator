@@ -1,13 +1,12 @@
-import 'package:equatable/equatable.dart';
-
+import '../base_entity/base_entity.dart';
 import 'field_entity.dart';
 
 // ignore: must_be_immutable
-class Form with EquatableMixin {
+class FormEntity extends BaseEntity {
   String title;
   String description;
   final Set<FormField> fields;
-  Form({
+  FormEntity({
     this.title = '',
     this.description = '',
     this.fields = const {},

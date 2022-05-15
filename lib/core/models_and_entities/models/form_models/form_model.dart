@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-import 'package:equatable/equatable.dart';
 import 'package:isar/isar.dart';
 
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/form_model.dart';
+import '../../entities/form_entities/form_entity.dart';
+import '../base_model/base_model.dart';
 import 'field_model.dart';
 
 // ignore: must_be_immutable
-class FormModel with EquatableMixin {
-  String title;
-  String description;
-  final Set<FormFieldModel> fields;
+class FormModel extends FormEntity implements BaseModel {
+  @override
+  Set<FormFieldModel> fields;
   FormModel({
-    this.title = '',
-    this.description = '',
+    super.title = '',
+    super.description = '',
     this.fields = const {},
   });
   @override
@@ -32,14 +32,20 @@ class FormModel with EquatableMixin {
     );
   }
 
+  @override
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'description': description,
-      'fields': fields.map((x) => x.toMap()).toList(),
+      'fields': fields
+          .map(
+            (x) => x.toMap(),
+          )
+          .toList(),
     };
   }
 
+  @override
   IsarFormModel get asIsarModel => IsarFormModel(
         title: title,
         description: description,
@@ -48,6 +54,7 @@ class FormModel with EquatableMixin {
             fields.map((e) => e.asIsarModel),
           ),
       );
+  @override
   factory FormModel.fromMap(Map<String, dynamic> map) {
     return FormModel(
       title: (map['title'] ?? '').toString(),
@@ -60,12 +67,24 @@ class FormModel with EquatableMixin {
     );
   }
 
+  @override
   String toJson() => json.encode(toMap());
-
+  @override
   factory FormModel.fromJson(String source) => FormModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
       );
-
+  factory FormModel.fromEntity(FormEntity entity) {
+    return FormModel(
+      title: entity.title,
+      description: entity.description,
+      fields: entity.fields
+          .map(
+            FormFieldModel.fromEntity,
+          )
+          .toSet(),
+    );
+  }
   @override
+  // ignore: lines_longer_than_80_chars
   String toString() => 'FormModel(title: $title, description: $description, fields: $fields)';
 }

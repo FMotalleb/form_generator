@@ -1,9 +1,8 @@
-import 'package:equatable/equatable.dart';
-
 import '../../../../../core/contracts/typedefs/form_enums/field_types.dart';
+import '../base_entity/base_entity.dart';
 
 // ignore: must_be_immutable
-class FormField with EquatableMixin {
+class FormField extends BaseEntity {
   String key;
   FieldType type;
   String label;
