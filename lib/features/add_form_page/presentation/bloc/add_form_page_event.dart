@@ -1,4 +1,4 @@
-part of 'starting_page_bloc.dart';
+part of 'add_form_page.dart';
 
 /// Event being processed by [AddFormBloc].
 abstract class AddFormEvent extends Equatable {}

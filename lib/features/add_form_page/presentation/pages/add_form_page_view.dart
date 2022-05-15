@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/services/state/theme_handler.dart';
-import '../bloc/starting_page_bloc.dart';
+import '../bloc/add_form_page.dart';
 
 class AddFormPage extends StatelessWidget {
   /// {@macro counter_page}

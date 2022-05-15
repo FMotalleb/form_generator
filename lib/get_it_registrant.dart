@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'core/models_and_entities/database_models/isar/isar_form_models/field_model.dart';
 import 'core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
-import 'core/services/io/database/isar/isar_db_repository.dart';
+import 'core/services/io/database/isar/isar_db_data_source.dart';
 // import 'core/services/io/web/request_handlers/http_request_handler.dart';
 
 Future<void> registerDependencies() async {
