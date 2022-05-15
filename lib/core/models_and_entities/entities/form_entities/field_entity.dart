@@ -1,5 +1,5 @@
 import '../../../../../core/contracts/typedefs/form_enums/field_types.dart';
-import '../base_entity/base_entity.dart';
+import '../../../contracts/interfaces/base_entity/base_entity.dart';
 
 // ignore: must_be_immutable
 class FormField extends BaseEntity {

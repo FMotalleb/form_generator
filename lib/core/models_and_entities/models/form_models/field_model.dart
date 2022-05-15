@@ -1,8 +1,9 @@
 import 'dart:convert';
+
+import '../../../contracts/interfaces/base_model/base_model.dart';
 import '../../../contracts/typedefs/form_enums/field_types.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
-import '../base_model/base_model.dart';
 
 // ignore: must_be_immutable
 class FormFieldModel extends FormField implements BaseModel {

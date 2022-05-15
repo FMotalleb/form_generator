@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:isar/isar.dart';
 
+import '../../../contracts/interfaces/base_model/base_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/form_model.dart';
 import '../../entities/form_entities/form_entity.dart';
-import '../base_model/base_model.dart';
 import 'field_model.dart';
 
 // ignore: must_be_immutable

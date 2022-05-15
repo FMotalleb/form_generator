@@ -1,4 +1,4 @@
-import '../base_entity/base_entity.dart';
+import '../../../contracts/interfaces/base_entity/base_entity.dart';
 import 'field_entity.dart';
 
 // ignore: must_be_immutable

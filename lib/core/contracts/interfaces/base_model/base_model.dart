@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_unused_constructor_parameters
 
-import '../../entities/base_entity/base_entity.dart';
+import '../base_entity/base_entity.dart';
 
 abstract class BaseModel extends BaseEntity {
   BaseModel get asIsarModel;

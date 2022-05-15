@@ -5,41 +5,36 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'core/models_and_entities/database_models/isar/isar_form_models/field_model.dart';
 import 'core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
-import 'core/services/io/web/request_handlers/http_request_handler.dart';
+import 'core/services/io/database/isar/isar_db_repository.dart';
+// import 'core/services/io/web/request_handlers/http_request_handler.dart';
 
 Future<void> registerDependencies() async {
-  const baseUrl = 'http://0.0.0.0:3000';
+  // const baseUrl = 'http://0.0.0.0:3000';
   // const bypassHttps = false;
   // const headers = <String, String>{};
-  const testApiUrl = '/api_test_zone/api_moke.php';
+  // const testApiUrl = '/api_test_zone/api_moke.php';
 
-  final httpRequestHandler = HttpRequestHandler(
-    baseUrl: baseUrl,
-  );
-  GetIt.I.registerSingleton(httpRequestHandler);
+  // final httpRequestHandler = HttpRequestHandler(
+  //   baseUrl: baseUrl,
+  // );
+  // GetIt.I.registerSingleton(httpRequestHandler);
+
+  final isarDbSchemas = [
+    IsarFormFieldSchema,
+    IsarFormModelSchema,
+  ];
   if (kIsWeb) {
     final isar = await Isar.open(
-      schemas: [
-        IsarFormFieldSchema,
-        IsarFormModelSchema,
-      ],
-      relaxedDurability: false,
+      schemas: isarDbSchemas,
     );
 
-    GetIt.I.registerFactory(() => isar);
+    GetIt.I.registerSingleton(IsarDbRepository(isar: isar));
   } else {
     final dir = await path_provider.getApplicationSupportDirectory();
-
-    print(dir.path);
     final isar = await Isar.open(
-      schemas: [
-        IsarFormFieldSchema,
-        IsarFormModelSchema,
-      ],
-      relaxedDurability: false,
+      schemas: isarDbSchemas,
       directory: dir.path,
     );
-
-    GetIt.I.registerFactory(() => isar);
+    GetIt.I.registerSingleton(IsarDbRepository(isar: isar));
   }
 }
