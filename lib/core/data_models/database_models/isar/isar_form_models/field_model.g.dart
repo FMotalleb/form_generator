@@ -15,7 +15,7 @@ extension GetIsarFormFieldCollection on Isar {
 const IsarFormFieldSchema = CollectionSchema(
   name: 'IsarFormField',
   schema:
-      '{"name":"IsarFormField","idName":"id","properties":[{"name":"error","type":"String"},{"name":"hashCode","type":"Long"},{"name":"hint","type":"String"},{"name":"isValid","type":"String"},{"name":"key","type":"String"},{"name":"label","type":"String"},{"name":"stringify","type":"Bool"}],"indexes":[],"links":[]}',
+      '{"name":"IsarFormField","idName":"id","properties":[{"name":"error","type":"String"},{"name":"hashCode","type":"Long"},{"name":"hint","type":"String"},{"name":"isValid","type":"String"},{"name":"key","type":"String"},{"name":"label","type":"String"},{"name":"stringify","type":"Bool"},{"name":"type","type":"Long"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {
     'error': 0,
@@ -24,7 +24,8 @@ const IsarFormFieldSchema = CollectionSchema(
     'isValid': 3,
     'key': 4,
     'label': 5,
-    'stringify': 6
+    'stringify': 6,
+    'type': 7
   },
   listProperties: {},
   indexIds: {},
@@ -60,6 +61,8 @@ List<IsarLinkBase> _isarFormFieldGetLinks(IsarFormField object) {
   return [];
 }
 
+const _isarFormFieldFieldTypeConverter = FieldTypeConverter();
+
 void _isarFormFieldSerializeNative(
     IsarCollection<IsarFormField> collection,
     IsarRawObject rawObj,
@@ -87,6 +90,8 @@ void _isarFormFieldSerializeNative(
   dynamicSize += (_label.length) as int;
   final value6 = object.stringify;
   final _stringify = value6;
+  final value7 = _isarFormFieldFieldTypeConverter.toIsar(object.type);
+  final _type = value7;
   final size = staticSize + dynamicSize;
 
   rawObj.buffer = alloc(size);
@@ -100,6 +105,7 @@ void _isarFormFieldSerializeNative(
   writer.writeBytes(offsets[4], _key);
   writer.writeBytes(offsets[5], _label);
   writer.writeBool(offsets[6], _stringify);
+  writer.writeLong(offsets[7], _type);
 }
 
 IsarFormField _isarFormFieldDeserializeNative(
@@ -114,6 +120,8 @@ IsarFormField _isarFormFieldDeserializeNative(
     isValid: reader.readString(offsets[3]),
     key: reader.readString(offsets[4]),
     label: reader.readString(offsets[5]),
+    type:
+        _isarFormFieldFieldTypeConverter.fromIsar(reader.readLong(offsets[7])),
   );
   return object;
 }
@@ -137,6 +145,9 @@ P _isarFormFieldDeserializePropNative<P>(
       return (reader.readString(offset)) as P;
     case 6:
       return (reader.readBoolOrNull(offset)) as P;
+    case 7:
+      return (_isarFormFieldFieldTypeConverter
+          .fromIsar(reader.readLong(offset))) as P;
     default:
       throw 'Illegal propertyIndex';
   }
@@ -153,6 +164,8 @@ dynamic _isarFormFieldSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'key', object.key);
   IsarNative.jsObjectSet(jsObj, 'label', object.label);
   IsarNative.jsObjectSet(jsObj, 'stringify', object.stringify);
+  IsarNative.jsObjectSet(
+      jsObj, 'type', _isarFormFieldFieldTypeConverter.toIsar(object.type));
   return jsObj;
 }
 
@@ -165,6 +178,8 @@ IsarFormField _isarFormFieldDeserializeWeb(
     isValid: IsarNative.jsObjectGet(jsObj, 'isValid') ?? '',
     key: IsarNative.jsObjectGet(jsObj, 'key') ?? '',
     label: IsarNative.jsObjectGet(jsObj, 'label') ?? '',
+    type: _isarFormFieldFieldTypeConverter.fromIsar(
+        IsarNative.jsObjectGet(jsObj, 'type') ?? double.negativeInfinity),
   );
   return object;
 }
@@ -188,6 +203,10 @@ P _isarFormFieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'label') ?? '') as P;
     case 'stringify':
       return (IsarNative.jsObjectGet(jsObj, 'stringify')) as P;
+    case 'type':
+      return (_isarFormFieldFieldTypeConverter.fromIsar(
+              IsarNative.jsObjectGet(jsObj, 'type') ?? double.negativeInfinity))
+          as P;
     default:
       throw 'Illegal propertyName';
   }
@@ -922,6 +941,56 @@ extension IsarFormFieldQueryFilter
       value: value,
     ));
   }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> typeEqualTo(
+      FieldType value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'type',
+      value: _isarFormFieldFieldTypeConverter.toIsar(value),
+    ));
+  }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      typeGreaterThan(
+    FieldType value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'type',
+      value: _isarFormFieldFieldTypeConverter.toIsar(value),
+    ));
+  }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      typeLessThan(
+    FieldType value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'type',
+      value: _isarFormFieldFieldTypeConverter.toIsar(value),
+    ));
+  }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> typeBetween(
+    FieldType lower,
+    FieldType upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'type',
+      lower: _isarFormFieldFieldTypeConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _isarFormFieldFieldTypeConverter.toIsar(upper),
+      includeUpper: includeUpper,
+    ));
+  }
 }
 
 extension IsarFormFieldQueryLinks
@@ -994,6 +1063,14 @@ extension IsarFormFieldQueryWhereSortBy
       sortByStringifyDesc() {
     return addSortByInternal('stringify', Sort.desc);
   }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByType() {
+    return addSortByInternal('type', Sort.asc);
+  }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByTypeDesc() {
+    return addSortByInternal('type', Sort.desc);
+  }
 }
 
 extension IsarFormFieldQueryWhereSortThenBy
@@ -1063,6 +1140,14 @@ extension IsarFormFieldQueryWhereSortThenBy
       thenByStringifyDesc() {
     return addSortByInternal('stringify', Sort.desc);
   }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByType() {
+    return addSortByInternal('type', Sort.asc);
+  }
+
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByTypeDesc() {
+    return addSortByInternal('type', Sort.desc);
+  }
 }
 
 extension IsarFormFieldQueryWhereDistinct
@@ -1103,6 +1188,10 @@ extension IsarFormFieldQueryWhereDistinct
   QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByStringify() {
     return addDistinctByInternal('stringify');
   }
+
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByType() {
+    return addDistinctByInternal('type');
+  }
 }
 
 extension IsarFormFieldQueryProperty
@@ -1137,5 +1226,9 @@ extension IsarFormFieldQueryProperty
 
   QueryBuilder<IsarFormField, bool?, QQueryOperations> stringifyProperty() {
     return addPropertyNameInternal('stringify');
+  }
+
+  QueryBuilder<IsarFormField, FieldType, QQueryOperations> typeProperty() {
+    return addPropertyNameInternal('type');
   }
 }

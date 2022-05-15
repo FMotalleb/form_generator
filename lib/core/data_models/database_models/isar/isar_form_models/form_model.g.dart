@@ -15,13 +15,13 @@ extension GetIsarFormModelCollection on Isar {
 const IsarFormModelSchema = CollectionSchema(
   name: 'IsarFormModel',
   schema:
-      '{"name":"IsarFormModel","idName":"id","properties":[{"name":"description","type":"String"},{"name":"hashCode","type":"Long"},{"name":"stringify","type":"Bool"},{"name":"title","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"IsarFormModel","idName":"id","properties":[{"name":"description","type":"String"},{"name":"hashCode","type":"Long"},{"name":"stringify","type":"Bool"},{"name":"title","type":"String"}],"indexes":[],"links":[{"name":"isarFields","target":"IsarFormField"}]}',
   idName: 'id',
   propertyIds: {'description': 0, 'hashCode': 1, 'stringify': 2, 'title': 3},
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
-  linkIds: {},
+  linkIds: {'isarFields': 0},
   backlinkLinkNames: {},
   getId: _isarFormModelGetId,
   setId: _isarFormModelSetId,
@@ -49,7 +49,7 @@ void _isarFormModelSetId(IsarFormModel object, int id) {
 }
 
 List<IsarLinkBase> _isarFormModelGetLinks(IsarFormModel object) {
-  return [];
+  return [object.isarFields];
 }
 
 void _isarFormModelSerializeNative(
@@ -92,6 +92,7 @@ IsarFormModel _isarFormModelDeserializeNative(
     id: id,
     title: reader.readString(offsets[3]),
   );
+  _isarFormModelAttachLinks(collection, id, object);
   return object;
 }
 
@@ -131,6 +132,8 @@ IsarFormModel _isarFormModelDeserializeWeb(
     id: IsarNative.jsObjectGet(jsObj, 'id'),
     title: IsarNative.jsObjectGet(jsObj, 'title') ?? '',
   );
+  _isarFormModelAttachLinks(
+      collection, IsarNative.jsObjectGet(jsObj, 'id'), object);
   return object;
 }
 
@@ -153,7 +156,9 @@ P _isarFormModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
 }
 
 void _isarFormModelAttachLinks(
-    IsarCollection col, int id, IsarFormModel object) {}
+    IsarCollection col, int id, IsarFormModel object) {
+  object.isarFields.attach(col, col.isar.isarFormFields, 'isarFields', id);
+}
 
 extension IsarFormModelQueryWhereSort
     on QueryBuilder<IsarFormModel, IsarFormModel, QWhere> {
@@ -566,7 +571,16 @@ extension IsarFormModelQueryFilter
 }
 
 extension IsarFormModelQueryLinks
-    on QueryBuilder<IsarFormModel, IsarFormModel, QFilterCondition> {}
+    on QueryBuilder<IsarFormModel, IsarFormModel, QFilterCondition> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition> isarFields(
+      FilterQuery<IsarFormField> q) {
+    return linkInternal(
+      isar.isarFormFields,
+      q,
+      'isarFields',
+    );
+  }
+}
 
 extension IsarFormModelQueryWhereSortBy
     on QueryBuilder<IsarFormModel, IsarFormModel, QSortBy> {

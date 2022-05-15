@@ -27,7 +27,7 @@ class AppBlocObserver extends BlocObserver {
     print(transition);
   }
 
-  @protected
+  @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     print('grabbed');
     print(error);
