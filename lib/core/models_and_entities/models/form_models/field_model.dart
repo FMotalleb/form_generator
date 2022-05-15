@@ -1,26 +1,20 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:form_generator/core/data_models/database_models/isar/isar_form_models/field_model.dart';
 
 import '../../../contracts/typedefs/form_enums/field_types.dart';
+import '../../database_models/isar/isar_form_models/field_model.dart';
+import '../../entities/form_entities/field_entity.dart';
 
 // ignore: must_be_immutable
-class FormField extends Equatable {
-  String key;
-  FieldType type;
-  String label;
-  String hint;
-  String error;
-  String isValid;
-
-  FormField({
-    this.key = '',
-    this.type = FieldType.int,
-    this.label = '',
-    this.hint = '',
-    this.error = '',
-    this.isValid = '',
+class FormFieldModel extends FormField with EquatableMixin {
+  FormFieldModel({
+    super.key = '',
+    super.type = FieldType.int,
+    super.label = '',
+    super.hint = '',
+    super.error = '',
+    super.isValid = '',
   });
   IsarFormField get asIsarModel => IsarFormField(
         key: key,
@@ -44,8 +38,8 @@ class FormField extends Equatable {
     };
   }
 
-  factory FormField.fromMap(Map<String, dynamic> map) {
-    return FormField(
+  factory FormFieldModel.fromMap(Map<String, dynamic> map) {
+    return FormFieldModel(
       key: (map['key'] ?? '').toString(),
       type: FieldType.fromMap(map['type'].toString()),
       label: (map['label'] ?? '').toString(),
@@ -57,7 +51,7 @@ class FormField extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory FormField.fromJson(String source) => FormField.fromMap(
+  factory FormFieldModel.fromJson(String source) => FormFieldModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
       );
 }

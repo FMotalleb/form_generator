@@ -12,7 +12,7 @@ class IsarFormModel extends FormModel {
   int? id;
 
   @override
-  Set<FormField> get fields => isarFields.map((e) => e.asModel).toSet();
+  Set<FormFieldModel> get fields => isarFields.map((e) => e.asModel).toSet();
   IsarLinks<IsarFormField> isarFields = IsarLinks<IsarFormField>();
 
   IsarFormModel({

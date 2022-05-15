@@ -6,6 +6,7 @@ import 'features/starting_page/presentation/pages/starting_page_view.dart';
 import 'get_it_registrant.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await registerDependencies();
 
   BlocOverrides.runZoned(

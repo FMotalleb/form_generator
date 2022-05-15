@@ -4,9 +4,10 @@ import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 
 import '../../../../core/contracts/typedefs/form_enums/field_types.dart';
-import '../../../../core/data_models/database_models/isar/isar_form_models/form_model.dart';
-import '../../../../core/data_models/models/form_models/field_model.dart';
-import '../../../../core/data_models/models/form_models/form_model.dart';
+
+import '../../../../core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
+import '../../../../core/models_and_entities/models/form_models/field_model.dart';
+import '../../../../core/models_and_entities/models/form_models/form_model.dart';
 
 part 'starting_page_event.dart';
 part 'starting_page_state.dart';
@@ -23,7 +24,9 @@ class CounterBloc extends Bloc<CounterEvent, int> {
       final testForm = FormModel(
         title: 'sample',
         description: 'sample form',
-        fields: {FormField(key: 'test', type: FieldType.string, label: 'test')},
+        fields: {
+          FormFieldModel(key: 'test', type: FieldType.string, label: 'test'),
+        },
       ).asIsarModel;
 
       await isarInstance.writeTxn(
@@ -33,7 +36,13 @@ class CounterBloc extends Bloc<CounterEvent, int> {
           );
         },
       ).then((value) => print('testForm.id: $value'));
-      testForm.isarFields.add(FormField(key: 'test2', type: FieldType.string, label: 'test').asIsarModel);
+      testForm.isarFields.add(
+        FormFieldModel(
+          key: 'test2',
+          type: FieldType.string,
+          label: 'test',
+        ).asIsarModel,
+      );
       await isarInstance.writeTxn(
         (isar) async {
           await testForm.isarFields.save();
@@ -49,9 +58,9 @@ class CounterBloc extends Bloc<CounterEvent, int> {
         (isar) => isar.isarFormModels.buildQuery().findAll(),
       )
           .then(
-        (e) {
-          var isarFormModels = e.map((e) => e as IsarFormModel).toList();
-          isarFormModels.first.isarFields.loadSync();
+        (e) async {
+          final isarFormModels = e.map((e) => e as IsarFormModel).toList();
+          await isarFormModels.first.isarFields.load();
           print(e);
         },
       );

@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:form_generator/core/data_models/database_models/isar/isar_form_models/field_model.dart';
-import 'package:form_generator/core/data_models/database_models/isar/isar_form_models/form_model.dart';
 import 'package:isar/isar.dart';
 
+import '../../database_models/isar/isar_form_models/field_model.dart';
+import '../../database_models/isar/isar_form_models/form_model.dart';
 import 'field_model.dart';
 
 // ignore: must_be_immutable
-class FormModel extends Equatable {
+class FormModel with EquatableMixin {
   String title;
   String description;
-  final Set<FormField> fields;
+  final Set<FormFieldModel> fields;
   FormModel({
     this.title = '',
     this.description = '',
@@ -23,7 +23,7 @@ class FormModel extends Equatable {
   FormModel copyWith({
     String? title,
     String? description,
-    Set<FormField>? fields,
+    Set<FormFieldModel>? fields,
   }) {
     return FormModel(
       title: title ?? this.title,
@@ -52,9 +52,9 @@ class FormModel extends Equatable {
     return FormModel(
       title: (map['title'] ?? '').toString(),
       description: (map['description'] ?? '').toString(),
-      fields: Set<FormField>.from(
+      fields: Set<FormFieldModel>.from(
         ((map['fields'] ?? []) as List<Map<String, dynamic>>).map(
-          FormField.fromMap,
+          FormFieldModel.fromMap,
         ),
       ),
     );
