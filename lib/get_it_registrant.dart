@@ -28,13 +28,13 @@ Future<void> registerDependencies() async {
       schemas: isarDbSchemas,
     );
 
-    GetIt.I.registerSingleton(IsarDbRepository(isar: isar));
+    GetIt.I.registerSingleton(IsarDbDataSource(isar: isar));
   } else {
     final dir = await path_provider.getApplicationSupportDirectory();
     final isar = await Isar.open(
       schemas: isarDbSchemas,
       directory: dir.path,
     );
-    GetIt.I.registerSingleton(IsarDbRepository(isar: isar));
+    GetIt.I.registerSingleton(IsarDbDataSource(isar: isar));
   }
 }

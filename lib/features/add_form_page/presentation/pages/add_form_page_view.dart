@@ -4,33 +4,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/services/state/theme_handler.dart';
 import '../bloc/starting_page_bloc.dart';
 
-class CounterPage extends StatelessWidget {
+class AddFormPage extends StatelessWidget {
   /// {@macro counter_page}
-  const CounterPage({Key? key}) : super(key: key);
+  const AddFormPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CounterBloc(),
-      child: const CounterView(),
+      create: (_) => AddFormBloc(),
+      child: const AddFormView(),
     );
   }
 }
 
 /// {@template counter_view}
 /// A [StatelessWidget] that:
-/// * demonstrates how to consume and interact with a [CounterBloc].
+/// * demonstrates how to consume and interact with a [AddFormBloc].
 /// {@endtemplate}
-class CounterView extends StatelessWidget {
+class AddFormView extends StatelessWidget {
   /// {@macro counter_view}
-  const CounterView({Key? key}) : super(key: key);
+  const AddFormView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Counter')),
+      appBar: AppBar(title: const Text('AddForm')),
       body: Center(
-        child: BlocBuilder<CounterBloc, int>(
+        child: BlocBuilder<AddFormBloc, int>(
           builder: (context, count) {
             return Text('$count', style: Theme.of(context).textTheme.headline1);
           },
@@ -43,14 +43,14 @@ class CounterView extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
-              context.read<CounterBloc>().add(CounterIncrementPressed());
+              context.read<AddFormBloc>().add(AddFormIncrementPressed());
             },
           ),
           const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.remove),
             onPressed: () {
-              context.read<CounterBloc>().add(CounterDecrementPressed());
+              context.read<AddFormBloc>().add(AddFormDecrementPressed());
             },
           ),
           const SizedBox(height: 4),

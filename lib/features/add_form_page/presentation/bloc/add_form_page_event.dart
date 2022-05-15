@@ -1,16 +1,16 @@
 part of 'starting_page_bloc.dart';
 
-/// Event being processed by [CounterBloc].
-abstract class CounterEvent extends Equatable {}
+/// Event being processed by [AddFormBloc].
+abstract class AddFormEvent extends Equatable {}
 
 /// Notifies bloc to increment state.
-class CounterIncrementPressed extends CounterEvent {
+class AddFormIncrementPressed extends AddFormEvent {
   @override
   List<Object> get props => [];
 }
 
 /// Notifies bloc to decrement state.
-class CounterDecrementPressed extends CounterEvent {
+class AddFormDecrementPressed extends AddFormEvent {
   @override
   List<Object> get props => [];
 }

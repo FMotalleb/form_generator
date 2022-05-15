@@ -15,13 +15,13 @@ part 'starting_page_state.dart';
 /// {@template counter_bloc}
 /// A simple [Bloc] that manages an `int` as its state.
 /// {@endtemplate}
-class CounterBloc extends Bloc<CounterEvent, int> {
+class AddFormBloc extends Bloc<AddFormEvent, int> {
   /// {@macro counter_bloc}
-  CounterBloc() : super(0) {
-    on<CounterIncrementPressed>((event, emit) async {
+  AddFormBloc() : super(0) {
+    on<AddFormIncrementPressed>((event, emit) async {
       emit(state + 1);
     });
-    on<CounterDecrementPressed>((event, emit) async {
+    on<AddFormDecrementPressed>((event, emit) async {
       emit(state - 1);
     });
   }

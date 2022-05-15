@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/services/state/theme_handler.dart';
-import 'features/starting_page/presentation/pages/starting_page_view.dart';
+import 'features/add_form_page/presentation/pages/add_form_page_view.dart';
 import 'get_it_registrant.dart';
 
 void main() async {
@@ -60,7 +60,7 @@ class App extends StatelessWidget {
 /// A [StatelessWidget] that:
 /// * reacts to state changes in the [ThemeCubit]
 /// and updates the theme of the [MaterialApp].
-/// * renders the [CounterPage].
+/// * renders the [AddFormPage].
 /// {@endtemplate}
 class AppView extends StatelessWidget {
   /// {@macro app_view}
@@ -72,7 +72,7 @@ class AppView extends StatelessWidget {
       builder: (_, theme) {
         return MaterialApp(
           theme: theme,
-          home: const CounterPage(),
+          home: const AddFormPage(),
         );
       },
     );

@@ -1,8 +1,8 @@
 import 'package:isar/isar.dart';
 
-class IsarDbRepository {
+class IsarDbDataSource {
   final Isar _isar;
-  IsarDbRepository({required Isar isar}) : _isar = isar;
+  IsarDbDataSource({required Isar isar}) : _isar = isar;
 
   Future<T> write<T>(
     Future<T> Function(Isar) callback, {
