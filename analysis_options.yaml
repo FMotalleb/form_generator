@@ -10,9 +10,9 @@
 analyzer:
   strong-mode:
     implicit-casts: false
-  implicit-dynamic: false
+  # implicit-dynamic: false
   exclude:
-    - *.g.dart
+    - "**.g.dart"
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

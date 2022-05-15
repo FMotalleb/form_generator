@@ -8,14 +8,14 @@ part of 'form_model.dart';
 
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
-extension GetFormModelCollection on Isar {
-  IsarCollection<FormModel> get formModels => getCollection();
+extension GetIsarFormModelCollection on Isar {
+  IsarCollection<IsarFormModel> get isarFormModels => getCollection();
 }
 
-const FormModelSchema = CollectionSchema(
-  name: 'FormModel',
+const IsarFormModelSchema = CollectionSchema(
+  name: 'IsarFormModel',
   schema:
-      '{"name":"FormModel","idName":"id","properties":[{"name":"description","type":"String"},{"name":"hashCode","type":"Long"},{"name":"stringify","type":"Bool"},{"name":"title","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"IsarFormModel","idName":"id","properties":[{"name":"description","type":"String"},{"name":"hashCode","type":"Long"},{"name":"stringify","type":"Bool"},{"name":"title","type":"String"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {'description': 0, 'hashCode': 1, 'stringify': 2, 'title': 3},
   listProperties: {},
@@ -23,20 +23,20 @@ const FormModelSchema = CollectionSchema(
   indexValueTypes: {},
   linkIds: {},
   backlinkLinkNames: {},
-  getId: _formModelGetId,
-  setId: _formModelSetId,
-  getLinks: _formModelGetLinks,
-  attachLinks: _formModelAttachLinks,
-  serializeNative: _formModelSerializeNative,
-  deserializeNative: _formModelDeserializeNative,
-  deserializePropNative: _formModelDeserializePropNative,
-  serializeWeb: _formModelSerializeWeb,
-  deserializeWeb: _formModelDeserializeWeb,
-  deserializePropWeb: _formModelDeserializePropWeb,
+  getId: _isarFormModelGetId,
+  setId: _isarFormModelSetId,
+  getLinks: _isarFormModelGetLinks,
+  attachLinks: _isarFormModelAttachLinks,
+  serializeNative: _isarFormModelSerializeNative,
+  deserializeNative: _isarFormModelDeserializeNative,
+  deserializePropNative: _isarFormModelDeserializePropNative,
+  serializeWeb: _isarFormModelSerializeWeb,
+  deserializeWeb: _isarFormModelDeserializeWeb,
+  deserializePropWeb: _isarFormModelDeserializePropWeb,
   version: 3,
 );
 
-int? _formModelGetId(FormModel object) {
+int? _isarFormModelGetId(IsarFormModel object) {
   if (object.id == Isar.autoIncrement) {
     return null;
   } else {
@@ -44,18 +44,18 @@ int? _formModelGetId(FormModel object) {
   }
 }
 
-void _formModelSetId(FormModel object, int id) {
+void _isarFormModelSetId(IsarFormModel object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _formModelGetLinks(FormModel object) {
+List<IsarLinkBase> _isarFormModelGetLinks(IsarFormModel object) {
   return [];
 }
 
-void _formModelSerializeNative(
-    IsarCollection<FormModel> collection,
+void _isarFormModelSerializeNative(
+    IsarCollection<IsarFormModel> collection,
     IsarRawObject rawObj,
-    FormModel object,
+    IsarFormModel object,
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
@@ -82,9 +82,12 @@ void _formModelSerializeNative(
   writer.writeBytes(offsets[3], _title);
 }
 
-FormModel _formModelDeserializeNative(IsarCollection<FormModel> collection,
-    int id, IsarBinaryReader reader, List<int> offsets) {
-  final object = FormModel(
+IsarFormModel _isarFormModelDeserializeNative(
+    IsarCollection<IsarFormModel> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = IsarFormModel(
     description: reader.readString(offsets[0]),
     id: id,
     title: reader.readString(offsets[3]),
@@ -92,7 +95,7 @@ FormModel _formModelDeserializeNative(IsarCollection<FormModel> collection,
   return object;
 }
 
-P _formModelDeserializePropNative<P>(
+P _isarFormModelDeserializePropNative<P>(
     int id, IsarBinaryReader reader, int propertyIndex, int offset) {
   switch (propertyIndex) {
     case -1:
@@ -110,8 +113,8 @@ P _formModelDeserializePropNative<P>(
   }
 }
 
-dynamic _formModelSerializeWeb(
-    IsarCollection<FormModel> collection, FormModel object) {
+dynamic _isarFormModelSerializeWeb(
+    IsarCollection<IsarFormModel> collection, IsarFormModel object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'description', object.description);
   IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
@@ -121,9 +124,9 @@ dynamic _formModelSerializeWeb(
   return jsObj;
 }
 
-FormModel _formModelDeserializeWeb(
-    IsarCollection<FormModel> collection, dynamic jsObj) {
-  final object = FormModel(
+IsarFormModel _isarFormModelDeserializeWeb(
+    IsarCollection<IsarFormModel> collection, dynamic jsObj) {
+  final object = IsarFormModel(
     description: IsarNative.jsObjectGet(jsObj, 'description') ?? '',
     id: IsarNative.jsObjectGet(jsObj, 'id'),
     title: IsarNative.jsObjectGet(jsObj, 'title') ?? '',
@@ -131,7 +134,7 @@ FormModel _formModelDeserializeWeb(
   return object;
 }
 
-P _formModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
+P _isarFormModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'description':
       return (IsarNative.jsObjectGet(jsObj, 'description') ?? '') as P;
@@ -149,18 +152,20 @@ P _formModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _formModelAttachLinks(IsarCollection col, int id, FormModel object) {}
+void _isarFormModelAttachLinks(
+    IsarCollection col, int id, IsarFormModel object) {}
 
-extension FormModelQueryWhereSort
-    on QueryBuilder<FormModel, FormModel, QWhere> {
-  QueryBuilder<FormModel, FormModel, QAfterWhere> anyId() {
+extension IsarFormModelQueryWhereSort
+    on QueryBuilder<IsarFormModel, IsarFormModel, QWhere> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterWhere> anyId() {
     return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
-extension FormModelQueryWhere
-    on QueryBuilder<FormModel, FormModel, QWhereClause> {
-  QueryBuilder<FormModel, FormModel, QAfterWhereClause> idEqualTo(int id) {
+extension IsarFormModelQueryWhere
+    on QueryBuilder<IsarFormModel, IsarFormModel, QWhereClause> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterWhereClause> idEqualTo(
+      int id) {
     return addWhereClauseInternal(IdWhereClause.between(
       lower: id,
       includeLower: true,
@@ -169,7 +174,8 @@ extension FormModelQueryWhere
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterWhereClause> idNotEqualTo(int id) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterWhereClause> idNotEqualTo(
+      int id) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(
         IdWhereClause.lessThan(upper: id, includeUpper: false),
@@ -185,21 +191,23 @@ extension FormModelQueryWhere
     }
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterWhereClause> idGreaterThan(int id,
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterWhereClause> idGreaterThan(
+      int id,
       {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.greaterThan(lower: id, includeLower: include),
     );
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterWhereClause> idLessThan(
+      int id,
       {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.lessThan(upper: id, includeUpper: include),
     );
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterWhereClause> idBetween(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterWhereClause> idBetween(
     int lowerId,
     int upperId, {
     bool includeLower = true,
@@ -214,9 +222,10 @@ extension FormModelQueryWhere
   }
 }
 
-extension FormModelQueryFilter
-    on QueryBuilder<FormModel, FormModel, QFilterCondition> {
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> descriptionEqualTo(
+extension IsarFormModelQueryFilter
+    on QueryBuilder<IsarFormModel, IsarFormModel, QFilterCondition> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      descriptionEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -228,7 +237,7 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition>
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
       descriptionGreaterThan(
     String value, {
     bool caseSensitive = true,
@@ -243,7 +252,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> descriptionLessThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      descriptionLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -257,7 +267,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> descriptionBetween(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      descriptionBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -274,7 +285,7 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition>
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
       descriptionStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -287,7 +298,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> descriptionEndsWith(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      descriptionEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -299,9 +311,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> descriptionContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      descriptionContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'description',
@@ -310,9 +321,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> descriptionMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      descriptionMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'description',
@@ -321,8 +331,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> hashCodeEqualTo(
-      int value) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hashCode',
@@ -330,7 +340,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> hashCodeGreaterThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      hashCodeGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -342,7 +353,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> hashCodeLessThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      hashCodeLessThan(
     int value, {
     bool include = false,
   }) {
@@ -354,7 +366,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> hashCodeBetween(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      hashCodeBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -369,7 +382,7 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> idIsNull() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition> idIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
       property: 'id',
@@ -377,7 +390,7 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> idEqualTo(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition> idEqualTo(
       int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
@@ -386,7 +399,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      idGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -398,7 +412,7 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> idLessThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition> idLessThan(
     int value, {
     bool include = false,
   }) {
@@ -410,7 +424,7 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> idBetween(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition> idBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -425,7 +439,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> stringifyIsNull() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      stringifyIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
       property: 'stringify',
@@ -433,8 +448,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> stringifyEqualTo(
-      bool? value) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      stringifyEqualTo(bool? value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'stringify',
@@ -442,7 +457,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleEqualTo(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -454,7 +470,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleGreaterThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -468,7 +485,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleLessThan(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -482,7 +500,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleBetween(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -499,7 +518,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleStartsWith(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -511,7 +531,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleEndsWith(
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -523,9 +544,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'title',
@@ -534,9 +554,8 @@ extension FormModelQueryFilter
     ));
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterFilterCondition> titleMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
+      titleMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'title',
@@ -546,139 +565,145 @@ extension FormModelQueryFilter
   }
 }
 
-extension FormModelQueryLinks
-    on QueryBuilder<FormModel, FormModel, QFilterCondition> {}
+extension IsarFormModelQueryLinks
+    on QueryBuilder<IsarFormModel, IsarFormModel, QFilterCondition> {}
 
-extension FormModelQueryWhereSortBy
-    on QueryBuilder<FormModel, FormModel, QSortBy> {
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByDescription() {
+extension IsarFormModelQueryWhereSortBy
+    on QueryBuilder<IsarFormModel, IsarFormModel, QSortBy> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByDescription() {
     return addSortByInternal('description', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByDescriptionDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
+      sortByDescriptionDesc() {
     return addSortByInternal('description', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByHashCode() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByHashCode() {
     return addSortByInternal('hashCode', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByHashCodeDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
+      sortByHashCodeDesc() {
     return addSortByInternal('hashCode', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortById() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortById() {
     return addSortByInternal('id', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByIdDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByIdDesc() {
     return addSortByInternal('id', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByStringify() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByStringify() {
     return addSortByInternal('stringify', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByStringifyDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
+      sortByStringifyDesc() {
     return addSortByInternal('stringify', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByTitle() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByTitle() {
     return addSortByInternal('title', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByTitleDesc() {
     return addSortByInternal('title', Sort.desc);
   }
 }
 
-extension FormModelQueryWhereSortThenBy
-    on QueryBuilder<FormModel, FormModel, QSortThenBy> {
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByDescription() {
+extension IsarFormModelQueryWhereSortThenBy
+    on QueryBuilder<IsarFormModel, IsarFormModel, QSortThenBy> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByDescription() {
     return addSortByInternal('description', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByDescriptionDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
+      thenByDescriptionDesc() {
     return addSortByInternal('description', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByHashCode() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByHashCode() {
     return addSortByInternal('hashCode', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByHashCodeDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
+      thenByHashCodeDesc() {
     return addSortByInternal('hashCode', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenById() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenById() {
     return addSortByInternal('id', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByIdDesc() {
     return addSortByInternal('id', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByStringify() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByStringify() {
     return addSortByInternal('stringify', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByStringifyDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
+      thenByStringifyDesc() {
     return addSortByInternal('stringify', Sort.desc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByTitle() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByTitle() {
     return addSortByInternal('title', Sort.asc);
   }
 
-  QueryBuilder<FormModel, FormModel, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByTitleDesc() {
     return addSortByInternal('title', Sort.desc);
   }
 }
 
-extension FormModelQueryWhereDistinct
-    on QueryBuilder<FormModel, FormModel, QDistinct> {
-  QueryBuilder<FormModel, FormModel, QDistinct> distinctByDescription(
+extension IsarFormModelQueryWhereDistinct
+    on QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> {
+  QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctByDescription(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('description', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<FormModel, FormModel, QDistinct> distinctByHashCode() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctByHashCode() {
     return addDistinctByInternal('hashCode');
   }
 
-  QueryBuilder<FormModel, FormModel, QDistinct> distinctById() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctById() {
     return addDistinctByInternal('id');
   }
 
-  QueryBuilder<FormModel, FormModel, QDistinct> distinctByStringify() {
+  QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctByStringify() {
     return addDistinctByInternal('stringify');
   }
 
-  QueryBuilder<FormModel, FormModel, QDistinct> distinctByTitle(
+  QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('title', caseSensitive: caseSensitive);
   }
 }
 
-extension FormModelQueryProperty
-    on QueryBuilder<FormModel, FormModel, QQueryProperty> {
-  QueryBuilder<FormModel, String, QQueryOperations> descriptionProperty() {
+extension IsarFormModelQueryProperty
+    on QueryBuilder<IsarFormModel, IsarFormModel, QQueryProperty> {
+  QueryBuilder<IsarFormModel, String, QQueryOperations> descriptionProperty() {
     return addPropertyNameInternal('description');
   }
 
-  QueryBuilder<FormModel, int, QQueryOperations> hashCodeProperty() {
+  QueryBuilder<IsarFormModel, int, QQueryOperations> hashCodeProperty() {
     return addPropertyNameInternal('hashCode');
   }
 
-  QueryBuilder<FormModel, int?, QQueryOperations> idProperty() {
+  QueryBuilder<IsarFormModel, int?, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
   }
 
-  QueryBuilder<FormModel, bool?, QQueryOperations> stringifyProperty() {
+  QueryBuilder<IsarFormModel, bool?, QQueryOperations> stringifyProperty() {
     return addPropertyNameInternal('stringify');
   }
 
-  QueryBuilder<FormModel, String, QQueryOperations> titleProperty() {
+  QueryBuilder<IsarFormModel, String, QQueryOperations> titleProperty() {
     return addPropertyNameInternal('title');
   }
 }

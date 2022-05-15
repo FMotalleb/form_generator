@@ -8,14 +8,14 @@ part of 'field_model.dart';
 
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
-extension GetFormFieldCollection on Isar {
-  IsarCollection<FormField> get formFields => getCollection();
+extension GetIsarFormFieldCollection on Isar {
+  IsarCollection<IsarFormField> get isarFormFields => getCollection();
 }
 
-const FormFieldSchema = CollectionSchema(
-  name: 'FormField',
+const IsarFormFieldSchema = CollectionSchema(
+  name: 'IsarFormField',
   schema:
-      '{"name":"FormField","idName":"id","properties":[{"name":"error","type":"String"},{"name":"hashCode","type":"Long"},{"name":"hint","type":"String"},{"name":"isValid","type":"String"},{"name":"key","type":"String"},{"name":"label","type":"String"},{"name":"stringify","type":"Bool"}],"indexes":[],"links":[]}',
+      '{"name":"IsarFormField","idName":"id","properties":[{"name":"error","type":"String"},{"name":"hashCode","type":"Long"},{"name":"hint","type":"String"},{"name":"isValid","type":"String"},{"name":"key","type":"String"},{"name":"label","type":"String"},{"name":"stringify","type":"Bool"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {
     'error': 0,
@@ -31,20 +31,20 @@ const FormFieldSchema = CollectionSchema(
   indexValueTypes: {},
   linkIds: {},
   backlinkLinkNames: {},
-  getId: _formFieldGetId,
-  setId: _formFieldSetId,
-  getLinks: _formFieldGetLinks,
-  attachLinks: _formFieldAttachLinks,
-  serializeNative: _formFieldSerializeNative,
-  deserializeNative: _formFieldDeserializeNative,
-  deserializePropNative: _formFieldDeserializePropNative,
-  serializeWeb: _formFieldSerializeWeb,
-  deserializeWeb: _formFieldDeserializeWeb,
-  deserializePropWeb: _formFieldDeserializePropWeb,
+  getId: _isarFormFieldGetId,
+  setId: _isarFormFieldSetId,
+  getLinks: _isarFormFieldGetLinks,
+  attachLinks: _isarFormFieldAttachLinks,
+  serializeNative: _isarFormFieldSerializeNative,
+  deserializeNative: _isarFormFieldDeserializeNative,
+  deserializePropNative: _isarFormFieldDeserializePropNative,
+  serializeWeb: _isarFormFieldSerializeWeb,
+  deserializeWeb: _isarFormFieldDeserializeWeb,
+  deserializePropWeb: _isarFormFieldDeserializePropWeb,
   version: 3,
 );
 
-int? _formFieldGetId(FormField object) {
+int? _isarFormFieldGetId(IsarFormField object) {
   if (object.id == Isar.autoIncrement) {
     return null;
   } else {
@@ -52,18 +52,18 @@ int? _formFieldGetId(FormField object) {
   }
 }
 
-void _formFieldSetId(FormField object, int id) {
+void _isarFormFieldSetId(IsarFormField object, int id) {
   object.id = id;
 }
 
-List<IsarLinkBase> _formFieldGetLinks(FormField object) {
+List<IsarLinkBase> _isarFormFieldGetLinks(IsarFormField object) {
   return [];
 }
 
-void _formFieldSerializeNative(
-    IsarCollection<FormField> collection,
+void _isarFormFieldSerializeNative(
+    IsarCollection<IsarFormField> collection,
     IsarRawObject rawObj,
-    FormField object,
+    IsarFormField object,
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
@@ -102,9 +102,12 @@ void _formFieldSerializeNative(
   writer.writeBool(offsets[6], _stringify);
 }
 
-FormField _formFieldDeserializeNative(IsarCollection<FormField> collection,
-    int id, IsarBinaryReader reader, List<int> offsets) {
-  final object = FormField(
+IsarFormField _isarFormFieldDeserializeNative(
+    IsarCollection<IsarFormField> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = IsarFormField(
     error: reader.readString(offsets[0]),
     hint: reader.readString(offsets[2]),
     id: id,
@@ -115,7 +118,7 @@ FormField _formFieldDeserializeNative(IsarCollection<FormField> collection,
   return object;
 }
 
-P _formFieldDeserializePropNative<P>(
+P _isarFormFieldDeserializePropNative<P>(
     int id, IsarBinaryReader reader, int propertyIndex, int offset) {
   switch (propertyIndex) {
     case -1:
@@ -139,8 +142,8 @@ P _formFieldDeserializePropNative<P>(
   }
 }
 
-dynamic _formFieldSerializeWeb(
-    IsarCollection<FormField> collection, FormField object) {
+dynamic _isarFormFieldSerializeWeb(
+    IsarCollection<IsarFormField> collection, IsarFormField object) {
   final jsObj = IsarNative.newJsObject();
   IsarNative.jsObjectSet(jsObj, 'error', object.error);
   IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
@@ -153,9 +156,9 @@ dynamic _formFieldSerializeWeb(
   return jsObj;
 }
 
-FormField _formFieldDeserializeWeb(
-    IsarCollection<FormField> collection, dynamic jsObj) {
-  final object = FormField(
+IsarFormField _isarFormFieldDeserializeWeb(
+    IsarCollection<IsarFormField> collection, dynamic jsObj) {
+  final object = IsarFormField(
     error: IsarNative.jsObjectGet(jsObj, 'error') ?? '',
     hint: IsarNative.jsObjectGet(jsObj, 'hint') ?? '',
     id: IsarNative.jsObjectGet(jsObj, 'id'),
@@ -166,7 +169,7 @@ FormField _formFieldDeserializeWeb(
   return object;
 }
 
-P _formFieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
+P _isarFormFieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
   switch (propertyName) {
     case 'error':
       return (IsarNative.jsObjectGet(jsObj, 'error') ?? '') as P;
@@ -190,18 +193,20 @@ P _formFieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
   }
 }
 
-void _formFieldAttachLinks(IsarCollection col, int id, FormField object) {}
+void _isarFormFieldAttachLinks(
+    IsarCollection col, int id, IsarFormField object) {}
 
-extension FormFieldQueryWhereSort
-    on QueryBuilder<FormField, FormField, QWhere> {
-  QueryBuilder<FormField, FormField, QAfterWhere> anyId() {
+extension IsarFormFieldQueryWhereSort
+    on QueryBuilder<IsarFormField, IsarFormField, QWhere> {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterWhere> anyId() {
     return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
-extension FormFieldQueryWhere
-    on QueryBuilder<FormField, FormField, QWhereClause> {
-  QueryBuilder<FormField, FormField, QAfterWhereClause> idEqualTo(int id) {
+extension IsarFormFieldQueryWhere
+    on QueryBuilder<IsarFormField, IsarFormField, QWhereClause> {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterWhereClause> idEqualTo(
+      int id) {
     return addWhereClauseInternal(IdWhereClause.between(
       lower: id,
       includeLower: true,
@@ -210,7 +215,8 @@ extension FormFieldQueryWhere
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterWhereClause> idNotEqualTo(int id) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterWhereClause> idNotEqualTo(
+      int id) {
     if (whereSortInternal == Sort.asc) {
       return addWhereClauseInternal(
         IdWhereClause.lessThan(upper: id, includeUpper: false),
@@ -226,21 +232,23 @@ extension FormFieldQueryWhere
     }
   }
 
-  QueryBuilder<FormField, FormField, QAfterWhereClause> idGreaterThan(int id,
+  QueryBuilder<IsarFormField, IsarFormField, QAfterWhereClause> idGreaterThan(
+      int id,
       {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.greaterThan(lower: id, includeLower: include),
     );
   }
 
-  QueryBuilder<FormField, FormField, QAfterWhereClause> idLessThan(int id,
+  QueryBuilder<IsarFormField, IsarFormField, QAfterWhereClause> idLessThan(
+      int id,
       {bool include = false}) {
     return addWhereClauseInternal(
       IdWhereClause.lessThan(upper: id, includeUpper: include),
     );
   }
 
-  QueryBuilder<FormField, FormField, QAfterWhereClause> idBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterWhereClause> idBetween(
     int lowerId,
     int upperId, {
     bool includeLower = true,
@@ -255,9 +263,10 @@ extension FormFieldQueryWhere
   }
 }
 
-extension FormFieldQueryFilter
-    on QueryBuilder<FormField, FormField, QFilterCondition> {
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorEqualTo(
+extension IsarFormFieldQueryFilter
+    on QueryBuilder<IsarFormField, IsarFormField, QFilterCondition> {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -269,7 +278,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -283,7 +293,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -297,7 +308,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -314,7 +326,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorStartsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -326,7 +339,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorEndsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -338,9 +352,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'error',
@@ -349,9 +362,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> errorMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      errorMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'error',
@@ -360,8 +372,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hashCodeEqualTo(
-      int value) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hashCode',
@@ -369,7 +381,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hashCodeGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hashCodeGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -381,7 +394,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hashCodeLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hashCodeLessThan(
     int value, {
     bool include = false,
   }) {
@@ -393,7 +407,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hashCodeBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hashCodeBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -408,7 +423,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintEqualTo(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> hintEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -420,7 +435,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hintGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -434,7 +450,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hintLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -448,7 +465,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> hintBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -465,7 +482,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintStartsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hintStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -477,7 +495,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintEndsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hintEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -489,9 +508,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      hintContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'hint',
@@ -500,7 +518,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> hintMatches(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> hintMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
@@ -511,7 +529,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> idIsNull() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> idIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
       property: 'id',
@@ -519,7 +537,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> idEqualTo(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> idEqualTo(
       int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
@@ -528,7 +546,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      idGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -540,7 +559,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> idLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> idLessThan(
     int value, {
     bool include = false,
   }) {
@@ -552,7 +571,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> idBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> idBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -567,7 +586,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidEqualTo(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -579,7 +599,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -593,7 +614,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -607,7 +629,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -624,7 +647,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidStartsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -636,7 +660,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidEndsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -648,9 +673,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'isValid',
@@ -659,9 +683,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> isValidMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      isValidMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'isValid',
@@ -670,7 +693,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyEqualTo(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> keyEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -682,7 +705,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      keyGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -696,7 +720,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> keyLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -710,7 +734,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> keyBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -727,7 +751,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyStartsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      keyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -739,7 +764,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyEndsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> keyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -751,7 +776,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyContains(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> keyContains(
       String value,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
@@ -762,7 +787,7 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> keyMatches(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> keyMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
@@ -773,7 +798,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelEqualTo(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -785,7 +811,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelGreaterThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -799,7 +826,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelLessThan(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -813,7 +841,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelBetween(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -830,7 +859,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelStartsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -842,7 +872,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelEndsWith(
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -854,9 +885,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
       property: 'label',
@@ -865,9 +895,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> labelMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      labelMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'label',
@@ -876,7 +905,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> stringifyIsNull() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      stringifyIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
       property: 'stringify',
@@ -884,8 +914,8 @@ extension FormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<FormField, FormField, QAfterFilterCondition> stringifyEqualTo(
-      bool? value) {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
+      stringifyEqualTo(bool? value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'stringify',
@@ -894,214 +924,218 @@ extension FormFieldQueryFilter
   }
 }
 
-extension FormFieldQueryLinks
-    on QueryBuilder<FormField, FormField, QFilterCondition> {}
+extension IsarFormFieldQueryLinks
+    on QueryBuilder<IsarFormField, IsarFormField, QFilterCondition> {}
 
-extension FormFieldQueryWhereSortBy
-    on QueryBuilder<FormField, FormField, QSortBy> {
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByError() {
+extension IsarFormFieldQueryWhereSortBy
+    on QueryBuilder<IsarFormField, IsarFormField, QSortBy> {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByError() {
     return addSortByInternal('error', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByErrorDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByErrorDesc() {
     return addSortByInternal('error', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByHashCode() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByHashCode() {
     return addSortByInternal('hashCode', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByHashCodeDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      sortByHashCodeDesc() {
     return addSortByInternal('hashCode', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByHint() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByHint() {
     return addSortByInternal('hint', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByHintDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByHintDesc() {
     return addSortByInternal('hint', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortById() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortById() {
     return addSortByInternal('id', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByIdDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByIdDesc() {
     return addSortByInternal('id', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByIsValid() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByIsValid() {
     return addSortByInternal('isValid', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByIsValidDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByIsValidDesc() {
     return addSortByInternal('isValid', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByKey() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByKey() {
     return addSortByInternal('key', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByKeyDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByKeyDesc() {
     return addSortByInternal('key', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByLabel() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByLabel() {
     return addSortByInternal('label', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByLabelDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByLabelDesc() {
     return addSortByInternal('label', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByStringify() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByStringify() {
     return addSortByInternal('stringify', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> sortByStringifyDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      sortByStringifyDesc() {
     return addSortByInternal('stringify', Sort.desc);
   }
 }
 
-extension FormFieldQueryWhereSortThenBy
-    on QueryBuilder<FormField, FormField, QSortThenBy> {
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByError() {
+extension IsarFormFieldQueryWhereSortThenBy
+    on QueryBuilder<IsarFormField, IsarFormField, QSortThenBy> {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByError() {
     return addSortByInternal('error', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByErrorDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByErrorDesc() {
     return addSortByInternal('error', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByHashCode() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByHashCode() {
     return addSortByInternal('hashCode', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByHashCodeDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      thenByHashCodeDesc() {
     return addSortByInternal('hashCode', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByHint() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByHint() {
     return addSortByInternal('hint', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByHintDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByHintDesc() {
     return addSortByInternal('hint', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenById() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenById() {
     return addSortByInternal('id', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByIdDesc() {
     return addSortByInternal('id', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByIsValid() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByIsValid() {
     return addSortByInternal('isValid', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByIsValidDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByIsValidDesc() {
     return addSortByInternal('isValid', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByKey() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByKey() {
     return addSortByInternal('key', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByKeyDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByKeyDesc() {
     return addSortByInternal('key', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByLabel() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByLabel() {
     return addSortByInternal('label', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByLabelDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByLabelDesc() {
     return addSortByInternal('label', Sort.desc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByStringify() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByStringify() {
     return addSortByInternal('stringify', Sort.asc);
   }
 
-  QueryBuilder<FormField, FormField, QAfterSortBy> thenByStringifyDesc() {
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      thenByStringifyDesc() {
     return addSortByInternal('stringify', Sort.desc);
   }
 }
 
-extension FormFieldQueryWhereDistinct
-    on QueryBuilder<FormField, FormField, QDistinct> {
-  QueryBuilder<FormField, FormField, QDistinct> distinctByError(
+extension IsarFormFieldQueryWhereDistinct
+    on QueryBuilder<IsarFormField, IsarFormField, QDistinct> {
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByError(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('error', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctByHashCode() {
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByHashCode() {
     return addDistinctByInternal('hashCode');
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctByHint(
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByHint(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('hint', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctById() {
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctById() {
     return addDistinctByInternal('id');
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctByIsValid(
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByIsValid(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('isValid', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctByKey(
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByKey(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('key', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctByLabel(
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByLabel(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('label', caseSensitive: caseSensitive);
   }
 
-  QueryBuilder<FormField, FormField, QDistinct> distinctByStringify() {
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByStringify() {
     return addDistinctByInternal('stringify');
   }
 }
 
-extension FormFieldQueryProperty
-    on QueryBuilder<FormField, FormField, QQueryProperty> {
-  QueryBuilder<FormField, String, QQueryOperations> errorProperty() {
+extension IsarFormFieldQueryProperty
+    on QueryBuilder<IsarFormField, IsarFormField, QQueryProperty> {
+  QueryBuilder<IsarFormField, String, QQueryOperations> errorProperty() {
     return addPropertyNameInternal('error');
   }
 
-  QueryBuilder<FormField, int, QQueryOperations> hashCodeProperty() {
+  QueryBuilder<IsarFormField, int, QQueryOperations> hashCodeProperty() {
     return addPropertyNameInternal('hashCode');
   }
 
-  QueryBuilder<FormField, String, QQueryOperations> hintProperty() {
+  QueryBuilder<IsarFormField, String, QQueryOperations> hintProperty() {
     return addPropertyNameInternal('hint');
   }
 
-  QueryBuilder<FormField, int?, QQueryOperations> idProperty() {
+  QueryBuilder<IsarFormField, int?, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
   }
 
-  QueryBuilder<FormField, String, QQueryOperations> isValidProperty() {
+  QueryBuilder<IsarFormField, String, QQueryOperations> isValidProperty() {
     return addPropertyNameInternal('isValid');
   }
 
-  QueryBuilder<FormField, String, QQueryOperations> keyProperty() {
+  QueryBuilder<IsarFormField, String, QQueryOperations> keyProperty() {
     return addPropertyNameInternal('key');
   }
 
-  QueryBuilder<FormField, String, QQueryOperations> labelProperty() {
+  QueryBuilder<IsarFormField, String, QQueryOperations> labelProperty() {
     return addPropertyNameInternal('label');
   }
 
-  QueryBuilder<FormField, bool?, QQueryOperations> stringifyProperty() {
+  QueryBuilder<IsarFormField, bool?, QQueryOperations> stringifyProperty() {
     return addPropertyNameInternal('stringify');
   }
 }

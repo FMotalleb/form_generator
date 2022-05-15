@@ -26,6 +26,14 @@ class AppBlocObserver extends BlocObserver {
     super.onTransition(bloc, transition);
     print(transition);
   }
+
+  @protected
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    print('grabbed');
+    print(error);
+    print(stackTrace);
+    super.onError(bloc, error, stackTrace);
+  }
 }
 
 /// {@template app}

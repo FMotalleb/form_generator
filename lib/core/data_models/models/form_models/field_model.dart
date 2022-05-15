@@ -1,12 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:isar/isar.dart';
 import '../../../contracts/typedefs/form_enums/field_types.dart';
-part 'field_model.g.dart';
 
-@Collection()
 class FormField extends Equatable {
-  @Id()
-  int? id;
   String key;
   FieldType type;
   String label;
@@ -15,7 +10,6 @@ class FormField extends Equatable {
   String isValid;
 
   FormField({
-    this.id,
     this.key = '',
     this.type = FieldType.int,
     this.label = '',
