@@ -87,34 +87,25 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   @override
   Future<int> write(FormModel input) async {
     final placeHolder = input.asIsarModel;
-    print('step1');
+
     final currentItem = await getItemById(input.id);
-    print('step2');
+
     if (currentItem != null) {
-      print('found item');
       await deleteItem(currentItem);
     }
-    print('step3');
     if (placeHolder.isarFields.isNotEmpty) {
       final fields = placeHolder.isarFields.toList();
-      // if (currentItem != null) {
-      //   fields.removeWhere(
-      //     (element) => currentItem.fields.map((e) => e.id)
-      // .contains(element.id),
-      //   );
-      // }
+
       await _isar.writeTxn(
         (isar) async {
           await _isar.isarFormFields.putAll(
             fields,
-            replaceOnConflict: false,
+            replaceOnConflict: true,
             saveLinks: true,
           );
         },
       );
     }
-
-    print('step4');
     final formId = await _isar.writeTxn(
       (isar) async {
         return isar.isarFormModels.put(
@@ -123,11 +114,9 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
         );
       },
     );
-    print('step5');
     await _isar.writeTxn((isar) async {
       await placeHolder.isarFields.save();
     });
-    print('step6');
     return formId;
   }
 

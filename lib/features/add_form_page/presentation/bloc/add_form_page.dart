@@ -2,9 +2,13 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hemend/debug/logger.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
+import '../../../../get_it_registrant.dart';
 import '../../domain/repositories/form_manager_interface.dart';
 import '../../domain/usecases/add_new_form_usecases.dart';
 import '../../domain/usecases/delete_all_forms_usecases.dart';
@@ -88,6 +92,21 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     });
     on<LoadDataFromDataBaseEvent>(
       (event, emit) async {
+        // noContextDialog(builder: ((p0) {
+        //   return Material(
+        //     child: Center(
+        //       child: Text('test'),
+        //     ),
+        //   );
+        // }));
+        noContextSnackBar(
+          const SnackBar(
+            content: Text('test'),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            behavior: SnackBarBehavior.fixed,
+          ),
+        );
         forms = {};
         emit(AddFormPageStateValue(forms: forms.toList()));
         final value = await _getAllFormsUsecases.execute();
@@ -114,6 +133,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         emit(AddFormPageStateValue(forms: forms.toList()));
       },
     );
+
     on<EditFormEvent>(
       (event, emit) async {
         final result = await _editFormUsecases.execute(event.form);

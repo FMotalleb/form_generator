@@ -29,6 +29,7 @@ class _FormPageViewState extends State<FormPageView> {
     super.initState();
     _titleController.addListener(() {
       _boundForm.title = _titleController.text;
+      widget.onFormChanged(_boundForm);
     });
   }
 
@@ -59,14 +60,6 @@ class _FormPageViewState extends State<FormPageView> {
               TextField(
                 controller: _titleController,
                 style: theme.primaryTextTheme.displaySmall,
-                onEditingComplete: () {
-                  widget.onFormChanged(_boundForm);
-                  print('finished');
-                },
-                onSubmitted: (_) {
-                  widget.onFormChanged(_boundForm);
-                  print('finished');
-                },
                 decoration: InputDecoration(
                   border: theme.inputDecorationTheme.border,
                 ),
@@ -112,7 +105,8 @@ class _FormPageViewState extends State<FormPageView> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    final index = _boundForm.fields.length + 1;
+                    final index =
+                        (_boundForm.fields.toList()..sort((a, b) => a.index.compareTo(b.index))).last.index + 1;
                     _boundForm.fields = {
                       ..._boundForm.fields,
                       field_entity.FormFieldEntity(
@@ -120,7 +114,7 @@ class _FormPageViewState extends State<FormPageView> {
                           '${_boundForm.id}${Random.secure().nextInt(9999999)}',
                         ),
                         index: index,
-                        label: 'New Field',
+                        label: 'New Field $index',
                         type: FieldType.select,
                         error: '',
                         hint: '',
