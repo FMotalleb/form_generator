@@ -1,13 +1,9 @@
-import 'package:equatable/equatable.dart';
+// ignore_for_file: lines_longer_than_80_chars
 
-import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/contracts/interfaces/data_source/db_data_source_base.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../../../../core/models_and_entities/models/form_models/form_model.dart';
 import '../../domain/repositories/form_manager_interface.dart';
-import '../../domain/usecases/add_new_form_usecases.dart';
-import '../../domain/usecases/edit_form_usecases.dart';
-import '../../domain/usecases/get_all_forms_usecases.dart';
 
 class FormManagerRepo implements FormManagerInterface {
   final BaseDataSource<FormModel> _formDbDataSource;
@@ -18,7 +14,7 @@ class FormManagerRepo implements FormManagerInterface {
       );
 
   @override
-  Future<void> deleteForm(int id) => _formDbDataSource.deleteItem(id);
+  Future<void> deleteForm(FormEntity form) => _formDbDataSource.deleteItem(FormModel.fromEntity(form));
 
   @override
   Future<List<FormEntity>> getAllForms() async =>

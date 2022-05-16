@@ -27,5 +27,5 @@ class FormFieldEntity extends BaseEntity {
   });
 
   @override
-  List<Object?> get props => [key, type, label, hint, error, isValid];
+  List<Object?> get props => [id, key, type, label, hint, error, isValid];
 }

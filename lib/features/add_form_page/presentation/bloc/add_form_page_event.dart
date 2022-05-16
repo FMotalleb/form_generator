@@ -37,3 +37,9 @@ class EditFormEvent extends AddFormEvent {
   @override
   List<Object?> get props => [form];
 }
+
+class SyncFormsWithDataBaseEvent extends AddFormEvent {
+  const SyncFormsWithDataBaseEvent();
+  @override
+  List<Object?> get props => [];
+}

@@ -15,27 +15,7 @@ void main() async {
   );
 }
 
-class AppBlocObserver extends BlocObserver {
-  @override
-  void onChange(BlocBase bloc, Change change) {
-    super.onChange(bloc, change);
-    if (bloc is Cubit) print(change);
-  }
-
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    super.onTransition(bloc, transition);
-    print(transition);
-  }
-
-  @override
-  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    print('grabbed');
-    print(error);
-    print(stackTrace);
-    super.onError(bloc, error, stackTrace);
-  }
-}
+class AppBlocObserver extends BlocObserver {}
 
 /// {@template app}
 /// A [StatelessWidget] that:

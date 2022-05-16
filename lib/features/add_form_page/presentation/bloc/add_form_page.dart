@@ -54,7 +54,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         ...forms,
         newForm,
       };
-      _addNewFormUsecases.execute(newForm).then(
+      await _addNewFormUsecases.execute(newForm).then(
             (value) => value.singleActOnFinished(
               onDone: (d) {
                 'add new form finished'.log();
@@ -75,10 +75,10 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         _deleteFormUsecases.execute(lastItem).then(
               (value) => value.singleActOnFinished(
                 onDone: (d) {
-                  'add new form finished'.log();
+                  'delete last finished'.log();
                 },
                 onError: (e) {
-                  'add new form error'.log(
+                  'delete last error'.log(
                     error: e,
                     stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
                   );
@@ -90,6 +90,8 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     });
     on<LoadDataFromDataBaseEvent>(
       (event, emit) async {
+        forms = {};
+        emit(AddFormPageStateValue(forms: forms.toList()));
         final value = await _getAllFormsUsecases.execute();
         value.singleActOnFinished(
           onDone: (d) {
@@ -117,14 +119,25 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     on<EditFormEvent>(
       (event, emit) async {
         final result = await _editFormUsecases.execute(event.form);
-        result.singleActOnFinished(onDone: (d) {
-          'edit form finished'.log();
-        }, onError: (e) {
-          'edit form has error'.log(
-            error: e,
-            stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,
-          );
-        });
+        result.singleActOnFinished(
+          onDone: (d) {
+            'edit form finished'.log();
+          },
+          onError: (e) {
+            'edit form has error'.log(
+              error: e,
+              stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,
+            );
+          },
+        );
+      },
+    );
+    on<SyncFormsWithDataBaseEvent>(
+      (event, emit) async {
+        await _deleteAllUsecases.execute();
+        for (final i in forms) {
+          await _addNewFormUsecases.execute(i);
+        }
       },
     );
   }

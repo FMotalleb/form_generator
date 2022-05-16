@@ -19,7 +19,7 @@ class DeleteFormUsecases with EquatableMixin implements BaseUsecases<void, FormE
           ErrorType.typeError,
         });
       }
-      await _repository.deleteForm(params.id);
+      await _repository.deleteForm(params);
       return const DataSnapHandler<bool>.done(
         data: true,
         sender: DeleteFormUsecases,

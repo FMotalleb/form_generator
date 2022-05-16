@@ -95,7 +95,7 @@ class FormModel extends FormEntity implements BaseModel {
   }
   @override
   // ignore: lines_longer_than_80_chars
-  String toString() => 'FormModel(title: $title, description: $description, fields: $fields)';
+  String toString() => 'FormModel(id: $id ,title: $title, description: $description, fields: $fields)';
 
   @override
   FormEntity castToEntity() {

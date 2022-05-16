@@ -72,14 +72,14 @@ class AddFormView extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
-              context.read<AddFormBloc>().add(AddNewFormEvent());
+              context.read<AddFormBloc>().add(const AddNewFormEvent());
             },
           ),
           const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.remove),
             onPressed: () {
-              context.read<AddFormBloc>().add(RemoveLastFormEvent());
+              context.read<AddFormBloc>().add(const RemoveLastFormEvent());
             },
           ),
           const SizedBox(height: 4),
@@ -91,16 +91,23 @@ class AddFormView extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           FloatingActionButton(
-            child: const Icon(Icons.save_alt_rounded),
+            child: const Icon(Icons.sync),
             onPressed: () {
-              context.read<AddFormBloc>().add(LoadDataFromDataBaseEvent());
+              context.read<AddFormBloc>().add(const SyncFormsWithDataBaseEvent());
+            },
+          ),
+          const SizedBox(height: 4),
+          FloatingActionButton(
+            child: const Icon(Icons.open_in_browser),
+            onPressed: () {
+              context.read<AddFormBloc>().add(const LoadDataFromDataBaseEvent());
             },
           ),
           const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.delete),
             onPressed: () {
-              context.read<AddFormBloc>().add(DeleteDataBaseEvent());
+              context.read<AddFormBloc>().add(const DeleteDataBaseEvent());
             },
           ),
         ],

@@ -28,6 +28,7 @@ Future<void> registerDependencies() async {
   if (kIsWeb) {
     final isar = await Isar.open(
       schemas: isarDbSchemas,
+      relaxedDurability: false,
     );
 
     GetIt.I.registerSingleton(IsarFormDbDataSource(isar: isar));
@@ -40,5 +41,7 @@ Future<void> registerDependencies() async {
     GetIt.I.registerSingleton(IsarFormDbDataSource(isar: isar));
   }
   // GetIt.I.registerSingleton(IsarFormDbDataSource(isar: GetIt.I.get<Isar>()));
-  GetIt.I.registerSingleton<FormManagerInterface>(FormManagerRepo(GetIt.I.get<IsarFormDbDataSource>()));
+  GetIt.I.registerSingleton<FormManagerInterface>(
+    FormManagerRepo(GetIt.I.get<IsarFormDbDataSource>()),
+  );
 }
