@@ -70,11 +70,6 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
       ),
     );
     await _isar.writeTxn((isar) => placeHolder.isarFields.save());
-
-    // if (item != null) {
-    //   await item.isarFields.load();
-    //   item.fields = item.isarFields.toSet();
-    // }
   }
 
   @override
@@ -103,20 +98,4 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
       (isar) => isar.isarFormModels.buildQuery().deleteAll(),
     );
   }
-
-  // Future<T> write<T>(
-  //   Future<T> Function(Isar) callback, {
-  //   bool silent = false,
-  // }) =>
-  //     _isar.writeTxn(
-  //       callback,
-  //       silent: silent,
-  //     );
-  // Future<T> read<T>(
-  //   Future<T> Function(Isar) callback,
-  // ) =>
-  //     _isar.txn(
-  //       callback,
-  //     );
-  // Future<void> clean() => _isar.clear();
 }
