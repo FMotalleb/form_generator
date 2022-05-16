@@ -14,3 +14,13 @@ class AddFormDecrementPressed extends AddFormEvent {
   @override
   List<Object> get props => [];
 }
+
+class AddFormReloadLastData extends AddFormEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class AddFormDeleteDataBase extends AddFormEvent {
+  @override
+  List<Object?> get props => [];
+}

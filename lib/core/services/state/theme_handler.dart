@@ -9,12 +9,45 @@ class ThemeCubit extends Cubit<ThemeData> {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: Colors.white,
     ),
+    cardTheme: const CardTheme(
+      clipBehavior: Clip.antiAlias,
+      color: Color.fromARGB(255, 230, 230, 230),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      surfaceTintColor: Colors.red,
+      shadowColor: Color.fromARGB(255, 194, 194, 194),
+      elevation: 15,
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: InputBorder.none,
+    ),
     brightness: Brightness.light,
   );
 
   static final _darkTheme = ThemeData(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: Colors.black,
+    ),
+    cardTheme: const CardTheme(
+      clipBehavior: Clip.antiAlias,
+      shadowColor: Color.fromARGB(255, 139, 139, 139),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      color: Color.fromARGB(240, 24, 24, 24),
+      elevation: 10,
+    ),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: InputBorder.none,
+      focusedBorder: OutlineInputBorder(
+        gapPadding: 0,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        borderSide: BorderSide(
+          color: Color.fromARGB(255, 139, 139, 139),
+          width: 0.5,
+        ),
+      ),
     ),
     brightness: Brightness.dark,
   );

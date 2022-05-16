@@ -10,12 +10,11 @@ part 'field_model.g.dart';
 @Collection()
 // ignore: must_be_immutable
 class IsarFormField extends FormFieldModel with EquatableMixin {
-  @Id()
-  int? id;
   @override
   @FieldTypeConverter()
   FieldType type;
   FormFieldModel get asModel => FormFieldModel(
+        id: id,
         key: key,
         type: type,
         label: label,
@@ -24,7 +23,7 @@ class IsarFormField extends FormFieldModel with EquatableMixin {
         isValid: isValid,
       );
   IsarFormField({
-    this.id,
+    required super.id,
     super.key = '',
     this.type = FieldType.int,
     super.label = '',

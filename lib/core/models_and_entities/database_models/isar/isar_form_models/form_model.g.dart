@@ -129,11 +129,11 @@ IsarFormModel _isarFormModelDeserializeWeb(
     IsarCollection<IsarFormModel> collection, dynamic jsObj) {
   final object = IsarFormModel(
     description: IsarNative.jsObjectGet(jsObj, 'description') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id'),
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
     title: IsarNative.jsObjectGet(jsObj, 'title') ?? '',
   );
-  _isarFormModelAttachLinks(
-      collection, IsarNative.jsObjectGet(jsObj, 'id'), object);
+  _isarFormModelAttachLinks(collection,
+      IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity, object);
   return object;
 }
 
@@ -145,7 +145,8 @@ P _isarFormModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
       return (IsarNative.jsObjectGet(jsObj, 'hashCode') ??
           double.negativeInfinity) as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
+          as P;
     case 'stringify':
       return (IsarNative.jsObjectGet(jsObj, 'stringify')) as P;
     case 'title':
@@ -384,14 +385,6 @@ extension IsarFormModelQueryFilter
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition> idIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'id',
-      value: null,
     ));
   }
 
@@ -709,7 +702,7 @@ extension IsarFormModelQueryProperty
     return addPropertyNameInternal('hashCode');
   }
 
-  QueryBuilder<IsarFormModel, int?, QQueryOperations> idProperty() {
+  QueryBuilder<IsarFormModel, int, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
   }
 

@@ -70,11 +70,37 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeData>(
       builder: (_, theme) {
-        return MaterialApp(
-          theme: theme,
-          home: const AddFormPage(),
+        return ScrollConfiguration(
+          behavior: const ScrollBehaviorModified(),
+          child: MaterialApp(
+            scrollBehavior: const ScrollBehaviorModified(),
+            theme: theme,
+            home: const AddFormPage(),
+          ),
         );
       },
     );
+  }
+}
+
+class ScrollBehaviorModified extends ScrollBehavior {
+  const ScrollBehaviorModified();
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const BouncingScrollPhysics();
+    // switch (getPlatform(context)) {
+    //   case TargetPlatform.iOS:
+    //     return const BouncingScrollPhysics();
+    //   case TargetPlatform.macOS:
+    //     return const BouncingScrollPhysics();
+    //   case TargetPlatform.android:
+    //     return const BouncingScrollPhysics();
+    //   case TargetPlatform.fuchsia:
+    //     return const BouncingScrollPhysics();
+    //   case TargetPlatform.linux:
+    //     return const BouncingScrollPhysics();
+    //   case TargetPlatform.windows:
+    //     return const BouncingScrollPhysics();
+    // }
   }
 }

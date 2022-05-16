@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../../core/services/state/theme_handler.dart';
 import '../bloc/add_form_page.dart';
+import '../widgets/form_page_view/form_page_view.dart';
+import '../../../../core/custom_widgets/slide_transiton.dart';
 
 class AddFormPage extends StatelessWidget {
   /// {@macro counter_page}
@@ -11,7 +14,7 @@ class AddFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AddFormBloc(),
+      create: (_) => AddFormBloc(GetIt.I.get()),
       child: const AddFormView(),
     );
   }
@@ -28,11 +31,32 @@ class AddFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AddForm')),
+      // appBar: AppBar(title: const Text('AddForm')),
       body: Center(
-        child: BlocBuilder<AddFormBloc, int>(
-          builder: (context, count) {
-            return Text('$count', style: Theme.of(context).textTheme.headline1);
+        child: BlocBuilder<AddFormBloc, AddFormPageState>(
+          builder: (context, state) {
+            if (state is AddFormPageStateValue && state.forms.isNotEmpty) {
+              return SingleChildScrollView(
+                child: Wrap(
+                  children: state.forms
+                      .map(
+                        (e) => ScaledSlideAnimation(
+                          beginOffset: const Offset(0, 0.5),
+                          endOffset: Offset.zero,
+                          child: FormPageView(
+                            boundForm: e,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              );
+            } else {
+              return Text(
+                'Just Loaded',
+                style: Theme.of(context).textTheme.headline1,
+              );
+            }
           },
         ),
       ),
@@ -58,6 +82,20 @@ class AddFormView extends StatelessWidget {
             child: const Icon(Icons.brightness_6),
             onPressed: () {
               context.read<ThemeCubit>().toggleTheme();
+            },
+          ),
+          const SizedBox(height: 4),
+          FloatingActionButton(
+            child: const Icon(Icons.save_alt_rounded),
+            onPressed: () {
+              context.read<AddFormBloc>().add(AddFormReloadLastData());
+            },
+          ),
+          const SizedBox(height: 4),
+          FloatingActionButton(
+            child: const Icon(Icons.delete),
+            onPressed: () {
+              context.read<AddFormBloc>().add(AddFormDeleteDataBase());
             },
           ),
         ],

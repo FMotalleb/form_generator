@@ -174,7 +174,7 @@ IsarFormField _isarFormFieldDeserializeWeb(
   final object = IsarFormField(
     error: IsarNative.jsObjectGet(jsObj, 'error') ?? '',
     hint: IsarNative.jsObjectGet(jsObj, 'hint') ?? '',
-    id: IsarNative.jsObjectGet(jsObj, 'id'),
+    id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
     isValid: IsarNative.jsObjectGet(jsObj, 'isValid') ?? '',
     key: IsarNative.jsObjectGet(jsObj, 'key') ?? '',
     label: IsarNative.jsObjectGet(jsObj, 'label') ?? '',
@@ -194,7 +194,8 @@ P _isarFormFieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'hint':
       return (IsarNative.jsObjectGet(jsObj, 'hint') ?? '') as P;
     case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
+      return (IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity)
+          as P;
     case 'isValid':
       return (IsarNative.jsObjectGet(jsObj, 'isValid') ?? '') as P;
     case 'key':
@@ -545,14 +546,6 @@ extension IsarFormFieldQueryFilter
       property: 'hint',
       value: pattern,
       caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> idIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'id',
-      value: null,
     ));
   }
 
@@ -1208,7 +1201,7 @@ extension IsarFormFieldQueryProperty
     return addPropertyNameInternal('hint');
   }
 
-  QueryBuilder<IsarFormField, int?, QQueryOperations> idProperty() {
+  QueryBuilder<IsarFormField, int, QQueryOperations> idProperty() {
     return addPropertyNameInternal('id');
   }
 

@@ -1,8 +1,12 @@
+import 'package:isar/isar.dart';
+
 import '../../../../../core/contracts/typedefs/form_enums/field_types.dart';
 import '../../../contracts/interfaces/base_entity/base_entity.dart';
 
 // ignore: must_be_immutable
-class FormField extends BaseEntity {
+class FormFieldEntity extends BaseEntity {
+  @Id()
+  int id;
   String key;
   FieldType type;
   String label;
@@ -10,13 +14,14 @@ class FormField extends BaseEntity {
   String error;
   String isValid;
 
-  FormField({
-    this.key = '',
+  FormFieldEntity({
+    required this.id,
+    required this.key,
     this.type = FieldType.int,
-    this.label = '',
-    this.hint = '',
-    this.error = '',
-    this.isValid = '',
+    required this.label,
+    required this.hint,
+    required this.error,
+    required this.isValid,
   });
 
   @override

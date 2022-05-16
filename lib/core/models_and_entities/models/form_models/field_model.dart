@@ -6,8 +6,9 @@ import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
 
 // ignore: must_be_immutable
-class FormFieldModel extends FormField implements BaseModel {
+class FormFieldModel extends FormFieldEntity implements BaseModel {
   FormFieldModel({
+    required super.id,
     super.key = '',
     super.type = FieldType.int,
     super.label = '',
@@ -17,6 +18,7 @@ class FormFieldModel extends FormField implements BaseModel {
   });
   @override
   IsarFormField get asIsarModel => IsarFormField(
+        id: id,
         key: key,
         type: type,
         label: label,
@@ -39,6 +41,7 @@ class FormFieldModel extends FormField implements BaseModel {
   @override
   factory FormFieldModel.fromMap(Map<String, dynamic> map) {
     return FormFieldModel(
+      id: map['id'] as int,
       key: (map['key'] ?? '').toString(),
       type: FieldType.fromMap(map['type'].toString()),
       label: (map['label'] ?? '').toString(),
@@ -54,8 +57,9 @@ class FormFieldModel extends FormField implements BaseModel {
         json.decode(source) as Map<String, dynamic>,
       );
   @override
-  factory FormFieldModel.fromEntity(FormField entity) {
+  factory FormFieldModel.fromEntity(FormFieldEntity entity) {
     return FormFieldModel(
+      id: entity.id,
       key: entity.key,
       type: entity.type,
       label: entity.label,
