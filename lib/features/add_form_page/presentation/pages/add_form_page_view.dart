@@ -45,6 +45,11 @@ class AddFormView extends StatelessWidget {
                           endOffset: Offset.zero,
                           child: FormPageView(
                             boundForm: e,
+                            onFormChanged: (form) {
+                              context.read<AddFormBloc>().add(
+                                    EditFormEvent(form),
+                                  );
+                            },
                           ),
                         ),
                       )
@@ -67,14 +72,14 @@ class AddFormView extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () {
-              context.read<AddFormBloc>().add(AddFormIncrementPressed());
+              context.read<AddFormBloc>().add(AddNewFormEvent());
             },
           ),
           const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.remove),
             onPressed: () {
-              context.read<AddFormBloc>().add(AddFormDecrementPressed());
+              context.read<AddFormBloc>().add(RemoveLastFormEvent());
             },
           ),
           const SizedBox(height: 4),
@@ -88,14 +93,14 @@ class AddFormView extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.save_alt_rounded),
             onPressed: () {
-              context.read<AddFormBloc>().add(AddFormReloadLastData());
+              context.read<AddFormBloc>().add(LoadDataFromDataBaseEvent());
             },
           ),
           const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.delete),
             onPressed: () {
-              context.read<AddFormBloc>().add(AddFormDeleteDataBase());
+              context.read<AddFormBloc>().add(DeleteDataBaseEvent());
             },
           ),
         ],

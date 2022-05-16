@@ -19,8 +19,9 @@ class EditFormUseCases with EquatableMixin implements BaseUsecases<void, FormEnt
           ErrorType.typeError,
         });
       }
-      return DataSnapHandler.done(
-        data: await _repository.updateForm(params),
+      await _repository.updateForm(params);
+      return const DataSnapHandler<bool>.done(
+        data: true,
         sender: EditFormUseCases,
       );
     } catch (e, st) {

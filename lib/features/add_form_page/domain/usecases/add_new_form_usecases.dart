@@ -24,10 +24,11 @@ class AddNewFormUseCases with EquatableMixin implements BaseUsecases<void, FormE
           ErrorType.typeError,
         });
       }
-      return DataSnapHandler.done(
-        data: await _repository.addForm(
-          params,
-        ),
+      await _repository.addForm(
+        params,
+      );
+      return const DataSnapHandler<bool>.done(
+        data: true,
         sender: AddNewFormUseCases,
       );
     } catch (e, st) {

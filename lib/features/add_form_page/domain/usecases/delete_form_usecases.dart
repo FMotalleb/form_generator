@@ -1,21 +1,28 @@
 import 'package:equatable/equatable.dart';
+import 'package:hemend/debug/error_handler.dart';
 import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../repositories/form_manager_interface.dart';
 
-class GetAllItemsUsecases with EquatableMixin implements BaseUsecases<void, void> {
-  final FormManagerInterface _repository;
-  const GetAllItemsUsecases(
-    this._repository,
-  );
+class DeleteFormUsecases with EquatableMixin implements BaseUsecases<void, FormEntity> {
   @override
-  Future<DataSnapHandler<List<FormEntity>>> execute([void params]) async {
+  List<Object?> get props => [_repository];
+  final FormManagerInterface _repository;
+  const DeleteFormUsecases(this._repository);
+  @override
+  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
     try {
-      return DataSnapHandler.done(
-        data: await _repository.getAllForms(),
-        sender: GetAllItemsUsecases,
+      if (params == null) {
+        throw ErrorHandler('params cannot be null', {
+          ErrorType.typeError,
+        });
+      }
+      await _repository.deleteForm(params.id);
+      return const DataSnapHandler<bool>.done(
+        data: true,
+        sender: DeleteFormUsecases,
       );
     } catch (e, st) {
       return DataSnapHandler.error(
@@ -27,6 +34,4 @@ class GetAllItemsUsecases with EquatableMixin implements BaseUsecases<void, void
 
   @override
   FormManagerInterface get repository => _repository;
-  @override
-  List<Object?> get props => [_repository];
 }

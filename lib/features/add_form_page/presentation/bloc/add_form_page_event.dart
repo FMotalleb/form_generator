@@ -1,26 +1,39 @@
 part of 'add_form_page.dart';
 
 /// Event being processed by [AddFormBloc].
-abstract class AddFormEvent extends Equatable {}
+abstract class AddFormEvent extends Equatable {
+  const AddFormEvent();
+}
 
 /// Notifies bloc to increment state.
-class AddFormIncrementPressed extends AddFormEvent {
+class AddNewFormEvent extends AddFormEvent {
+  const AddNewFormEvent();
   @override
   List<Object> get props => [];
 }
 
 /// Notifies bloc to decrement state.
-class AddFormDecrementPressed extends AddFormEvent {
+class RemoveLastFormEvent extends AddFormEvent {
+  const RemoveLastFormEvent();
   @override
   List<Object> get props => [];
 }
 
-class AddFormReloadLastData extends AddFormEvent {
+class LoadDataFromDataBaseEvent extends AddFormEvent {
+  const LoadDataFromDataBaseEvent();
   @override
   List<Object?> get props => [];
 }
 
-class AddFormDeleteDataBase extends AddFormEvent {
+class DeleteDataBaseEvent extends AddFormEvent {
+  const DeleteDataBaseEvent();
   @override
   List<Object?> get props => [];
+}
+
+class EditFormEvent extends AddFormEvent {
+  final FormEntity form;
+  const EditFormEvent(this.form);
+  @override
+  List<Object?> get props => [form];
 }
