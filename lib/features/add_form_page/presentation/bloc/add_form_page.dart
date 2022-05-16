@@ -73,7 +73,6 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       if (forms.isNotEmpty) {
         final lastItem = forms.last;
         forms = forms.where((element) => element.id != lastItem.id).toSet();
-
         _deleteFormUsecases.execute(lastItem).then(
               (value) => value.singleActOnFinished(
                 onDone: (d) {
@@ -92,28 +91,12 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     });
     on<LoadDataFromDataBaseEvent>(
       (event, emit) async {
-        // noContextDialog(builder: ((p0) {
-        //   return Material(
-        //     child: Center(
-        //       child: Text('test'),
-        //     ),
-        //   );
-        // }));
-        noContextSnackBar(
-          const SnackBar(
-            content: Text('test'),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            behavior: SnackBarBehavior.fixed,
-          ),
-        );
         forms = {};
         emit(AddFormPageStateValue(forms: forms.toList()));
         final value = await _getAllFormsUsecases.execute();
         value.singleActOnFinished(
           onDone: (d) {
             forms = d!.toSet();
-
             emit(AddFormPageStateValue(forms: forms.toList()));
           },
           onError: (e) {
@@ -159,4 +142,23 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       },
     );
   }
+}
+
+SnackBar infoSnackbar(String info) {
+  final theme = Theme.of(GetIt.I.get());
+  return SnackBar(
+    content: Text(
+      info,
+      style: theme.snackBarTheme.contentTextStyle,
+    ),
+    backgroundColor: theme.snackBarTheme.backgroundColor,
+    elevation: 0,
+    shape: theme.snackBarTheme.shape,
+    behavior: SnackBarBehavior.fixed,
+    // margin: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
+  );
+}
+
+extension ShowSnack on SnackBar {
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> show() => noContextSnackBar(this);
 }

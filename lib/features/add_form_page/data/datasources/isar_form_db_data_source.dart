@@ -42,11 +42,7 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   Future<List<FormModel>> getAllItems() async {
     final items = await _isar.txn(
       (isar) async {
-        return isar.isarFormModels.buildQuery<IsarFormModel>(
-          sortBy: [
-            const SortProperty(property: 'index', sort: Sort.asc),
-          ],
-        ).findAll();
+        return isar.isarFormModels.buildQuery<IsarFormModel>().findAll();
       },
     );
     for (final item in items) {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../features/add_form_page/presentation/bloc/add_form_page.dart';
+
 class ThemeCubit extends Cubit<ThemeData> {
   /// {@macro brightness_cubit}
   ThemeCubit() : super(_darkTheme);
@@ -21,6 +23,11 @@ class ThemeCubit extends Cubit<ThemeData> {
     ),
     inputDecorationTheme: const InputDecorationTheme(
       border: InputBorder.none,
+    ),
+    snackBarTheme: const SnackBarThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
     ),
     brightness: Brightness.light,
   );
@@ -49,11 +56,17 @@ class ThemeCubit extends Cubit<ThemeData> {
         ),
       ),
     ),
+    snackBarTheme: const SnackBarThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+    ),
     brightness: Brightness.dark,
   );
 
   /// Toggles the current brightness between light and dark.
   void toggleTheme() {
+    infoSnackbar('theme changed').show();
     emit(state.brightness == Brightness.dark ? _lightTheme : _darkTheme);
   }
 }
