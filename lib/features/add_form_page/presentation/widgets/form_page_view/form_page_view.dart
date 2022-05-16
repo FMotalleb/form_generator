@@ -110,6 +110,7 @@ class _FormPageViewState extends State<FormPageView> {
                         id: int.parse(
                           '${widget.boundForm.id}${Random.secure().nextInt(9999999)}',
                         ),
+                        index: widget.boundForm.fields.length + 1,
                         label: 'New Field ${Random().nextInt(1000)}',
                         type: FieldType.select,
                         error: '',

@@ -7,11 +7,13 @@ import 'field_entity.dart';
 class FormEntity extends BaseEntity {
   @Id()
   int id;
+  int index;
   String title;
   String description;
   Set<FormFieldEntity> fields;
   FormEntity({
     required this.id,
+    required this.index,
     this.title = '',
     this.description = '',
     this.fields = const {},

@@ -23,14 +23,19 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   @override
   Future<List<FormModel>> getAllItems() async {
     final items = await _isar.txn(
-      (isar) async => isar.isarFormModels.buildQuery<IsarFormModel>().findAll(),
+      (isar) async => isar.isarFormModels.buildQuery<IsarFormModel>(
+        sortBy: [
+          const SortProperty(property: 'index', sort: Sort.asc),
+        ],
+      ).findAll(),
     );
     for (final item in items) {
-      await item.isarFields.load();
-      item.fields = item.isarFields.toSet();
-      print(item.isarFields);
+      await _isar.txn((isar) => item.isarFields.load());
+      final sortedProps = item.isarFields.toList();
+      sortedProps.sort((a, b) => a.index.compareTo(b.index));
+      item.fields = sortedProps.toSet();
     }
-    return items;
+    return items.map((e) => e.castToModel()).toList();
   }
 
   @override
@@ -44,22 +49,28 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
     );
 
     if (item != null) {
-      await item.isarFields.load();
+      await _isar.txn((isar) => item.isarFields.load());
       item.fields = item.isarFields.toSet();
     }
-    return item;
+    return item?.castToModel();
   }
 
   @override
   Future<void> update(FormModel input) async {
     final placeHolder = input.asIsarModel;
+
     await _isar.writeTxn(
       (isar) => isar.isarFormModels.put(
         placeHolder,
-        replaceOnConflict: true,
-        saveLinks: true,
       ),
     );
+    await _isar.writeTxn(
+      (isar) => _isar.isarFormFields.putAll(
+        placeHolder.isarFields.toList(),
+      ),
+    );
+    await _isar.writeTxn((isar) => placeHolder.isarFields.save());
+
     // if (item != null) {
     //   await item.isarFields.load();
     //   item.fields = item.isarFields.toSet();
@@ -67,10 +78,16 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   }
 
   @override
-  Future<int> write(FormModel input) {
+  Future<int> write(FormModel input) async {
+    final placeHolder = input.asIsarModel;
+    await _isar.writeTxn(
+      (isar) => _isar.isarFormFields.putAll(
+        placeHolder.isarFields.toList(),
+      ),
+    );
     return _isar.writeTxn(
       (isar) => isar.isarFormModels.put(
-        input.asIsarModel,
+        placeHolder,
         replaceOnConflict: false,
         saveLinks: true,
       ),

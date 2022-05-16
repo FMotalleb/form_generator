@@ -7,6 +7,7 @@ import '../../../contracts/interfaces/base_entity/base_entity.dart';
 class FormFieldEntity extends BaseEntity {
   @Id()
   int id;
+  int index;
   String key;
   FieldType type;
   String label;
@@ -17,6 +18,7 @@ class FormFieldEntity extends BaseEntity {
   FormFieldEntity({
     required this.id,
     required this.key,
+    required this.index,
     this.type = FieldType.int,
     required this.label,
     required this.hint,

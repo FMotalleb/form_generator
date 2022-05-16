@@ -15,10 +15,14 @@ class FormManager implements FormManagerInterface {
   Future<void> deleteForm(int id) => _formDbDataSource.deleteItem(id);
 
   @override
-  Future<List<FormEntity>> getAllForms() => _formDbDataSource.getAllItems();
+  Future<List<FormEntity>> getAllForms() async =>
+      (await _formDbDataSource.getAllItems()).map((e) => e.castToEntity()).toList();
 
   @override
-  Future<FormEntity?> getFormById(int id) => _formDbDataSource.getItemById(id);
+  Future<FormEntity?> getFormById(int id) async => (await _formDbDataSource.getItemById(
+        id,
+      ))
+          ?.castToEntity();
 
   @override
   Future<void> updateForm(FormEntity form) => _formDbDataSource.update(

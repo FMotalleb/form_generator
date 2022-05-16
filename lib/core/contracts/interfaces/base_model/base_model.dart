@@ -4,6 +4,7 @@ import '../base_entity/base_entity.dart';
 
 abstract class BaseModel extends BaseEntity {
   BaseModel get asIsarModel;
+  BaseEntity castToEntity();
   BaseModel();
   Map<String, dynamic> toMap();
   String toJson();

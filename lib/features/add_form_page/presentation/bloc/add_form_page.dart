@@ -24,6 +24,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     on<AddFormIncrementPressed>((event, emit) async {
       final newForm = FormEntity(
         id: Random.secure().nextInt(99999999),
+        index: forms.length,
         title: 'test form ${forms.length + 1}',
       );
       forms = {

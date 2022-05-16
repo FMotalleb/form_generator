@@ -5,7 +5,6 @@ import 'package:isar/isar.dart';
 import '../../../contracts/interfaces/base_model/base_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/form_model.dart';
-import '../../entities/form_entities/field_entity.dart';
 import '../../entities/form_entities/form_entity.dart';
 import 'field_model.dart';
 
@@ -13,10 +12,12 @@ import 'field_model.dart';
 class FormModel extends FormEntity implements BaseModel {
   FormModel({
     required super.id,
+    required super.index,
     super.title = '',
     super.description = '',
     super.fields = const {},
   });
+
   @override
   List<Object> get props => [title, description, fields];
 
@@ -27,6 +28,7 @@ class FormModel extends FormEntity implements BaseModel {
   }) {
     return FormModel(
       id: id,
+      index: index,
       title: title ?? this.title,
       description: description ?? this.description,
       fields: fields ?? this.fields,
@@ -49,6 +51,7 @@ class FormModel extends FormEntity implements BaseModel {
   @override
   IsarFormModel get asIsarModel => IsarFormModel(
         id: id,
+        index: index,
         title: title,
         description: description,
         fields: IsarLinks<IsarFormField>()
@@ -59,6 +62,7 @@ class FormModel extends FormEntity implements BaseModel {
   @override
   factory FormModel.fromMap(Map<String, dynamic> map) {
     return FormModel(
+      index: map['index'] as int,
       id: map['id'] as int,
       title: (map['title'] ?? '').toString(),
       description: (map['description'] ?? '').toString(),
@@ -79,6 +83,7 @@ class FormModel extends FormEntity implements BaseModel {
   factory FormModel.fromEntity(FormEntity entity) {
     return FormModel(
       id: entity.id,
+      index: entity.index,
       title: entity.title,
       description: entity.description,
       fields: entity.fields
@@ -91,4 +96,15 @@ class FormModel extends FormEntity implements BaseModel {
   @override
   // ignore: lines_longer_than_80_chars
   String toString() => 'FormModel(title: $title, description: $description, fields: $fields)';
+
+  @override
+  FormEntity castToEntity() {
+    return FormEntity(
+      id: id,
+      index: index,
+      title: title,
+      description: description,
+      fields: fields.map((e) => e).toSet(),
+    );
+  }
 }

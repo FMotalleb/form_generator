@@ -9,6 +9,7 @@ import '../../entities/form_entities/field_entity.dart';
 class FormFieldModel extends FormFieldEntity implements BaseModel {
   FormFieldModel({
     required super.id,
+    required super.index,
     super.key = '',
     super.type = FieldType.int,
     super.label = '',
@@ -19,6 +20,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
   @override
   IsarFormField get asIsarModel => IsarFormField(
         id: id,
+        index: index,
         key: key,
         type: type,
         label: label,
@@ -41,6 +43,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
   @override
   factory FormFieldModel.fromMap(Map<String, dynamic> map) {
     return FormFieldModel(
+      index: map['index'] as int,
       id: map['id'] as int,
       key: (map['key'] ?? '').toString(),
       type: FieldType.fromMap(map['type'].toString()),
@@ -59,6 +62,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
   @override
   factory FormFieldModel.fromEntity(FormFieldEntity entity) {
     return FormFieldModel(
+      index: entity.index,
       id: entity.id,
       key: entity.key,
       type: entity.type,
@@ -66,6 +70,19 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
       hint: entity.hint,
       error: entity.error,
       isValid: entity.isValid,
+    );
+  }
+  @override
+  FormFieldEntity castToEntity() {
+    return FormFieldEntity(
+      id: id,
+      index: index,
+      error: error,
+      hint: hint,
+      isValid: isValid,
+      key: key,
+      label: label,
+      type: type,
     );
   }
 }
