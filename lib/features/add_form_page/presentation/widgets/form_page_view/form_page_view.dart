@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/contracts/typedefs/form_enums/field_types.dart';
-import '../../../../../core/custom_widgets/slide_transiton.dart';
+import '../../../../../core/custom_widgets/slide_transition.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart' as field_entity;
 import '../../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 
@@ -112,14 +112,15 @@ class _FormPageViewState extends State<FormPageView> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
+                    final index = _boundForm.fields.length + 1;
                     _boundForm.fields = {
                       ..._boundForm.fields,
                       field_entity.FormFieldEntity(
                         id: int.parse(
                           '${_boundForm.id}${Random.secure().nextInt(9999999)}',
                         ),
-                        index: _boundForm.fields.length + 1,
-                        label: 'New Field ${Random().nextInt(1000)}',
+                        index: index,
+                        label: 'New Field',
                         type: FieldType.select,
                         error: '',
                         hint: '',
@@ -130,7 +131,7 @@ class _FormPageViewState extends State<FormPageView> {
                   });
                   widget.onFormChanged(_boundForm);
                 },
-                child: Text('Add Field'),
+                child: const Text('Add Field'),
               ),
             ],
           ),

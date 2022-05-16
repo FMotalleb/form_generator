@@ -12,9 +12,17 @@ class GetAllItemsUsecases with EquatableMixin implements BaseUsecases<void, void
   );
   @override
   Future<DataSnapHandler<List<FormEntity>>> execute([void params]) async {
+    final result = await _repository.getAllForms();
+    for (final item in result) {
+      final tempList = item.fields.toList();
+      tempList.sort((a, b) {
+        return a.index.compareTo(b.index);
+      });
+      item.fields = tempList.toSet();
+    }
     try {
       return DataSnapHandler.done(
-        data: await _repository.getAllForms(),
+        data: result,
         sender: GetAllItemsUsecases,
       );
     } catch (e, st) {

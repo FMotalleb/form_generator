@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
@@ -6,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:hemend/debug/logger.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
-import '../../data/repositories/form_manager_repo.dart';
 import '../../domain/repositories/form_manager_interface.dart';
 import '../../domain/usecases/add_new_form_usecases.dart';
 import '../../domain/usecases/delete_all_forms_usecases.dart';
@@ -54,7 +52,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         ...forms,
         newForm,
       };
-      await _addNewFormUsecases.execute(newForm).then(
+      _addNewFormUsecases.execute(newForm).then(
             (value) => value.singleActOnFinished(
               onDone: (d) {
                 'add new form finished'.log();

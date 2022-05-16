@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
+import '../../../../core/custom_widgets/slide_transition.dart';
 import '../../../../core/services/state/theme_handler.dart';
 import '../bloc/add_form_page.dart';
 import '../widgets/form_page_view/form_page_view.dart';
-import '../../../../core/custom_widgets/slide_transiton.dart';
 
 class AddFormPage extends StatelessWidget {
   /// {@macro counter_page}
