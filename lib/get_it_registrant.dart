@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -44,4 +45,30 @@ Future<void> registerDependencies() async {
   GetIt.I.registerSingleton<FormManagerInterface>(
     FormManagerRepo(GetIt.I.get<IsarFormDbDataSource>()),
   );
+  GetIt.I.registerSingleton<GlobalKey<NavigatorState>>(GlobalKey<NavigatorState>());
+  GetIt.I.registerFactory<BuildContext>(() => GetIt.I.get<GlobalKey<NavigatorState>>().currentState!.overlay!.context);
 }
+
+Future<T?> noContextDialog<T>({
+  required Widget Function(BuildContext) builder,
+  bool barrierDismissible = true,
+  Color? barrierColor = Colors.black54,
+  String? barrierLabel,
+  bool useSafeArea = true,
+  bool useRootNavigator = true,
+  RouteSettings? routeSettings,
+  Offset? anchorPoint,
+}) =>
+    showDialog<T>(
+      context: GetIt.I.get<BuildContext>(),
+      builder: builder,
+      barrierDismissible: barrierDismissible,
+      barrierColor: barrierColor,
+      barrierLabel: barrierLabel,
+      useSafeArea: useSafeArea,
+      useRootNavigator: useRootNavigator,
+      routeSettings: routeSettings,
+      anchorPoint: anchorPoint,
+    );
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> noContextSnackBar(SnackBar snackBar) =>
+    ScaffoldMessenger.of(GetIt.I.get<BuildContext>()).showSnackBar(snackBar);

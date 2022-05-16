@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import 'core/services/state/theme_handler.dart';
 import 'features/add_form_page/presentation/pages/add_form_page_view.dart';
 import 'get_it_registrant.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerDependencies();
@@ -53,6 +55,7 @@ class AppView extends StatelessWidget {
         return ScrollConfiguration(
           behavior: const ScrollBehaviorModified(),
           child: MaterialApp(
+            navigatorKey: GetIt.I.get<GlobalKey<NavigatorState>>(),
             scrollBehavior: const ScrollBehaviorModified(),
             theme: theme,
             home: const AddFormPage(),
