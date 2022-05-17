@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 enum FieldType {
   int(Icons.onetwothree_rounded),
@@ -7,7 +6,7 @@ enum FieldType {
   select(Icons.radio_button_off),
   string(Icons.abc_rounded),
   // ignore: constant_identifier_names
-  NULL(Icons.close);
+  NULL(Icons.new_label);
 
   const FieldType(this.icon);
   factory FieldType.fromMap(String item) {

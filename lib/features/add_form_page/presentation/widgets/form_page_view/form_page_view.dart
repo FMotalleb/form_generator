@@ -11,12 +11,14 @@ class FormPageView extends StatefulWidget {
   const FormPageView({
     Key? key,
     required this.boundForm,
-    required this.onFormChanged,
-    required this.onFormRemoved,
+    this.onFormChanged,
+    this.onFormRemoved,
+    this.displayOnly = false,
   }) : super(key: key);
   final FormEntity boundForm;
-  final void Function(FormEntity) onFormChanged;
-  final void Function(FormEntity) onFormRemoved;
+  final void Function(FormEntity)? onFormChanged;
+  final void Function(FormEntity)? onFormRemoved;
+  final bool displayOnly;
   @override
   State<FormPageView> createState() => _FormPageViewState();
 }
@@ -26,12 +28,16 @@ class _FormPageViewState extends State<FormPageView> {
   late final _titleController = TextEditingController(
     text: _boundForm.title,
   );
+  void _callNullableFunction<T>(void Function(T)? function, T prams) {
+    (function ?? (_) {})(prams);
+  }
+
   @override
   void initState() {
     super.initState();
     _titleController.addListener(() {
       _boundForm.title = _titleController.text;
-      widget.onFormChanged(_boundForm);
+      _callNullableFunction(widget.onFormChanged, _boundForm);
     });
   }
 
@@ -85,17 +91,21 @@ class _FormPageViewState extends State<FormPageView> {
                             ),
                             index: index,
                             label: 'New Field $index',
-                            type: FieldType.values[Random().nextInt(FieldType.values.length)],
+                            type: FieldType.NULL,
                             error: '',
                             hint: '',
                             isValid: '',
-                            key: 'randomNess',
+                            key: '',
                           ),
                         };
                       });
-                      widget.onFormChanged(_boundForm);
+                      _callNullableFunction(widget.onFormChanged, _boundForm);
                     },
-                    child: const Text('Add Field'),
+                    style: theme.elevatedButtonTheme.style,
+                    child: Text(
+                      'Add Field',
+                      style: theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
+                    ),
                   ),
                 ],
               ),
@@ -106,7 +116,7 @@ class _FormPageViewState extends State<FormPageView> {
         Positioned(
           child: GestureDetector(
             onTap: () {
-              widget.onFormRemoved(_boundForm);
+              _callNullableFunction(widget.onFormRemoved, _boundForm);
             },
             child: const DecoratedBox(
               decoration: BoxDecoration(
@@ -132,8 +142,6 @@ class _FormPageViewState extends State<FormPageView> {
     field_entity.FormFieldEntity e,
   ) {
     return ScaledSlideAnimation(
-      beginOffset: const Offset(0.5, 0),
-      endOffset: Offset.zero,
       child: ListTile(
         shape: theme.listTileTheme.shape,
         onTap: () {
@@ -151,7 +159,7 @@ class _FormPageViewState extends State<FormPageView> {
                     setState(() {
                       _boundForm.fields.remove(e);
                     });
-                    widget.onFormChanged(_boundForm);
+                    _callNullableFunction(widget.onFormChanged, _boundForm);
                     Navigator.of(context).pop();
                   },
                 ),

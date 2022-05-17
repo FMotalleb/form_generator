@@ -1,5 +1,3 @@
-import 'package:isar/isar.dart';
-
 import '../../../contracts/interfaces/base_entity/base_entity.dart';
 import 'field_entity.dart';
 

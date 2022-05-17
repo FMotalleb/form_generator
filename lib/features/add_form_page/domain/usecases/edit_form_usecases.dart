@@ -12,23 +12,17 @@ class EditFormUseCases with EquatableMixin implements BaseUsecases<void, FormEnt
     this._repository,
   );
   @override
-  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
+  Future<void> execute([FormEntity? params]) async {
     try {
       if (params == null) {
-        throw ErrorHandler('params cannot be null', {
-          ErrorType.typeError,
-        });
+        throw Exception(
+          'params cannot be null',
+        );
       }
       await _repository.updateForm(params);
-      return const DataSnapHandler<bool>.done(
-        data: true,
-        sender: EditFormUseCases,
-      );
+      return;
     } catch (e, st) {
-      return DataSnapHandler.error(
-        exception: e,
-        sender: st,
-      );
+      rethrow;
     }
   }
 

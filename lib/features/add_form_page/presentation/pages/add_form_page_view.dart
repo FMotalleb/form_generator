@@ -44,7 +44,6 @@ class AddFormView extends StatelessWidget {
                       return ScaledSlideAnimation(
                         key: ValueKey(e.id),
                         beginOffset: const Offset(0, 0.5),
-                        endOffset: Offset.zero,
                         child: FormPageView(
                           boundForm: e,
                           onFormRemoved: (form) => context.read<AddFormBloc>().add(

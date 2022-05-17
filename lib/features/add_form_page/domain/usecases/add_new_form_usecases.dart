@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hemend/debug/error_handler.dart';
-import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
@@ -16,12 +14,12 @@ class AddNewFormUseCases with EquatableMixin implements BaseUsecases<void, FormE
   List<Object?> get props => [_repository];
 
   @override
-  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
+  Future<void> execute([FormEntity? params]) async {
     try {
       if (params == null) {
-        throw ErrorHandler('params cannot be null', {
-          ErrorType.typeError,
-        });
+        throw Exception(
+          'params cannot be null',
+        );
       }
       await _repository.addForm(
         params,

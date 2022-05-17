@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:isar/isar.dart';
 
 import '../../../../core/contracts/interfaces/data_source/db_data_source_base.dart';
@@ -50,7 +47,6 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
       sortedProps.sort((a, b) => a.index.compareTo(b.index));
       item.fields = sortedProps.toSet();
     }
-    log(jsonEncode(items));
     return items.map((e) => e.castToModel()).toList();
   }
 

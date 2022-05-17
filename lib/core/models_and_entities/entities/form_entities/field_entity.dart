@@ -1,5 +1,3 @@
-import 'package:isar/isar.dart';
-
 import '../../../../../core/contracts/typedefs/form_enums/field_types.dart';
 import '../../../contracts/interfaces/base_entity/base_entity.dart';
 

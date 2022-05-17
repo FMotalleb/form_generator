@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
-
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../repositories/form_manager_interface.dart';
@@ -11,7 +9,7 @@ class GetAllItemsUsecases with EquatableMixin implements BaseUsecases<void, void
     this._repository,
   );
   @override
-  Future<DataSnapHandler<List<FormEntity>>> execute([void params]) async {
+  Future<List<FormEntity>> execute([void params]) async {
     final result = await _repository.getAllForms();
     for (final item in result) {
       final tempList = item.fields.toList();
@@ -21,15 +19,9 @@ class GetAllItemsUsecases with EquatableMixin implements BaseUsecases<void, void
       item.fields = tempList.toSet();
     }
     try {
-      return DataSnapHandler.done(
-        data: result,
-        sender: GetAllItemsUsecases,
-      );
+      return result;
     } catch (e, st) {
-      return DataSnapHandler.error(
-        exception: e,
-        sender: st,
-      );
+      rethrow;
     }
   }
 

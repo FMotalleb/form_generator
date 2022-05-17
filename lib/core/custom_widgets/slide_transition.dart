@@ -28,8 +28,8 @@ class ScaledSlideAnimation extends StatefulWidget {
   ScaledSlideAnimation({
     Key? key,
     required this.child,
-    required this.beginOffset,
-    required this.endOffset,
+    this.beginOffset = Offset.zero,
+    this.endOffset = Offset.zero,
     this.scaleDuration = const Duration(milliseconds: 500),
     this.slideDuration = const Duration(milliseconds: 500),
     this.scaleCurve = Curves.decelerate,
