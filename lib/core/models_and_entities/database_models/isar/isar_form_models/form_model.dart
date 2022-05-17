@@ -10,13 +10,16 @@ part 'form_model.g.dart';
 class IsarFormModel extends FormModel {
   IsarLinks<IsarFormField> isarFields = IsarLinks<IsarFormField>();
 
+  @Id()
+  @override
+  int id;
   IsarFormModel({
-    required super.id,
+    required this.id,
     required super.index,
     super.title = '',
     super.description = '',
     Set<IsarFormField> fields = const {},
-  }) {
+  }) : super(id: id) {
     isarFields.addAll(fields);
   }
   @override
@@ -24,22 +27,10 @@ class IsarFormModel extends FormModel {
 
   @override
   FormEntity castToEntity() {
-    return FormEntity(
-      id: id,
-      index: index,
-      title: title,
-      description: description,
-      fields: isarFields.map((e) => e.castToEntity()).toSet(),
-    );
+    return this;
   }
 
   FormModel castToModel() {
-    return FormModel(
-      id: id,
-      index: index,
-      title: title,
-      description: description,
-      fields: isarFields.map((e) => e.castToEntity()).toSet(),
-    );
+    return this;
   }
 }

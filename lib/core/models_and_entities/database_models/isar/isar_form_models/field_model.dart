@@ -13,19 +13,12 @@ class IsarFormField extends FormFieldModel with EquatableMixin {
   @override
   @FieldTypeConverter()
   FieldType type;
-
-  FormFieldModel get asModel => FormFieldModel(
-        id: id,
-        key: key,
-        index: index,
-        type: type,
-        label: label,
-        hint: hint,
-        error: error,
-        isValid: isValid,
-      );
+  @Id()
+  @override
+  int id;
+  FormFieldModel get asModel => this;
   IsarFormField({
-    required super.id,
+    required this.id,
     super.key = '',
     required super.index,
     this.type = FieldType.int,
@@ -33,5 +26,5 @@ class IsarFormField extends FormFieldModel with EquatableMixin {
     super.hint = '',
     super.error = '',
     super.isValid = '',
-  });
+  }) : super(id: id);
 }

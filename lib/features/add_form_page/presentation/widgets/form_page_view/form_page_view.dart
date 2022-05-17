@@ -12,9 +12,11 @@ class FormPageView extends StatefulWidget {
     Key? key,
     required this.boundForm,
     required this.onFormChanged,
+    required this.onFormRemoved,
   }) : super(key: key);
   final FormEntity boundForm;
   final void Function(FormEntity) onFormChanged;
+  final void Function(FormEntity) onFormRemoved;
   @override
   State<FormPageView> createState() => _FormPageViewState();
 }
@@ -42,95 +44,131 @@ class _FormPageViewState extends State<FormPageView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return SizedBox(
-      width: 360,
-      height: 640,
-      child: Card(
-        clipBehavior: theme.cardTheme.clipBehavior,
-        elevation: theme.cardTheme.elevation,
-        margin: theme.cardTheme.margin,
-        shape: theme.cardTheme.shape,
-        shadowColor: theme.cardTheme.shadowColor,
-        surfaceTintColor: theme.cardTheme.surfaceTintColor,
-        color: theme.cardTheme.color,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ListView(
-            children: [
-              TextField(
-                controller: _titleController,
-                style: theme.primaryTextTheme.displaySmall,
-                decoration: InputDecoration(
-                  border: theme.inputDecorationTheme.border,
-                ),
-              ),
-              ..._boundForm.fields.map(
-                (e) => ScaledSlideAnimation(
-                  beginOffset: const Offset(0.5, 0),
-                  endOffset: Offset.zero,
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Remove this field?'),
-                          content: const Text(
-                            'Are you sure you want to remove this field?',
-                          ),
-                          actions: [
-                            ElevatedButton(
-                              child: const Text('Yes'),
-                              onPressed: () {
-                                setState(() {
-                                  _boundForm.fields.remove(e);
-                                });
-                                widget.onFormChanged(_boundForm);
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            ElevatedButton(
-                              child: const Text('No'),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    child: Text(
-                      e.label,
+    return Stack(
+      children: [
+        SizedBox(
+          width: 360,
+          height: 640,
+          child: Card(
+            clipBehavior: theme.cardTheme.clipBehavior,
+            elevation: theme.cardTheme.elevation,
+            margin: theme.cardTheme.margin,
+            shape: theme.cardTheme.shape,
+            shadowColor: theme.cardTheme.shadowColor,
+            surfaceTintColor: theme.cardTheme.surfaceTintColor,
+            color: theme.cardTheme.color,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ListView(
+                children: [
+                  TextField(
+                    controller: _titleController,
+                    style: theme.primaryTextTheme.displaySmall,
+                    decoration: InputDecoration(
+                      border: theme.inputDecorationTheme.border,
                     ),
                   ),
-                ),
+                  ..._boundForm.fields.map(
+                    (e) => createFieldView(theme, context, e),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        final index = _boundForm.fields.isEmpty
+                            ? 0
+                            : (_boundForm.fields.toList()..sort((a, b) => a.index.compareTo(b.index))).last.index + 1;
+                        _boundForm.fields = {
+                          ..._boundForm.fields,
+                          field_entity.FormFieldEntity(
+                            id: int.parse(
+                              '${_boundForm.id}${Random.secure().nextInt(9999999)}',
+                            ),
+                            index: index,
+                            label: 'New Field $index',
+                            type: FieldType.values[Random().nextInt(FieldType.values.length)],
+                            error: '',
+                            hint: '',
+                            isValid: '',
+                            key: 'randomNess',
+                          ),
+                        };
+                      });
+                      widget.onFormChanged(_boundForm);
+                    },
+                    child: const Text('Add Field'),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    final index =
-                        (_boundForm.fields.toList()..sort((a, b) => a.index.compareTo(b.index))).last.index + 1;
-                    _boundForm.fields = {
-                      ..._boundForm.fields,
-                      field_entity.FormFieldEntity(
-                        id: int.parse(
-                          '${_boundForm.id}${Random.secure().nextInt(9999999)}',
-                        ),
-                        index: index,
-                        label: 'New Field $index',
-                        type: FieldType.select,
-                        error: '',
-                        hint: '',
-                        isValid: 'number',
-                        key: 'randomNess',
-                      ),
-                    };
-                  });
-                  widget.onFormChanged(_boundForm);
-                },
-                child: const Text('Add Field'),
-              ),
-            ],
+            ),
+            // borderOnForeground: true,
           ),
         ),
-        // borderOnForeground: true,
+        Positioned(
+          child: GestureDetector(
+            onTap: () {
+              widget.onFormRemoved(_boundForm);
+            },
+            child: const DecoratedBox(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(146, 253, 12, 12),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: Icon(
+                Icons.close,
+                size: 25,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  ScaledSlideAnimation createFieldView(
+    ThemeData theme,
+    BuildContext context,
+    field_entity.FormFieldEntity e,
+  ) {
+    return ScaledSlideAnimation(
+      beginOffset: const Offset(0.5, 0),
+      endOffset: Offset.zero,
+      child: ListTile(
+        shape: theme.listTileTheme.shape,
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Remove this field?'),
+              content: const Text(
+                'Are you sure you want to remove this field?',
+              ),
+              actions: [
+                ElevatedButton(
+                  child: const Text('Yes'),
+                  onPressed: () {
+                    setState(() {
+                      _boundForm.fields.remove(e);
+                    });
+                    widget.onFormChanged(_boundForm);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('No'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          );
+        },
+        leading: Icon(
+          e.type.icon,
+        ),
+        title: Text(
+          e.label,
+        ),
       ),
     );
   }

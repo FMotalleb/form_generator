@@ -5,7 +5,6 @@ import 'field_entity.dart';
 
 // ignore: must_be_immutable
 class FormEntity extends BaseEntity {
-  @Id()
   int id;
   int index;
   String title;

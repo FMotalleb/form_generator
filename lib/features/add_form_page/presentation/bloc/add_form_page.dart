@@ -24,6 +24,11 @@ part 'add_form_page_state.dart';
 /// {@endtemplate}
 class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
   Set<FormEntity> forms;
+  List<FormEntity> get sortedForms {
+    final list = forms.toList();
+    list.sort((a, b) => a.index.compareTo(b.index));
+    return list;
+  }
 
   final FormManagerInterface _formManager;
   AddNewFormUseCases get _addNewFormUsecases => AddNewFormUseCases(
@@ -47,15 +52,17 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       : forms = {},
         super(AddFormPageStateInitial()) {
     on<AddNewFormEvent>((event, emit) async {
+      final index = forms.isEmpty ? 0 : sortedForms.last.index + 1;
       final newForm = FormEntity(
-        id: Random.secure().nextInt(99999999),
-        index: forms.length,
-        title: 'test form ${forms.length + 1}',
+        id: Random().nextInt(999999999),
+        index: index,
+        title: 'test form $index',
       );
       forms = {
         ...forms,
         newForm,
       };
+      print(newForm);
       _addNewFormUsecases.execute(newForm).then(
             (value) => value.singleActOnFinished(
               onDone: (d) {
@@ -67,7 +74,25 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
             ),
           );
 
-      emit(AddFormPageStateValue(forms: forms.toList()));
+      emit(AddFormPageStateValue(forms: sortedForms));
+    });
+    on<RemoveSpecifiedFormEvent>((event, emit) async {
+      final item = event.form;
+      forms = forms.where((element) => element.id != item.id).toSet();
+      _deleteFormUsecases.execute(item).then(
+            (value) => value.singleActOnFinished(
+              onDone: (d) {
+                'delete last finished'.log();
+              },
+              onError: (e) {
+                'delete last error'.log(
+                  error: e,
+                  stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
+                );
+              },
+            ),
+          );
+      emit(AddFormPageStateValue(forms: sortedForms));
     });
     on<RemoveLastFormEvent>((event, emit) async {
       if (forms.isNotEmpty) {
@@ -86,18 +111,18 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
                 },
               ),
             );
-        emit(AddFormPageStateValue(forms: forms.toList()));
+        emit(AddFormPageStateValue(forms: sortedForms));
       }
     });
     on<LoadDataFromDataBaseEvent>(
       (event, emit) async {
         forms = {};
-        emit(AddFormPageStateValue(forms: forms.toList()));
+        emit(AddFormPageStateValue(forms: sortedForms));
         final value = await _getAllFormsUsecases.execute();
         value.singleActOnFinished(
           onDone: (d) {
             forms = d!.toSet();
-            emit(AddFormPageStateValue(forms: forms.toList()));
+            emit(AddFormPageStateValue(forms: sortedForms));
           },
           onError: (e) {
             'error loading all items'.log(
@@ -113,7 +138,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         await _deleteAllUsecases.execute();
         forms.clear();
 
-        emit(AddFormPageStateValue(forms: forms.toList()));
+        emit(AddFormPageStateValue(forms: sortedForms));
       },
     );
 
@@ -141,6 +166,8 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         }
       },
     );
+
+    add(const LoadDataFromDataBaseEvent());
   }
 }
 

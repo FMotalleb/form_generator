@@ -74,15 +74,6 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
   }
   @override
   FormFieldEntity castToEntity() {
-    return FormFieldEntity(
-      id: id,
-      index: index,
-      error: error,
-      hint: hint,
-      isValid: isValid,
-      key: key,
-      label: label,
-      type: type,
-    );
+    return this;
   }
 }

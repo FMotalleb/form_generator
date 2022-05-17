@@ -38,22 +38,25 @@ class AddFormView extends StatelessWidget {
             if (state is AddFormPageStateValue && state.forms.isNotEmpty) {
               return SingleChildScrollView(
                 child: Wrap(
-                  children: state.forms
-                      .map(
-                        (e) => ScaledSlideAnimation(
-                          beginOffset: const Offset(0, 0.5),
-                          endOffset: Offset.zero,
-                          child: FormPageView(
-                            boundForm: e,
-                            onFormChanged: (form) {
-                              context.read<AddFormBloc>().add(
-                                    EditFormEvent(form),
-                                  );
-                            },
-                          ),
+                  // key: ValueKey(state.forms.hashCode),
+                  children: state.forms.map(
+                    (e) {
+                      return ScaledSlideAnimation(
+                        key: ValueKey(e.id),
+                        beginOffset: const Offset(0, 0.5),
+                        endOffset: Offset.zero,
+                        child: FormPageView(
+                          boundForm: e,
+                          onFormRemoved: (form) => context.read<AddFormBloc>().add(
+                                RemoveSpecifiedFormEvent(form),
+                              ),
+                          onFormChanged: (form) => context.read<AddFormBloc>().add(
+                                EditFormEvent(form),
+                              ),
                         ),
-                      )
-                      .toList(),
+                      );
+                    },
+                  ).toList(),
                 ),
               );
             } else {

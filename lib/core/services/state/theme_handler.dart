@@ -61,6 +61,11 @@ class ThemeCubit extends Cubit<ThemeData> {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
     ),
+    listTileTheme: const ListTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+    ),
     brightness: Brightness.dark,
   );
 

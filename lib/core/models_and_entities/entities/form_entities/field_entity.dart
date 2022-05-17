@@ -5,7 +5,6 @@ import '../../../contracts/interfaces/base_entity/base_entity.dart';
 
 // ignore: must_be_immutable
 class FormFieldEntity extends BaseEntity {
-  @Id()
   int id;
   int index;
   String key;

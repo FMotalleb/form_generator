@@ -99,12 +99,6 @@ class FormModel extends FormEntity implements BaseModel {
 
   @override
   FormEntity castToEntity() {
-    return FormEntity(
-      id: id,
-      index: index,
-      title: title,
-      description: description,
-      fields: fields.map((e) => e).toSet(),
-    );
+    return this;
   }
 }

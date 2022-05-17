@@ -43,3 +43,10 @@ class SyncFormsWithDataBaseEvent extends AddFormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class RemoveSpecifiedFormEvent extends AddFormEvent {
+  final FormEntity form;
+  const RemoveSpecifiedFormEvent(this.form);
+  @override
+  List<Object> get props => [form];
+}

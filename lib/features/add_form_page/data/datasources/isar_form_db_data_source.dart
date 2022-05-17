@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:isar/isar.dart';
 
 import '../../../../core/contracts/interfaces/data_source/db_data_source_base.dart';
@@ -23,7 +26,7 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
             whereClauses: [
               IdWhereClause.equalTo(value: field.id),
             ],
-          ).deleteAll();
+          ).deleteFirst();
         },
       );
     }
@@ -40,38 +43,27 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
 
   @override
   Future<List<FormModel>> getAllItems() async {
-    final items = await _isar.txn(
-      (isar) async {
-        return isar.isarFormModels.buildQuery<IsarFormModel>().findAll();
-      },
-    );
+    final items = await _isar.isarFormModels.where().findAll();
     for (final item in items) {
-      await _isar.txn((isar) async {
-        await item.isarFields.load();
-      });
+      await item.isarFields.load();
       final sortedProps = item.isarFields.toList();
       sortedProps.sort((a, b) => a.index.compareTo(b.index));
       item.fields = sortedProps.toSet();
     }
+    log(jsonEncode(items));
     return items.map((e) => e.castToModel()).toList();
   }
 
   @override
   Future<FormModel?> getItemById(int id) async {
-    final item = await _isar.txn(
-      (isar) async {
-        return isar.isarFormModels.buildQuery<IsarFormModel>(
-          whereClauses: [
-            IdWhereClause.equalTo(value: id),
-          ],
-        ).findFirst();
-      },
-    );
+    final item = await _isar.isarFormModels.buildQuery<IsarFormModel>(
+      whereClauses: [
+        IdWhereClause.equalTo(value: id),
+      ],
+    ).findFirst();
 
     if (item != null) {
-      await _isar.txn((isar) async {
-        await item.isarFields.load();
-      });
+      await item.isarFields.load();
       item.fields = item.isarFields.toSet();
     }
     return item?.castToModel();
@@ -96,7 +88,6 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
         (isar) async {
           await _isar.isarFormFields.putAll(
             fields,
-            replaceOnConflict: true,
             saveLinks: true,
           );
         },
@@ -120,12 +111,12 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   Future<void> deleteAllItems() async {
     await _isar.writeTxn(
       (isar) async {
-        await isar.isarFormFields.buildQuery().deleteAll();
+        await isar.isarFormFields.where().deleteAll();
       },
     );
     await _isar.writeTxn(
       (isar) async {
-        await isar.isarFormModels.buildQuery().deleteAll();
+        await isar.isarFormModels.where().deleteAll();
       },
     );
   }
