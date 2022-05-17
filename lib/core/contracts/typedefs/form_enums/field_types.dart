@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum FieldType {
-  int(Icons.onetwothree_rounded),
-  double(Icons.onetwothree_rounded),
+  number(Icons.onetwothree_rounded),
   select(Icons.radio_button_off),
   string(Icons.abc_rounded),
   // ignore: constant_identifier_names

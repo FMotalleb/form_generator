@@ -16,7 +16,7 @@ class FormFieldEntity extends BaseEntity {
     required this.id,
     required this.key,
     required this.index,
-    this.type = FieldType.int,
+    this.type = FieldType.number,
     required this.label,
     required this.hint,
     required this.error,

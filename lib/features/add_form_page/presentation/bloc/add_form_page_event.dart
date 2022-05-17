@@ -12,15 +12,11 @@ class AddNewFormEvent extends AddFormEvent {
   List<Object> get props => [];
 }
 
-/// Notifies bloc to decrement state.
-class RemoveLastFormEvent extends AddFormEvent {
-  const RemoveLastFormEvent();
-  @override
-  List<Object> get props => [];
-}
-
 class LoadDataFromDataBaseEvent extends AddFormEvent {
-  const LoadDataFromDataBaseEvent();
+  final bool forcedRefresh;
+  const LoadDataFromDataBaseEvent({
+    this.forcedRefresh = true,
+  });
   @override
   List<Object?> get props => [];
 }

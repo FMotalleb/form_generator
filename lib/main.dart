@@ -32,7 +32,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ThemeCubit(),
+      create: (_) => GetIt.I.get<ThemeCubit>(),
       child: const AppView(),
     );
   }

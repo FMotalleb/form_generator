@@ -1,7 +1,9 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../features/add_form_page/presentation/bloc/add_form_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ThemeCubit extends Cubit<ThemeData> {
   /// {@macro brightness_cubit}
@@ -9,11 +11,12 @@ class ThemeCubit extends Cubit<ThemeData> {
 
   static final _lightTheme = ThemeData(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      foregroundColor: Colors.white,
+      shape: RoundedRectangleBorder(),
+      extendedPadding: EdgeInsets.zero,
     ),
     primaryTextTheme: const TextTheme(
       displaySmall: TextStyle(
-        color: Color.fromARGB(235, 27, 27, 27),
+        color: Color.fromARGB(255, 27, 27, 27),
       ),
     ),
     cardTheme: const CardTheme(
@@ -36,6 +39,12 @@ class ThemeCubit extends Cubit<ThemeData> {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(
+          GoogleFonts.lato(
+            fontWeight: FontWeight.w700,
+            color: Colors.white.withOpacity(0.87),
+          ),
+        ),
         overlayColor: MaterialStateProperty.resolveWith((states) {
           if (states.contains(MaterialState.pressed)) {
             return const Color.fromARGB(55, 195, 248, 175);
@@ -57,12 +66,23 @@ class ThemeCubit extends Cubit<ThemeData> {
         elevation: MaterialStateProperty.all(10),
       ),
     ),
+    listTileTheme: const ListTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+    ),
     brightness: Brightness.light,
   );
-
   static final _darkTheme = ThemeData(
+    primaryTextTheme: const TextTheme(
+      displaySmall: TextStyle(
+        color: Color.fromARGB(255, 255, 255, 255),
+      ),
+    ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      foregroundColor: Colors.black,
+      // foregroundColor: Color(0xFF000000),
+      shape: RoundedRectangleBorder(),
+      extendedPadding: EdgeInsets.zero,
     ),
     cardTheme: const CardTheme(
       clipBehavior: Clip.antiAlias,
@@ -76,21 +96,22 @@ class ThemeCubit extends Cubit<ThemeData> {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all(
-          const TextStyle(
-            color: Colors.black,
+          GoogleFonts.lato(
+            fontWeight: FontWeight.w700,
+            color: Colors.black87,
           ),
         ),
-        overlayColor: _materialStatePropForElevatedBtn(
+        overlayColor: materialStatePropForElevatedBtn(
           onPressed: const Color.fromARGB(48, 169, 255, 251),
           onHovered: const Color.fromARGB(6, 121, 243, 252),
           byDefault: null,
         ),
-        backgroundColor: _materialStatePropForElevatedBtn(
+        backgroundColor: materialStatePropForElevatedBtn(
           onPressed: const Color.fromARGB(255, 255, 255, 255),
           onHovered: const Color.fromARGB(255, 224, 224, 224),
           byDefault: const Color.fromARGB(255, 189, 189, 189),
         ),
-        elevation: _materialStatePropForElevatedBtn(
+        elevation: materialStatePropForElevatedBtn(
           onPressed: 5,
           onHovered: 15,
           byDefault: 10,
@@ -120,15 +141,16 @@ class ThemeCubit extends Cubit<ThemeData> {
     ),
     brightness: Brightness.dark,
   );
+  ThemeData get getCurrentTheme => state.brightness == Brightness.dark ? _darkTheme : _lightTheme;
 
   /// Toggles the current brightness between light and dark.
   void toggleTheme() {
-    infoSnackbar('theme changed').show();
+    // infoSnackbar('theme changed').show();
     emit(state.brightness == Brightness.dark ? _lightTheme : _darkTheme);
   }
 }
 
-MaterialStateProperty<T> _materialStatePropForElevatedBtn<T>({
+MaterialStateProperty<T> materialStatePropForElevatedBtn<T>({
   required T byDefault,
   required T onPressed,
   required T onHovered,

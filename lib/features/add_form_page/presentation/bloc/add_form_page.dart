@@ -3,10 +3,12 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hemend/debug/logger.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
+import '../../../../core/services/state/theme_handler.dart';
 import '../../../../get_it_registrant.dart';
 import '../../domain/repositories/form_manager_interface.dart';
 import '../../domain/usecases/add_new_form_usecases.dart';
@@ -14,6 +16,7 @@ import '../../domain/usecases/delete_all_forms_usecases.dart';
 import '../../domain/usecases/delete_form_usecases.dart';
 import '../../domain/usecases/edit_form_usecases.dart';
 import '../../domain/usecases/get_all_forms_usecases.dart';
+import '../widgets/form_page_view/popups/remove_form_dialog.dart';
 
 part 'add_form_page_event.dart';
 part 'add_form_page_state.dart';
@@ -77,27 +80,15 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     });
     on<RemoveSpecifiedFormEvent>((event, emit) async {
       final item = event.form;
-      forms = forms.where((element) => element.id != item.id).toSet();
-      _deleteFormUsecases.execute(item).then(
-            (value) => value.singleActOnFinished(
-              onDone: (d) {
-                'delete last finished'.log();
-              },
-              onError: (e) {
-                'delete last error'.log(
-                  error: e,
-                  stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
-                );
-              },
-            ),
-          );
-      emit(AddFormPageStateValue(forms: sortedForms));
-    });
-    on<RemoveLastFormEvent>((event, emit) async {
-      if (forms.isNotEmpty) {
-        final lastItem = forms.last;
-        forms = forms.where((element) => element.id != lastItem.id).toSet();
-        _deleteFormUsecases.execute(lastItem).then(
+      final permission = await noContextDialog(
+        builder: (p1) => RemoveFormView(
+          form: item,
+          theme: GetIt.I.get<ThemeCubit>().getCurrentTheme,
+        ),
+      );
+      if (permission == true) {
+        forms = forms.where((element) => element.id != item.id).toSet();
+        _deleteFormUsecases.execute(item).then(
               (value) => value.singleActOnFinished(
                 onDone: (d) {
                   'delete last finished'.log();
@@ -113,10 +104,13 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         emit(AddFormPageStateValue(forms: sortedForms));
       }
     });
+
     on<LoadDataFromDataBaseEvent>(
       (event, emit) async {
         forms = {};
-        emit(AddFormPageStateValue(forms: sortedForms));
+        if (event.forcedRefresh) {
+          emit(AddFormPageStateValue(forms: sortedForms));
+        }
         final value = await _getAllFormsUsecases.execute();
         value.singleActOnFinished(
           onDone: (d) {
@@ -144,6 +138,11 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     on<EditFormEvent>(
       (event, emit) async {
         final result = await _editFormUsecases.execute(event.form);
+        final selectedForm = forms.firstWhere((element) => event.form.id == element.id);
+        selectedForm.title = event.form.title;
+        selectedForm.fields = event.form.fields;
+        selectedForm.description = event.form.description;
+        // emit(AddFormPageStateValue(forms: sortedForms));
         result.singleActOnFinished(
           onDone: (d) {
             'edit form finished'.log();
@@ -166,7 +165,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       },
     );
 
-    add(const LoadDataFromDataBaseEvent());
+    add(const LoadDataFromDataBaseEvent(forcedRefresh: false));
   }
 }
 

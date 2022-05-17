@@ -11,7 +11,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
     required super.id,
     required super.index,
     super.key = '',
-    super.type = FieldType.int,
+    super.type = FieldType.number,
     super.label = '',
     super.hint = '',
     super.error = '',
@@ -74,6 +74,14 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
   }
   @override
   FormFieldEntity castToEntity() {
-    return this;
+    return FormFieldEntity(
+      id: id,
+      key: key,
+      index: index,
+      label: label,
+      hint: hint,
+      error: error,
+      isValid: isValid,
+    );
   }
 }

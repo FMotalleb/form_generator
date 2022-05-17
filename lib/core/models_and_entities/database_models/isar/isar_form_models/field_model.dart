@@ -21,7 +21,7 @@ class IsarFormField extends FormFieldModel with EquatableMixin {
     required this.id,
     super.key = '',
     required super.index,
-    this.type = FieldType.int,
+    this.type = FieldType.number,
     super.label = '',
     super.hint = '',
     super.error = '',

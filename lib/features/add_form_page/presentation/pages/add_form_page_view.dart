@@ -41,9 +41,11 @@ class AddFormView extends StatelessWidget {
                   // key: ValueKey(state.forms.hashCode),
                   children: state.forms.map(
                     (e) {
-                      return ScaledSlideAnimation(
-                        key: ValueKey(e.id),
-                        beginOffset: const Offset(0, 0.5),
+                      return FadedSlideAnimation(
+                        key: ValueKey(
+                          e.id,
+                        ),
+                        // beginOffset: const Offset(0, 0.5),
                         child: FormPageView(
                           boundForm: e,
                           onFormRemoved: (form) => context.read<AddFormBloc>().add(
@@ -67,46 +69,60 @@ class AddFormView extends StatelessWidget {
           },
         ),
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+            ),
             child: const Icon(Icons.add),
             onPressed: () {
               context.read<AddFormBloc>().add(const AddNewFormEvent());
             },
           ),
-          const SizedBox(height: 4),
-          FloatingActionButton(
-            child: const Icon(Icons.remove),
-            onPressed: () {
-              context.read<AddFormBloc>().add(const RemoveLastFormEvent());
-            },
-          ),
-          const SizedBox(height: 4),
+          // const SizedBox(height: 4),
+          // FloatingActionButton(
+          //   child: const Icon(Icons.remove),
+          //   onPressed: () {
+          //     context.read<AddFormBloc>().add(const RemoveLastFormEvent());
+          //   },
+          // ),
+          // const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.brightness_6),
             onPressed: () {
               context.read<ThemeCubit>().toggleTheme();
             },
           ),
-          const SizedBox(height: 4),
+          // const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.sync),
             onPressed: () {
               context.read<AddFormBloc>().add(const SyncFormsWithDataBaseEvent());
             },
           ),
-          const SizedBox(height: 4),
+          // const SizedBox(height: 4),
           FloatingActionButton(
             child: const Icon(Icons.open_in_browser),
             onPressed: () {
               context.read<AddFormBloc>().add(const LoadDataFromDataBaseEvent());
             },
           ),
-          const SizedBox(height: 4),
+          // const SizedBox(height: 4),
           FloatingActionButton(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+            ),
             child: const Icon(Icons.delete),
             onPressed: () {
               context.read<AddFormBloc>().add(const DeleteDataBaseEvent());

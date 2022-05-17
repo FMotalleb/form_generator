@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart' as path_provider;
 
 import 'core/models_and_entities/database_models/isar/isar_form_models/field_model.dart';
 import 'core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
+import 'core/services/state/theme_handler.dart';
 import 'features/add_form_page/data/datasources/isar_form_db_data_source.dart';
 import 'features/add_form_page/data/repositories/form_manager_repo.dart';
 import 'features/add_form_page/domain/repositories/form_manager_interface.dart';
@@ -21,7 +22,7 @@ Future<void> registerDependencies() async {
   //   baseUrl: baseUrl,
   // );
   // GetIt.I.registerSingleton(httpRequestHandler);
-
+  GetIt.I.registerSingleton(ThemeCubit());
   final isarDbSchemas = [
     IsarFormFieldSchema,
     IsarFormModelSchema,
