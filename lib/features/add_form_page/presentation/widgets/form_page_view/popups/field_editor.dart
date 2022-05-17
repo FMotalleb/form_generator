@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/contracts/typedefs/form_enums/field_types.dart';
 import '../../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
-import '../../../../../../core/models_and_entities/models/form_models/field_model.dart';
 import '../../../../../../core/services/state/theme_handler.dart';
 
 class FieldEditorPopup extends StatefulWidget {
@@ -102,6 +103,32 @@ class _FieldEditorPopupState extends State<FieldEditorPopup> {
                     ),
                   ),
                 ),
+                CupertinoSlidingSegmentedControl<FieldType>(
+                  groupValue: _field.type,
+                  onValueChanged: (value) {
+                    setState(() {
+                      _field.type = value!;
+                    });
+                  },
+                  children: Map.fromEntries(
+                    FieldType.values.map(
+                      (e) => MapEntry(
+                        e,
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Icon(
+                            e.icon,
+                            size: 29,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Expanded(child: SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -135,17 +162,14 @@ class _FieldEditorPopupState extends State<FieldEditorPopup> {
                         Navigator.of(context).pop(null);
                       },
                     ),
-                    ElevatedButtonTheme(
-                      data: widget.theme.elevatedButtonTheme,
-                      child: ElevatedButton(
-                        child: Text(
-                          'Save',
-                          style: widget.theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(_field);
-                        },
+                    ElevatedButton(
+                      child: Text(
+                        'Save',
+                        style: widget.theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                       ),
+                      onPressed: () {
+                        Navigator.of(context).pop(_field);
+                      },
                     )
                   ],
                 ),

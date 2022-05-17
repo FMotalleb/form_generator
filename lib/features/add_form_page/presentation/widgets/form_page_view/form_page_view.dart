@@ -7,7 +7,6 @@ import '../../../../../core/custom_widgets/slide_transition.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart' as field_entity;
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
-import '../../../../../core/services/state/theme_handler.dart';
 import 'popups/field_editor.dart';
 
 class FormPageView extends StatefulWidget {
@@ -156,36 +155,41 @@ class _FormPageViewState extends State<FormPageView> {
     BuildContext context,
     field_entity.FormFieldEntity e,
   ) {
-    return FadedSlideAnimation(
-      child: ListTile(
-        key: ValueKey(e),
-        shape: theme.listTileTheme.shape,
-        onTap: () async {
-          if (widget.displayOnly) return;
-          final resultField = await showDialog<FormFieldEntity>(
-            context: context,
-            builder: (context) => FieldEditorPopup(
-              field: e,
-              theme: theme,
-            ),
-          );
-          if (resultField == null) {
-            _boundForm.fields.remove(e);
-          }
-          _callNullableFunction(widget.onFormChanged, _boundForm);
-          setState(() {});
-        },
-        leading: Icon(
-          e.type.icon,
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 10,
+      ),
+      child: FadedSlideAnimation(
+        child: ListTile(
+          key: ValueKey(e),
+          shape: theme.listTileTheme.shape,
+          onTap: () async {
+            if (widget.displayOnly) return;
+            final resultField = await showDialog<FormFieldEntity>(
+              context: context,
+              builder: (context) => FieldEditorPopup(
+                field: e,
+                theme: theme,
+              ),
+            );
+            if (resultField == null) {
+              _boundForm.fields.remove(e);
+            }
+            _callNullableFunction(widget.onFormChanged, _boundForm);
+            setState(() {});
+          },
+          leading: Icon(
+            e.type.icon,
+          ),
+          title: Text(
+            e.label,
+          ),
+          subtitle: e.hint.isNotEmpty
+              ? Text(
+                  e.hint,
+                )
+              : null,
         ),
-        title: Text(
-          e.label,
-        ),
-        subtitle: e.hint.isNotEmpty
-            ? Text(
-                e.hint,
-              )
-            : null,
       ),
     );
   }
