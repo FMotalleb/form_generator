@@ -24,15 +24,9 @@ class AddNewFormUseCases with EquatableMixin implements BaseUsecases<void, FormE
       await _repository.addForm(
         params,
       );
-      return const DataSnapHandler<bool>.done(
-        data: true,
-        sender: AddNewFormUseCases,
-      );
+      return;
     } catch (e, st) {
-      return DataSnapHandler.error(
-        exception: e,
-        sender: st,
-      );
+      rethrow;
     }
   }
 

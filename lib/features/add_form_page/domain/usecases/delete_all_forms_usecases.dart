@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../repositories/form_manager_interface.dart';
