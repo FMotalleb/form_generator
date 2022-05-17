@@ -85,27 +85,7 @@ class _FormPageViewState extends State<FormPageView> {
                     if (!widget.displayOnly)
                       ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            final index = _boundForm.fields.isEmpty
-                                ? 0
-                                : (_boundForm.fields.toList()..sort((a, b) => a.index.compareTo(b.index))).last.index +
-                                    1;
-                            _boundForm.fields = {
-                              ..._boundForm.fields,
-                              field_entity.FormFieldEntity(
-                                id: int.parse(
-                                  '${_boundForm.id}${Random.secure().nextInt(9999999)}',
-                                ),
-                                index: index,
-                                label: 'New Field $index',
-                                type: FieldType.NULL,
-                                error: '',
-                                hint: '',
-                                isValid: '',
-                                key: '',
-                              ),
-                            };
-                          });
+                          setState(addField);
                           _callNullableFunction(widget.onFormChanged, _boundForm);
                         },
                         style: theme.elevatedButtonTheme.style,
@@ -148,6 +128,27 @@ class _FormPageViewState extends State<FormPageView> {
           )
       ],
     );
+  }
+
+  void addField() {
+    final index = _boundForm.fields.isEmpty
+        ? 0
+        : (_boundForm.fields.toList()..sort((a, b) => a.index.compareTo(b.index))).last.index + 1;
+    _boundForm.fields = {
+      ..._boundForm.fields,
+      field_entity.FormFieldEntity(
+        id: int.parse(
+          '${_boundForm.id}${Random.secure().nextInt(9999999)}',
+        ),
+        index: index,
+        label: 'New Field $index',
+        type: FieldType.NULL,
+        error: '',
+        hint: '',
+        isValid: '',
+        key: StringToolkit.getRandomString(15),
+      ),
+    };
   }
 
   Widget createFieldView(
@@ -193,4 +194,12 @@ class _FormPageViewState extends State<FormPageView> {
       ),
     );
   }
+}
+
+abstract class StringToolkit {
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static final _rnd = Random.secure();
+
+  static String getRandomString(int length) =>
+      String.fromCharCodes(Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 }
