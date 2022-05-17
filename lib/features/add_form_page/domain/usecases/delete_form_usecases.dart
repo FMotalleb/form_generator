@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:hemend/debug/error_handler.dart';
+import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
@@ -10,17 +12,23 @@ class DeleteFormUsecases with EquatableMixin implements BaseUsecases<void, FormE
   final FormManagerInterface _repository;
   const DeleteFormUsecases(this._repository);
   @override
-  Future<void> execute([FormEntity? params]) async {
+  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
     try {
       if (params == null) {
-        throw Exception(
-          'params cannot be null',
-        );
+        throw ErrorHandler('params cannot be null', {
+          ErrorType.typeError,
+        });
       }
       await _repository.deleteForm(params);
-      return;
+      return const DataSnapHandler<bool>.done(
+        data: true,
+        sender: DeleteFormUsecases,
+      );
     } catch (e, st) {
-      rethrow;
+      return DataSnapHandler.error(
+        exception: e,
+        sender: st,
+      );
     }
   }
 

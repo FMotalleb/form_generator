@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hemend/debug/logger.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../../../../get_it_registrant.dart';
@@ -61,58 +62,54 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         newForm,
       };
       print(newForm);
-      await _addNewFormUsecases.execute(newForm);
-      // .then(
-      //       (value) => value.singleActOnFinished(
-      //         onDone: (d) {
-      //           'add new form finished'.log();
-      //         },
-      //         onError: (e) {
-      //           'add new form error'.log();
-      //         },
-      //       ),
-      //     );
+      _addNewFormUsecases.execute(newForm).then(
+            (value) => value.singleActOnFinished(
+              onDone: (d) {
+                'add new form finished'.log();
+              },
+              onError: (e) {
+                'add new form error'.log();
+              },
+            ),
+          );
 
       emit(AddFormPageStateValue(forms: sortedForms));
     });
     on<RemoveSpecifiedFormEvent>((event, emit) async {
       final item = event.form;
       forms = forms.where((element) => element.id != item.id).toSet();
-      await _deleteFormUsecases.execute(item);
-      // .then(
-      //       (value) => value.singleActOnFinished(
-      //         onDone: (d) {
-      //           'delete last finished'.log();
-      //         },
-      //         onError: (e) {
-      //           'delete last error'.log(
-      //             error: e,
-      //             stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
-      //           );
-      //         },
-      //       ),
-      // );
+      _deleteFormUsecases.execute(item).then(
+            (value) => value.singleActOnFinished(
+              onDone: (d) {
+                'delete last finished'.log();
+              },
+              onError: (e) {
+                'delete last error'.log(
+                  error: e,
+                  stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
+                );
+              },
+            ),
+          );
       emit(AddFormPageStateValue(forms: sortedForms));
     });
     on<RemoveLastFormEvent>((event, emit) async {
       if (forms.isNotEmpty) {
         final lastItem = forms.last;
         forms = forms.where((element) => element.id != lastItem.id).toSet();
-        await _deleteFormUsecases.execute(lastItem);
-        // .then(
-        //       (value) => print(value)
-        //       value.singleActOnFinished(
-        //         onDone: (d) {
-        //           'delete last finished'.log();
-        //         },
-        //         onError: (e) {
-        //           'delete last error'.log(
-        //             error: e,
-        //             stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
-        //           );
-        //         },
-        //       ),
-        //     );
+        _deleteFormUsecases.execute(lastItem).then(
+              (value) => value.singleActOnFinished(
+                onDone: (d) {
+                  'delete last finished'.log();
+                },
+                onError: (e) {
+                  'delete last error'.log(
+                    error: e,
+                    stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
+                  );
+                },
+              ),
+            );
         emit(AddFormPageStateValue(forms: sortedForms));
       }
     });
@@ -121,18 +118,18 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         forms = {};
         emit(AddFormPageStateValue(forms: sortedForms));
         final value = await _getAllFormsUsecases.execute();
-        // value.singleActOnFinished(
-        //   onDone: (d) {
-        //     forms = d!.toSet();
-        //     emit(AddFormPageStateValue(forms: sortedForms));
-        //   },
-        //   onError: (e) {
-        //     'error loading all items'.log(
-        //       error: e,
-        //       stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
-        //     );
-        //   },
-        // );
+        value.singleActOnFinished(
+          onDone: (d) {
+            forms = d!.toSet();
+            emit(AddFormPageStateValue(forms: sortedForms));
+          },
+          onError: (e) {
+            'error loading all items'.log(
+              error: e,
+              stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
+            );
+          },
+        );
       },
     );
     on<DeleteDataBaseEvent>(
@@ -147,18 +144,17 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     on<EditFormEvent>(
       (event, emit) async {
         final result = await _editFormUsecases.execute(event.form);
-
-        // result.singleActOnFinished(
-        //   onDone: (d) {
-        //     'edit form finished'.log();
-        //   },
-        //   onError: (e) {
-        //     'edit form has error'.log(
-        //       error: e,
-        //       stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,
-        //     );
-        //   },
-        // );
+        result.singleActOnFinished(
+          onDone: (d) {
+            'edit form finished'.log();
+          },
+          onError: (e) {
+            'edit form has error'.log(
+              error: e,
+              stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,
+            );
+          },
+        );
       },
     );
     on<SyncFormsWithDataBaseEvent>(

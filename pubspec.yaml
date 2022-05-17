@@ -34,6 +34,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   get_it: ^7.2.0
+  hemend:
+    path: ../hemend
   http: ^0.13.4
   isar: ^3.0.0-dev.0
   isar_flutter_libs: ^3.0.0-dev.0
