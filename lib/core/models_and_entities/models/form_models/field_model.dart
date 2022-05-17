@@ -15,7 +15,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
     super.label = '',
     super.hint = '',
     super.error = '',
-    super.isValid = '',
+    super.internalValidators = '',
   });
   @override
   IsarFormField get asIsarModel => IsarFormField(
@@ -26,17 +26,19 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
         label: label,
         hint: hint,
         error: error,
-        isValid: isValid,
+        internalValidators: internalValidators,
       );
   @override
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
+      'index': index,
       'key': key,
       'type': type.toMap(),
       'label': label,
       'hint': hint,
       'error': error,
-      'isValid': isValid,
+      'isValid': internalValidators,
     };
   }
 
@@ -50,7 +52,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
       label: (map['label'] ?? '').toString(),
       hint: (map['hint'] ?? '').toString(),
       error: (map['error'] ?? '').toString(),
-      isValid: (map['isValid'] ?? '').toString(),
+      internalValidators: (map['isValid'] ?? '').toString(),
     );
   }
   @override
@@ -69,7 +71,7 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
       label: entity.label,
       hint: entity.hint,
       error: entity.error,
-      isValid: entity.isValid,
+      internalValidators: entity.internalValidators,
     );
   }
   @override
@@ -78,10 +80,11 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
       id: id,
       key: key,
       index: index,
+      type: type,
       label: label,
       hint: hint,
       error: error,
-      isValid: isValid,
+      internalValidators: internalValidators,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:isar/isar.dart';
 import '../../../contracts/interfaces/base_model/base_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/form_model.dart';
+import '../../entities/form_entities/field_entity.dart';
 import '../../entities/form_entities/form_entity.dart';
 import 'field_model.dart';
 
@@ -17,9 +18,6 @@ class FormModel extends FormEntity implements BaseModel {
     super.description = '',
     super.fields = const {},
   });
-
-  @override
-  List<Object> get props => [title, description, fields];
 
   FormModel copyWith({
     String? title,
@@ -38,6 +36,8 @@ class FormModel extends FormEntity implements BaseModel {
   @override
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
+      'index': index,
       'title': title,
       'description': description,
       'fields': fields
@@ -66,9 +66,9 @@ class FormModel extends FormEntity implements BaseModel {
       id: map['id'] as int,
       title: (map['title'] ?? '').toString(),
       description: (map['description'] ?? '').toString(),
-      fields: Set<FormFieldModel>.from(
-        ((map['fields'] ?? []) as List<Map<String, dynamic>>).map(
-          FormFieldModel.fromMap,
+      fields: Set<FormFieldEntity>.from(
+        List<Map<String, dynamic>>.from((map['fields'] ?? []) as Iterable).map(
+          (e) => FormFieldModel.fromMap(e).castToEntity(),
         ),
       ),
     );

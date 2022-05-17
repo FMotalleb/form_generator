@@ -6,7 +6,7 @@ part of 'form_model.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetIsarFormModelCollection on Isar {
   IsarCollection<IsarFormModel> get isarFormModels => getCollection();
@@ -15,15 +15,9 @@ extension GetIsarFormModelCollection on Isar {
 const IsarFormModelSchema = CollectionSchema(
   name: 'IsarFormModel',
   schema:
-      '{"name":"IsarFormModel","idName":"id","properties":[{"name":"description","type":"String"},{"name":"hashCode","type":"Long"},{"name":"index","type":"Long"},{"name":"stringify","type":"Bool"},{"name":"title","type":"String"}],"indexes":[],"links":[{"name":"isarFields","target":"IsarFormField"}]}',
+      '{"name":"IsarFormModel","idName":"id","properties":[{"name":"description","type":"String"},{"name":"hashCode","type":"Long"},{"name":"index","type":"Long"},{"name":"title","type":"String"}],"indexes":[],"links":[{"name":"isarFields","target":"IsarFormField"}]}',
   idName: 'id',
-  propertyIds: {
-    'description': 0,
-    'hashCode': 1,
-    'index': 2,
-    'stringify': 3,
-    'title': 4
-  },
+  propertyIds: {'description': 0, 'hashCode': 1, 'index': 2, 'title': 3},
   listProperties: {},
   indexIds: {},
   indexValueTypes: {},
@@ -39,7 +33,7 @@ const IsarFormModelSchema = CollectionSchema(
   serializeWeb: _isarFormModelSerializeWeb,
   deserializeWeb: _isarFormModelDeserializeWeb,
   deserializePropWeb: _isarFormModelDeserializePropWeb,
-  version: 4,
+  version: 3,
 );
 
 int? _isarFormModelGetId(IsarFormModel object) {
@@ -60,7 +54,7 @@ List<IsarLinkBase> _isarFormModelGetLinks(IsarFormModel object) {
 
 void _isarFormModelSerializeNative(
     IsarCollection<IsarFormModel> collection,
-    IsarCObject cObj,
+    IsarRawObject rawObj,
     IsarFormModel object,
     int staticSize,
     List<int> offsets,
@@ -73,22 +67,19 @@ void _isarFormModelSerializeNative(
   final _hashCode = value1;
   final value2 = object.index;
   final _index = value2;
-  final value3 = object.stringify;
-  final _stringify = value3;
-  final value4 = object.title;
-  final _title = IsarBinaryWriter.utf8Encoder.convert(value4);
+  final value3 = object.title;
+  final _title = IsarBinaryWriter.utf8Encoder.convert(value3);
   dynamicSize += (_title.length) as int;
   final size = staticSize + dynamicSize;
 
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _description);
   writer.writeLong(offsets[1], _hashCode);
   writer.writeLong(offsets[2], _index);
-  writer.writeBool(offsets[3], _stringify);
-  writer.writeBytes(offsets[4], _title);
+  writer.writeBytes(offsets[3], _title);
 }
 
 IsarFormModel _isarFormModelDeserializeNative(
@@ -100,7 +91,7 @@ IsarFormModel _isarFormModelDeserializeNative(
     description: reader.readString(offsets[0]),
     id: id,
     index: reader.readLong(offsets[2]),
-    title: reader.readString(offsets[4]),
+    title: reader.readString(offsets[3]),
   );
   _isarFormModelAttachLinks(collection, id, object);
   return object;
@@ -118,8 +109,6 @@ P _isarFormModelDeserializePropNative<P>(
     case 2:
       return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readBoolOrNull(offset)) as P;
-    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw 'Illegal propertyIndex';
@@ -133,7 +122,6 @@ dynamic _isarFormModelSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'hashCode', object.hashCode);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'index', object.index);
-  IsarNative.jsObjectSet(jsObj, 'stringify', object.stringify);
   IsarNative.jsObjectSet(jsObj, 'title', object.title);
   return jsObj;
 }
@@ -164,8 +152,6 @@ P _isarFormModelDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'index':
       return (IsarNative.jsObjectGet(jsObj, 'index') ?? double.negativeInfinity)
           as P;
-    case 'stringify':
-      return (IsarNative.jsObjectGet(jsObj, 'stringify')) as P;
     case 'title':
       return (IsarNative.jsObjectGet(jsObj, 'title') ?? '') as P;
     default:
@@ -506,24 +492,6 @@ extension IsarFormModelQueryFilter
   }
 
   QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
-      stringifyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'stringify',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
-      stringifyEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'stringify',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterFilterCondition>
       titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -679,15 +647,6 @@ extension IsarFormModelQueryWhereSortBy
     return addSortByInternal('index', Sort.desc);
   }
 
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByStringify() {
-    return addSortByInternal('stringify', Sort.asc);
-  }
-
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
-      sortByStringifyDesc() {
-    return addSortByInternal('stringify', Sort.desc);
-  }
-
   QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> sortByTitle() {
     return addSortByInternal('title', Sort.asc);
   }
@@ -733,15 +692,6 @@ extension IsarFormModelQueryWhereSortThenBy
     return addSortByInternal('index', Sort.desc);
   }
 
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByStringify() {
-    return addSortByInternal('stringify', Sort.asc);
-  }
-
-  QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy>
-      thenByStringifyDesc() {
-    return addSortByInternal('stringify', Sort.desc);
-  }
-
   QueryBuilder<IsarFormModel, IsarFormModel, QAfterSortBy> thenByTitle() {
     return addSortByInternal('title', Sort.asc);
   }
@@ -770,10 +720,6 @@ extension IsarFormModelQueryWhereDistinct
     return addDistinctByInternal('index');
   }
 
-  QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctByStringify() {
-    return addDistinctByInternal('stringify');
-  }
-
   QueryBuilder<IsarFormModel, IsarFormModel, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('title', caseSensitive: caseSensitive);
@@ -796,10 +742,6 @@ extension IsarFormModelQueryProperty
 
   QueryBuilder<IsarFormModel, int, QQueryOperations> indexProperty() {
     return addPropertyNameInternal('index');
-  }
-
-  QueryBuilder<IsarFormModel, bool?, QQueryOperations> stringifyProperty() {
-    return addPropertyNameInternal('stringify');
   }
 
   QueryBuilder<IsarFormModel, String, QQueryOperations> titleProperty() {

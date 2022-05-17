@@ -145,7 +145,7 @@ class _FormPageViewState extends State<FormPageView> {
         type: FieldType.NULL,
         error: '',
         hint: '',
-        isValid: '',
+        internalValidators: '',
         key: StringToolkit.getRandomString(15),
       ),
     };

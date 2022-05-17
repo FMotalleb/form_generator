@@ -10,19 +10,19 @@ class FormFieldEntity extends BaseEntity {
   String label;
   String hint;
   String error;
-  String isValid;
+  String internalValidators;
 
   FormFieldEntity({
     required this.id,
     required this.key,
     required this.index,
-    this.type = FieldType.number,
+    required this.type,
     required this.label,
     required this.hint,
     required this.error,
-    required this.isValid,
+    required this.internalValidators,
   });
 
   @override
-  List<Object?> get props => [id, key, type, label, hint, error, isValid];
+  List<Object> get equalCheckItems => [id, key, type, label, hint, error, internalValidators];
 }

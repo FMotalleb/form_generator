@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:hemend/extensions/equalizer/equalizer.dart';
 import 'package:isar/isar.dart';
 
 import '../../../../contracts/typedefs/form_enums/field_types.dart';
@@ -9,7 +10,7 @@ part 'field_model.g.dart';
 
 @Collection()
 // ignore: must_be_immutable
-class IsarFormField extends FormFieldModel with EquatableMixin {
+class IsarFormField extends FormFieldModel {
   @override
   @FieldTypeConverter()
   FieldType type;
@@ -25,6 +26,9 @@ class IsarFormField extends FormFieldModel with EquatableMixin {
     super.label = '',
     super.hint = '',
     super.error = '',
-    super.isValid = '',
+    super.internalValidators = '',
   }) : super(id: id);
+
+  // @override
+  // List get equalCheckItems => equalCheckItems;
 }

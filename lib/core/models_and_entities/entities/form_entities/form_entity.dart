@@ -16,5 +16,5 @@ class FormEntity extends BaseEntity {
     this.fields = const {},
   });
   @override
-  List<Object> get props => [title, description, fields];
+  List<Object> get equalCheckItems => [title, description, ...fields];
 }

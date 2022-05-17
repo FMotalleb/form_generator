@@ -6,7 +6,7 @@ part of 'field_model.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetIsarFormFieldCollection on Isar {
   IsarCollection<IsarFormField> get isarFormFields => getCollection();
@@ -15,18 +15,17 @@ extension GetIsarFormFieldCollection on Isar {
 const IsarFormFieldSchema = CollectionSchema(
   name: 'IsarFormField',
   schema:
-      '{"name":"IsarFormField","idName":"id","properties":[{"name":"error","type":"String"},{"name":"hashCode","type":"Long"},{"name":"hint","type":"String"},{"name":"index","type":"Long"},{"name":"isValid","type":"String"},{"name":"key","type":"String"},{"name":"label","type":"String"},{"name":"stringify","type":"Bool"},{"name":"type","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"IsarFormField","idName":"id","properties":[{"name":"error","type":"String"},{"name":"hashCode","type":"Long"},{"name":"hint","type":"String"},{"name":"index","type":"Long"},{"name":"internalValidators","type":"String"},{"name":"key","type":"String"},{"name":"label","type":"String"},{"name":"type","type":"Long"}],"indexes":[],"links":[]}',
   idName: 'id',
   propertyIds: {
     'error': 0,
     'hashCode': 1,
     'hint': 2,
     'index': 3,
-    'isValid': 4,
+    'internalValidators': 4,
     'key': 5,
     'label': 6,
-    'stringify': 7,
-    'type': 8
+    'type': 7
   },
   listProperties: {},
   indexIds: {},
@@ -43,7 +42,7 @@ const IsarFormFieldSchema = CollectionSchema(
   serializeWeb: _isarFormFieldSerializeWeb,
   deserializeWeb: _isarFormFieldDeserializeWeb,
   deserializePropWeb: _isarFormFieldDeserializePropWeb,
-  version: 4,
+  version: 3,
 );
 
 int? _isarFormFieldGetId(IsarFormField object) {
@@ -66,7 +65,7 @@ const _isarFormFieldFieldTypeConverter = FieldTypeConverter();
 
 void _isarFormFieldSerializeNative(
     IsarCollection<IsarFormField> collection,
-    IsarCObject cObj,
+    IsarRawObject rawObj,
     IsarFormField object,
     int staticSize,
     List<int> offsets,
@@ -82,34 +81,31 @@ void _isarFormFieldSerializeNative(
   dynamicSize += (_hint.length) as int;
   final value3 = object.index;
   final _index = value3;
-  final value4 = object.isValid;
-  final _isValid = IsarBinaryWriter.utf8Encoder.convert(value4);
-  dynamicSize += (_isValid.length) as int;
+  final value4 = object.internalValidators;
+  final _internalValidators = IsarBinaryWriter.utf8Encoder.convert(value4);
+  dynamicSize += (_internalValidators.length) as int;
   final value5 = object.key;
   final _key = IsarBinaryWriter.utf8Encoder.convert(value5);
   dynamicSize += (_key.length) as int;
   final value6 = object.label;
   final _label = IsarBinaryWriter.utf8Encoder.convert(value6);
   dynamicSize += (_label.length) as int;
-  final value7 = object.stringify;
-  final _stringify = value7;
-  final value8 = _isarFormFieldFieldTypeConverter.toIsar(object.type);
-  final _type = value8;
+  final value7 = _isarFormFieldFieldTypeConverter.toIsar(object.type);
+  final _type = value7;
   final size = staticSize + dynamicSize;
 
-  cObj.buffer = alloc(size);
-  cObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _error);
   writer.writeLong(offsets[1], _hashCode);
   writer.writeBytes(offsets[2], _hint);
   writer.writeLong(offsets[3], _index);
-  writer.writeBytes(offsets[4], _isValid);
+  writer.writeBytes(offsets[4], _internalValidators);
   writer.writeBytes(offsets[5], _key);
   writer.writeBytes(offsets[6], _label);
-  writer.writeBool(offsets[7], _stringify);
-  writer.writeLong(offsets[8], _type);
+  writer.writeLong(offsets[7], _type);
 }
 
 IsarFormField _isarFormFieldDeserializeNative(
@@ -122,11 +118,11 @@ IsarFormField _isarFormFieldDeserializeNative(
     hint: reader.readString(offsets[2]),
     id: id,
     index: reader.readLong(offsets[3]),
-    isValid: reader.readString(offsets[4]),
+    internalValidators: reader.readString(offsets[4]),
     key: reader.readString(offsets[5]),
     label: reader.readString(offsets[6]),
     type:
-        _isarFormFieldFieldTypeConverter.fromIsar(reader.readLong(offsets[8])),
+        _isarFormFieldFieldTypeConverter.fromIsar(reader.readLong(offsets[7])),
   );
   return object;
 }
@@ -151,8 +147,6 @@ P _isarFormFieldDeserializePropNative<P>(
     case 6:
       return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readBoolOrNull(offset)) as P;
-    case 8:
       return (_isarFormFieldFieldTypeConverter
           .fromIsar(reader.readLong(offset))) as P;
     default:
@@ -168,10 +162,10 @@ dynamic _isarFormFieldSerializeWeb(
   IsarNative.jsObjectSet(jsObj, 'hint', object.hint);
   IsarNative.jsObjectSet(jsObj, 'id', object.id);
   IsarNative.jsObjectSet(jsObj, 'index', object.index);
-  IsarNative.jsObjectSet(jsObj, 'isValid', object.isValid);
+  IsarNative.jsObjectSet(
+      jsObj, 'internalValidators', object.internalValidators);
   IsarNative.jsObjectSet(jsObj, 'key', object.key);
   IsarNative.jsObjectSet(jsObj, 'label', object.label);
-  IsarNative.jsObjectSet(jsObj, 'stringify', object.stringify);
   IsarNative.jsObjectSet(
       jsObj, 'type', _isarFormFieldFieldTypeConverter.toIsar(object.type));
   return jsObj;
@@ -184,7 +178,8 @@ IsarFormField _isarFormFieldDeserializeWeb(
     hint: IsarNative.jsObjectGet(jsObj, 'hint') ?? '',
     id: IsarNative.jsObjectGet(jsObj, 'id') ?? double.negativeInfinity,
     index: IsarNative.jsObjectGet(jsObj, 'index') ?? double.negativeInfinity,
-    isValid: IsarNative.jsObjectGet(jsObj, 'isValid') ?? '',
+    internalValidators:
+        IsarNative.jsObjectGet(jsObj, 'internalValidators') ?? '',
     key: IsarNative.jsObjectGet(jsObj, 'key') ?? '',
     label: IsarNative.jsObjectGet(jsObj, 'label') ?? '',
     type: _isarFormFieldFieldTypeConverter.fromIsar(
@@ -208,14 +203,12 @@ P _isarFormFieldDeserializePropWeb<P>(Object jsObj, String propertyName) {
     case 'index':
       return (IsarNative.jsObjectGet(jsObj, 'index') ?? double.negativeInfinity)
           as P;
-    case 'isValid':
-      return (IsarNative.jsObjectGet(jsObj, 'isValid') ?? '') as P;
+    case 'internalValidators':
+      return (IsarNative.jsObjectGet(jsObj, 'internalValidators') ?? '') as P;
     case 'key':
       return (IsarNative.jsObjectGet(jsObj, 'key') ?? '') as P;
     case 'label':
       return (IsarNative.jsObjectGet(jsObj, 'label') ?? '') as P;
-    case 'stringify':
-      return (IsarNative.jsObjectGet(jsObj, 'stringify')) as P;
     case 'type':
       return (_isarFormFieldFieldTypeConverter.fromIsar(
               IsarNative.jsObjectGet(jsObj, 'type') ?? double.negativeInfinity))
@@ -662,20 +655,20 @@ extension IsarFormFieldQueryFilter
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidEqualTo(
+      internalValidatorsEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
-      property: 'isValid',
+      property: 'internalValidators',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidGreaterThan(
+      internalValidatorsGreaterThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -683,14 +676,14 @@ extension IsarFormFieldQueryFilter
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.gt,
       include: include,
-      property: 'isValid',
+      property: 'internalValidators',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidLessThan(
+      internalValidatorsLessThan(
     String value, {
     bool caseSensitive = true,
     bool include = false,
@@ -698,14 +691,14 @@ extension IsarFormFieldQueryFilter
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.lt,
       include: include,
-      property: 'isValid',
+      property: 'internalValidators',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidBetween(
+      internalValidatorsBetween(
     String lower,
     String upper, {
     bool caseSensitive = true,
@@ -713,7 +706,7 @@ extension IsarFormFieldQueryFilter
     bool includeUpper = true,
   }) {
     return addFilterConditionInternal(FilterCondition.between(
-      property: 'isValid',
+      property: 'internalValidators',
       lower: lower,
       includeLower: includeLower,
       upper: upper,
@@ -723,46 +716,46 @@ extension IsarFormFieldQueryFilter
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidStartsWith(
+      internalValidatorsStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.startsWith,
-      property: 'isValid',
+      property: 'internalValidators',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidEndsWith(
+      internalValidatorsEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.endsWith,
-      property: 'isValid',
+      property: 'internalValidators',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidContains(String value, {bool caseSensitive = true}) {
+      internalValidatorsContains(String value, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.contains,
-      property: 'isValid',
+      property: 'internalValidators',
       value: value,
       caseSensitive: caseSensitive,
     ));
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      isValidMatches(String pattern, {bool caseSensitive = true}) {
+      internalValidatorsMatches(String pattern, {bool caseSensitive = true}) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
-      property: 'isValid',
+      property: 'internalValidators',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -980,24 +973,6 @@ extension IsarFormFieldQueryFilter
     ));
   }
 
-  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      stringifyIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'stringify',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition>
-      stringifyEqualTo(bool? value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'stringify',
-      value: value,
-    ));
-  }
-
   QueryBuilder<IsarFormField, IsarFormField, QAfterFilterCondition> typeEqualTo(
       FieldType value) {
     return addFilterConditionInternal(FilterCondition(
@@ -1095,12 +1070,14 @@ extension IsarFormFieldQueryWhereSortBy
     return addSortByInternal('index', Sort.desc);
   }
 
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByIsValid() {
-    return addSortByInternal('isValid', Sort.asc);
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      sortByInternalValidators() {
+    return addSortByInternal('internalValidators', Sort.asc);
   }
 
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByIsValidDesc() {
-    return addSortByInternal('isValid', Sort.desc);
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      sortByInternalValidatorsDesc() {
+    return addSortByInternal('internalValidators', Sort.desc);
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByKey() {
@@ -1117,15 +1094,6 @@ extension IsarFormFieldQueryWhereSortBy
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByLabelDesc() {
     return addSortByInternal('label', Sort.desc);
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByStringify() {
-    return addSortByInternal('stringify', Sort.asc);
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
-      sortByStringifyDesc() {
-    return addSortByInternal('stringify', Sort.desc);
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> sortByType() {
@@ -1180,12 +1148,14 @@ extension IsarFormFieldQueryWhereSortThenBy
     return addSortByInternal('index', Sort.desc);
   }
 
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByIsValid() {
-    return addSortByInternal('isValid', Sort.asc);
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      thenByInternalValidators() {
+    return addSortByInternal('internalValidators', Sort.asc);
   }
 
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByIsValidDesc() {
-    return addSortByInternal('isValid', Sort.desc);
+  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
+      thenByInternalValidatorsDesc() {
+    return addSortByInternal('internalValidators', Sort.desc);
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByKey() {
@@ -1202,15 +1172,6 @@ extension IsarFormFieldQueryWhereSortThenBy
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByLabelDesc() {
     return addSortByInternal('label', Sort.desc);
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByStringify() {
-    return addSortByInternal('stringify', Sort.asc);
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy>
-      thenByStringifyDesc() {
-    return addSortByInternal('stringify', Sort.desc);
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QAfterSortBy> thenByType() {
@@ -1246,9 +1207,10 @@ extension IsarFormFieldQueryWhereDistinct
     return addDistinctByInternal('index');
   }
 
-  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByIsValid(
-      {bool caseSensitive = true}) {
-    return addDistinctByInternal('isValid', caseSensitive: caseSensitive);
+  QueryBuilder<IsarFormField, IsarFormField, QDistinct>
+      distinctByInternalValidators({bool caseSensitive = true}) {
+    return addDistinctByInternal('internalValidators',
+        caseSensitive: caseSensitive);
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByKey(
@@ -1259,10 +1221,6 @@ extension IsarFormFieldQueryWhereDistinct
   QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByLabel(
       {bool caseSensitive = true}) {
     return addDistinctByInternal('label', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByStringify() {
-    return addDistinctByInternal('stringify');
   }
 
   QueryBuilder<IsarFormField, IsarFormField, QDistinct> distinctByType() {
@@ -1292,8 +1250,9 @@ extension IsarFormFieldQueryProperty
     return addPropertyNameInternal('index');
   }
 
-  QueryBuilder<IsarFormField, String, QQueryOperations> isValidProperty() {
-    return addPropertyNameInternal('isValid');
+  QueryBuilder<IsarFormField, String, QQueryOperations>
+      internalValidatorsProperty() {
+    return addPropertyNameInternal('internalValidators');
   }
 
   QueryBuilder<IsarFormField, String, QQueryOperations> keyProperty() {
@@ -1302,10 +1261,6 @@ extension IsarFormFieldQueryProperty
 
   QueryBuilder<IsarFormField, String, QQueryOperations> labelProperty() {
     return addPropertyNameInternal('label');
-  }
-
-  QueryBuilder<IsarFormField, bool?, QQueryOperations> stringifyProperty() {
-    return addPropertyNameInternal('stringify');
   }
 
   QueryBuilder<IsarFormField, FieldType, QQueryOperations> typeProperty() {
