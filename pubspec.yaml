@@ -43,12 +43,13 @@ dependencies:
   path_provider: ^2.0.10
 
 dev_dependencies:
-  mockito: ^5.1.0
+  bloc_test: ^9.0.3
   build_runner: any
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
   isar_generator: ^2.5.0
+  mockito: ^5.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
