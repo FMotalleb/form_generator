@@ -6,7 +6,7 @@ import 'package:form_generator/core/models_and_entities/models/form_models/field
 import 'package:form_generator/core/models_and_entities/models/form_models/form_model.dart';
 
 void main() {
-  group('Form/Field cast tests', () {
+  group('Testing Form/Field casters', () {
     late FormFieldEntity fieldSample;
     late FormEntity formSample;
     setUp(() {
@@ -29,25 +29,25 @@ void main() {
       );
     });
 
-    test('testing field casting', () {
+    test('field casting', () {
       final fieldCasted = FormFieldModel.fromEntity(fieldSample).castToEntity();
       expect(fieldCasted, fieldSample);
       final isarFieldModel = FormFieldModel.fromEntity(fieldSample).castToIsarModel();
       expect(fieldSample, isarFieldModel.castToModel().castToEntity());
     });
-    test('testing form casting', () {
+    test('form casting', () {
       final formCasted = FormModel.fromEntity(formSample).castToEntity();
       expect(formCasted, formSample);
       final isarFormModel = FormModel.fromEntity(formSample).castToIsarModel();
       expect(formSample, isarFormModel.castToEntity());
     });
 
-    test('testing field serializer', () {
+    test('field serializer', () {
       final serialized = FormFieldModel.fromEntity(fieldSample).toJson();
       final deserialized = FormFieldModel.fromJson(serialized).castToEntity();
       expect(deserialized, fieldSample);
     });
-    test('testing form serializer', () {
+    test('form serializer', () {
       final serialized = FormModel.fromEntity(formSample).toJson();
       final deserialized = FormModel.fromJson(serialized).castToEntity();
       expect(formSample, deserialized);
