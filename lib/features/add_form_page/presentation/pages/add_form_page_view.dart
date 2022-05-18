@@ -14,7 +14,7 @@ class AddFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AddFormBloc(GetIt.I.get()),
+      create: (_) => AddFormBloc(formManager: GetIt.I.get()),
       child: const AddFormView(),
     );
   }

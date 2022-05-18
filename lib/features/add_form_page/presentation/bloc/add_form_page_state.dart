@@ -7,7 +7,9 @@ abstract class AddFormPageState extends Equatable {
   List<Object> get props => [];
 }
 
-class AddFormPageStateInitial extends AddFormPageState {}
+class AddFormPageStateInitial extends AddFormPageState {
+  const AddFormPageStateInitial();
+}
 
 class AddFormPageStateValue extends AddFormPageState {
   final List<FormEntity> forms;

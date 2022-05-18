@@ -32,27 +32,34 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     return list;
   }
 
-  final FormManagerInterface _formManager;
+  final FormManagerInterface formManager;
   AddNewFormUseCases get _addNewFormUsecases => AddNewFormUseCases(
-        _formManager,
+        formManager,
       );
   DeleteAllUsecases get _deleteAllUsecases => DeleteAllUsecases(
-        _formManager,
+        formManager,
       );
   EditFormUseCases get _editFormUsecases => EditFormUseCases(
-        _formManager,
+        formManager,
       );
   GetAllItemsUsecases get _getAllFormsUsecases => GetAllItemsUsecases(
-        _formManager,
+        formManager,
       );
   DeleteFormUsecases get _deleteFormUsecases => DeleteFormUsecases(
-        _formManager,
+        formManager,
       );
+  AddFormPageState getStateForForms() {
+    if (forms.isEmpty) {
+      return const AddFormPageStateInitial();
+    } else {
+      return AddFormPageStateValue(forms: sortedForms);
+    }
+  }
 
   /// {@macro counter_bloc}
-  AddFormBloc(this._formManager)
+  AddFormBloc({required this.formManager, bool initialLoad = true})
       : forms = {},
-        super(AddFormPageStateInitial()) {
+        super(const AddFormPageStateInitial()) {
     on<AddNewFormEvent>((event, emit) async {
       final index = forms.isEmpty ? 0 : sortedForms.last.index + 1;
       final newForm = FormEntity(
@@ -64,7 +71,6 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         ...forms,
         newForm,
       };
-      print(newForm);
       _addNewFormUsecases.execute(newForm).then(
             (value) => value.singleActOnFinished(
               onDone: (d) {
@@ -76,7 +82,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
             ),
           );
 
-      emit(AddFormPageStateValue(forms: sortedForms));
+      emit(getStateForForms());
     });
     on<RemoveSpecifiedFormEvent>((event, emit) async {
       final item = event.form;
@@ -101,7 +107,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
                 },
               ),
             );
-        emit(AddFormPageStateValue(forms: sortedForms));
+        emit(getStateForForms());
       }
     });
 
@@ -109,13 +115,13 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       (event, emit) async {
         forms = {};
         if (event.forcedRefresh) {
-          emit(AddFormPageStateValue(forms: sortedForms));
+          emit(getStateForForms());
         }
         final value = await _getAllFormsUsecases.execute();
         value.singleActOnFinished(
           onDone: (d) {
             forms = d!.toSet();
-            emit(AddFormPageStateValue(forms: sortedForms));
+            emit(getStateForForms());
           },
           onError: (e) {
             'error loading all items'.log(
@@ -131,7 +137,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         await _deleteAllUsecases.execute();
         forms.clear();
 
-        emit(AddFormPageStateValue(forms: sortedForms));
+        emit(getStateForForms());
       },
     );
 
@@ -142,7 +148,6 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         selectedForm.title = event.form.title;
         selectedForm.fields = event.form.fields;
         selectedForm.description = event.form.description;
-        // emit(AddFormPageStateValue(forms: sortedForms));
         result.singleActOnFinished(
           onDone: (d) {
             'edit form finished'.log();
@@ -164,8 +169,9 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         }
       },
     );
-
-    add(const LoadDataFromDataBaseEvent(forcedRefresh: false));
+    if (initialLoad) {
+      add(const LoadDataFromDataBaseEvent(forcedRefresh: false));
+    }
   }
 }
 
@@ -180,7 +186,6 @@ SnackBar infoSnackbar(String info) {
     elevation: 0,
     shape: theme.snackBarTheme.shape,
     behavior: SnackBarBehavior.fixed,
-    // margin: EdgeInsets.symmetric(horizontal: 50, vertical: 50),
   );
 }
 
