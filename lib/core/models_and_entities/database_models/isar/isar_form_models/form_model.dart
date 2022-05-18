@@ -1,6 +1,7 @@
 import 'package:isar/isar.dart';
 
 import '../../../entities/form_entities/form_entity.dart';
+import '../../../models/form_models/field_model.dart';
 import '../../../models/form_models/form_model.dart';
 import 'field_model.dart';
 part 'form_model.g.dart';
@@ -16,21 +17,29 @@ class IsarFormModel extends FormModel {
   IsarFormModel({
     required this.id,
     required super.index,
-    super.title = '',
-    super.description = '',
-    Set<IsarFormField> fields = const {},
-  }) : super(id: id) {
-    isarFields.addAll(fields);
+    required super.title,
+    required super.description,
+    super.fields = const {},
+  }) : super(
+          id: id,
+        ) {
+    isarFields.addAll(
+      fields.map((e) => FormFieldModel.fromEntity(e).castToIsarModel()),
+    );
   }
   @override
   String toString() => '${super.toString()} $isarFields';
 
   @override
   FormEntity castToEntity() {
-    return this;
+    return FormModel.fromEntity(this).castToEntity();
   }
 
-  FormModel castToModel() {
-    return this;
-  }
+  FormModel castToModel() => FormModel(
+        id: id,
+        title: title,
+        index: index,
+        description: description,
+        fields: isarFields.map((e) => e.castToModel().castToEntity()).toSet(),
+      );
 }

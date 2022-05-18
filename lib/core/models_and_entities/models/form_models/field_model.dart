@@ -17,8 +17,8 @@ class FormFieldModel extends FormFieldEntity implements BaseModel {
     super.error = '',
     super.internalValidators = '',
   });
-  @override
-  IsarFormField get asIsarModel => IsarFormField(
+
+  IsarFormField castToIsarModel() => IsarFormField(
         id: id,
         index: index,
         key: key,

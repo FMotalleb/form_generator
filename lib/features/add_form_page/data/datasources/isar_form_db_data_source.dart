@@ -11,7 +11,7 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
 
   @override
   Future<void> deleteItem(FormModel input) async {
-    final isarModel = input.asIsarModel;
+    final isarModel = input.castToIsarModel();
     await _isar.writeTxn((isar) async {
       isarModel.isarFields.clear();
       await isarModel.isarFields.save();
@@ -70,7 +70,7 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
 
   @override
   Future<int> write(FormModel input) async {
-    final placeHolder = input.asIsarModel;
+    final placeHolder = input.castToIsarModel();
 
     final currentItem = await getItemById(input.id);
 

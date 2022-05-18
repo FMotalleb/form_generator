@@ -1,13 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:form_generator/core/contracts/typedefs/form_enums/field_types.dart';
 import 'package:form_generator/core/models_and_entities/entities/form_entities/field_entity.dart';
+import 'package:form_generator/core/models_and_entities/entities/form_entities/form_entity.dart';
 import 'package:form_generator/core/models_and_entities/models/form_models/field_model.dart';
 import 'package:form_generator/core/models_and_entities/models/form_models/form_model.dart';
 
 void main() {
-  group('Testing Form Models', () {
+  group('Form/Field cast tests', () {
     late FormFieldEntity fieldSample;
-    late FormModel dataSample;
+    late FormEntity formSample;
     setUp(() {
       fieldSample = FormFieldEntity(
         id: 0,
@@ -19,22 +20,37 @@ void main() {
         key: 'test key',
         label: 'test label',
       );
-      dataSample = FormModel(
+      formSample = FormEntity(
         id: 0,
         index: 0,
-        title: 'Sample',
+        title: 'test title',
+        description: 'test description',
         fields: {fieldSample},
       );
     });
+
+    test('testing field casting', () {
+      final fieldCasted = FormFieldModel.fromEntity(fieldSample).castToEntity();
+      expect(fieldCasted, fieldSample);
+      final isarFieldModel = FormFieldModel.fromEntity(fieldSample).castToIsarModel();
+      expect(fieldSample, isarFieldModel.castToModel().castToEntity());
+    });
+    test('testing form casting', () {
+      final formCasted = FormModel.fromEntity(formSample).castToEntity();
+      expect(formCasted, formSample);
+      final isarFormModel = FormModel.fromEntity(formSample).castToIsarModel();
+      expect(formSample, isarFormModel.castToEntity());
+    });
+
     test('testing field serializer', () {
       final serialized = FormFieldModel.fromEntity(fieldSample).toJson();
       final deserialized = FormFieldModel.fromJson(serialized).castToEntity();
       expect(deserialized, fieldSample);
     });
     test('testing form serializer', () {
-      final serialized = dataSample.toJson();
-      final deserialized = FormModel.fromJson(serialized);
-      expect(deserialized, dataSample);
+      final serialized = FormModel.fromEntity(formSample).toJson();
+      final deserialized = FormModel.fromJson(serialized).castToEntity();
+      expect(formSample, deserialized);
     });
   });
 }

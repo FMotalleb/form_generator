@@ -17,7 +17,7 @@ class IsarFormField extends FormFieldModel {
   @Id()
   @override
   int id;
-  FormFieldModel get asModel => this;
+  FormFieldModel castToModel() => this;
   IsarFormField({
     required this.id,
     super.key = '',

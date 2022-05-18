@@ -14,9 +14,9 @@ class FormModel extends FormEntity implements BaseModel {
   FormModel({
     required super.id,
     required super.index,
-    super.title = '',
-    super.description = '',
-    super.fields = const {},
+    required super.title,
+    required super.description,
+    required super.fields,
   });
 
   FormModel copyWith({
@@ -49,14 +49,14 @@ class FormModel extends FormEntity implements BaseModel {
   }
 
   @override
-  IsarFormModel get asIsarModel => IsarFormModel(
+  IsarFormModel castToIsarModel() => IsarFormModel(
         id: id,
         index: index,
         title: title,
         description: description,
         fields: IsarLinks<IsarFormField>()
           ..addAll(
-            fields.map((e) => FormFieldModel.fromEntity(e).asIsarModel),
+            fields.map((e) => FormFieldModel.fromEntity(e).castToIsarModel()),
           ),
       );
   @override
@@ -99,6 +99,12 @@ class FormModel extends FormEntity implements BaseModel {
 
   @override
   FormEntity castToEntity() {
-    return this;
+    return FormEntity(
+      id: id,
+      index: index,
+      fields: fields.map((e) => FormFieldModel.fromEntity(e).castToEntity()).toSet(),
+      description: description,
+      title: title,
+    );
   }
 }
