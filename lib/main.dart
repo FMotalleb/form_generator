@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/services/state/theme_handler.dart';
@@ -10,7 +12,6 @@ final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerDependencies();
-
   BlocOverrides.runZoned(
     () => runApp(const App()),
     blocObserver: AppBlocObserver(),
@@ -55,6 +56,16 @@ class AppView extends StatelessWidget {
         return ScrollConfiguration(
           behavior: const ScrollBehaviorModified(),
           child: MaterialApp(
+            localizationsDelegates: [
+              AppLocalizations.delegate, // Add this line
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', ''),
+              const Locale('fa', ''),
+            ],
             navigatorKey: GetIt.I.get<GlobalKey<NavigatorState>>(),
             scrollBehavior: const ScrollBehaviorModified(),
             theme: theme,

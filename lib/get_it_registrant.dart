@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-
 import 'core/models_and_entities/database_models/isar/isar_form_models/field_model.dart';
 import 'core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
 import 'core/services/state/theme_handler.dart';
