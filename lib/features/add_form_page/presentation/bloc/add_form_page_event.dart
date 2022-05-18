@@ -5,13 +5,6 @@ abstract class AddFormEvent extends Equatable {
   const AddFormEvent();
 }
 
-/// Notifies bloc to increment state.
-class AddNewFormEvent extends AddFormEvent {
-  const AddNewFormEvent();
-  @override
-  List<Object> get props => [];
-}
-
 class LoadDataFromDataBaseEvent extends AddFormEvent {
   final bool forcedRefresh;
   const LoadDataFromDataBaseEvent({
@@ -19,6 +12,12 @@ class LoadDataFromDataBaseEvent extends AddFormEvent {
   });
   @override
   List<Object?> get props => [];
+}
+
+class AddNewFormEvent extends AddFormEvent {
+  const AddNewFormEvent();
+  @override
+  List<Object> get props => [];
 }
 
 class DeleteDataBaseEvent extends AddFormEvent {
@@ -42,7 +41,8 @@ class SyncFormsWithDataBaseEvent extends AddFormEvent {
 
 class RemoveSpecifiedFormEvent extends AddFormEvent {
   final FormEntity form;
-  const RemoveSpecifiedFormEvent(this.form);
+  final bool forced;
+  const RemoveSpecifiedFormEvent(this.form, {this.forced = false});
   @override
   List<Object> get props => [form];
 }

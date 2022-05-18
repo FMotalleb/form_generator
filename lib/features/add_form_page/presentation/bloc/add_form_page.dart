@@ -26,6 +26,10 @@ part 'add_form_page_state.dart';
 /// {@endtemplate}
 class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
   Set<FormEntity> forms;
+  void addForm(FormEntity form) {
+    forms = {...sortedForms.where((element) => element.id != form.id), form};
+  }
+
   List<FormEntity> get sortedForms {
     final list = forms.toList();
     list.sort((a, b) => a.index.compareTo(b.index));
@@ -86,12 +90,17 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     });
     on<RemoveSpecifiedFormEvent>((event, emit) async {
       final item = event.form;
-      final permission = await noContextDialog(
-        builder: (p1) => RemoveFormView(
-          form: item,
-          theme: GetIt.I.get<ThemeCubit>().getCurrentTheme,
-        ),
-      );
+      var permission = event.forced;
+      if (!permission) {
+        permission = await noContextDialog(
+              builder: (p1) => RemoveFormView(
+                form: item,
+                theme: GetIt.I.get<ThemeCubit>().getCurrentTheme,
+              ),
+            ) ??
+            false;
+      }
+
       if (permission == true) {
         forms = forms.where((element) => element.id != item.id).toSet();
         _deleteFormUsecases.execute(item).then(
@@ -144,21 +153,27 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     on<EditFormEvent>(
       (event, emit) async {
         final result = await _editFormUsecases.execute(event.form);
-        final selectedForm = forms.firstWhere((element) => event.form.id == element.id);
-        selectedForm.title = event.form.title;
-        selectedForm.fields = event.form.fields;
-        selectedForm.description = event.form.description;
-        result.singleActOnFinished(
-          onDone: (d) {
-            'edit form finished'.log();
-          },
-          onError: (e) {
-            'edit form has error'.log(
-              error: e,
-              stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,
-            );
-          },
-        );
+        try {
+          addForm(event.form);
+
+          result.singleActOnFinished(
+            onDone: (d) {
+              'edit form finished'.log();
+            },
+            onError: (e) {
+              'edit form has error'.log(
+                error: e,
+                stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,
+              );
+            },
+          );
+        } catch (e, st) {
+          'error editing form'.log(
+            error: e,
+            stackTrace: st,
+          );
+        }
+        emit(getStateForForms());
       },
     );
     on<SyncFormsWithDataBaseEvent>(
