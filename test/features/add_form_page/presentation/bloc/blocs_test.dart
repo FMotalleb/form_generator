@@ -18,6 +18,7 @@ void main() {
   group("Testing AddFormPage's bloc", () {
     late FormFieldEntity fieldSample;
     late FormEntity formSample;
+    final addedForms = <FormEntity>[];
     // ignore: prefer_function_declarations_over_variables
     late List<FormEntity> getForms;
     void register() {
@@ -46,7 +47,9 @@ void main() {
       when(
         mockedFormManager.addForm(argThat(const TypeMatcher<FormEntity>())),
       ).thenAnswer((realInvocation) async {
-        getForms.add(realInvocation.positionalArguments[0] as FormEntity);
+        final form = realInvocation.positionalArguments[0] as FormEntity;
+        getForms.add(form);
+        addedForms.add(form);
       });
 
       when(
@@ -99,7 +102,7 @@ void main() {
       verify: (AddFormBloc bloc) {},
       expect: () => [
         const AddFormPageStateInitial(),
-        AddFormPageStateValue(forms: List.from(getForms)..removeLast()),
+        AddFormPageStateValue(forms: [formSample]),
         AddFormPageStateValue(forms: getForms),
       ],
     );
@@ -157,5 +160,24 @@ void main() {
         const AddFormPageStateInitial(),
       ],
     );
+    // blocTest(
+    //   'sync data with data source ##<-RESULT IS NOT RELIABLE->##',
+    //   build: () => addFormBloc,
+    //   setUp: register,
+    //   act: (AddFormBloc bloc) async {
+    //     bloc.add(const LoadDataFromDataBaseEvent());
+    //     await Future.delayed(const Duration(milliseconds: 150), () {
+    //       bloc.add(const SyncFormsWithDataBaseEvent());
+    //     });
+    //     bloc.add(const LoadDataFromDataBaseEvent());
+    //   },
+    //   expect: () => [
+    //     const AddFormPageStateInitial(),
+    //     AddFormPageStateValue(forms: [formSample]),
+    //     const AddFormPageStateInitial(),
+    //     // AddFormPageStateValue(forms: [formSample]),
+    //     // const AddFormPageStateInitial(),
+    //   ],
+    // );
   });
 }
