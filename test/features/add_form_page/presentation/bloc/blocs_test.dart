@@ -53,7 +53,7 @@ void main() {
       });
 
       when(
-        mockedFormManager.deleteAll(),
+        mockedFormManager.deleteAllForms(),
       ).thenAnswer((realInvocation) async {
         getForms.clear();
       });

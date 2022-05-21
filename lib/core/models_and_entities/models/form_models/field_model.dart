@@ -6,7 +6,7 @@ import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
 
 // ignore: must_be_immutable
-class FormFieldModel extends FormFieldEntity implements BaseModel {
+class FormFieldModel extends FormFieldEntity implements IModel {
   FormFieldModel({
     required super.id,
     required super.index,

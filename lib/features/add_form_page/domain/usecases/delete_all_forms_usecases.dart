@@ -12,7 +12,7 @@ class DeleteAllUsecases with EquatableMixin implements IUsecases<void, void> {
   @override
   Future<DataSnapHandler<void>> execute([void none]) async {
     try {
-      await _repository.deleteAll();
+      await _repository.deleteAllForms();
       return const DataSnapHandler<bool>.done(
         data: true,
         sender: DeleteAllUsecases,

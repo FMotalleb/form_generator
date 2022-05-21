@@ -4,10 +4,8 @@
 
 import 'dart:async' as _i3;
 
-import 'package:form_generator/core/models_and_entities/entities/form_entities/form_entity.dart'
-    as _i4;
-import 'package:form_generator/features/add_form_page/data/repositories/form_manager_repo.dart'
-    as _i2;
+import 'package:form_generator/core/models_and_entities/entities/form_entities/form_entity.dart' as _i4;
+import 'package:form_generator/features/add_form_page/data/repositories/form_manager_repo.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -29,33 +27,22 @@ class MockFormManagerRepo extends _i1.Mock implements _i2.FormManagerRepo {
   }
 
   @override
-  _i3.Future<void> addForm(_i4.FormEntity? form) =>
-      (super.noSuchMethod(Invocation.method(#addForm, [form]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
+  _i3.Future<void> addForm(_i4.FormEntity? form) => (super.noSuchMethod(Invocation.method(#addForm, [form]),
+      returnValue: Future<void>.value(), returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<void> deleteForm(_i4.FormEntity? form) =>
-      (super.noSuchMethod(Invocation.method(#deleteForm, [form]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
+  _i3.Future<void> deleteForm(_i4.FormEntity? form) => (super.noSuchMethod(Invocation.method(#deleteForm, [form]),
+      returnValue: Future<void>.value(), returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<List<_i4.FormEntity>> getAllForms() => (super.noSuchMethod(
-          Invocation.method(#getAllForms, []),
-          returnValue: Future<List<_i4.FormEntity>>.value(<_i4.FormEntity>[]))
-      as _i3.Future<List<_i4.FormEntity>>);
+  _i3.Future<List<_i4.FormEntity>> getAllForms() => (super.noSuchMethod(Invocation.method(#getAllForms, []),
+      returnValue: Future<List<_i4.FormEntity>>.value(<_i4.FormEntity>[])) as _i3.Future<List<_i4.FormEntity>>);
   @override
   _i3.Future<_i4.FormEntity?> getFormById(int? id) =>
-      (super.noSuchMethod(Invocation.method(#getFormById, [id]),
-              returnValue: Future<_i4.FormEntity?>.value())
+      (super.noSuchMethod(Invocation.method(#getFormById, [id]), returnValue: Future<_i4.FormEntity?>.value())
           as _i3.Future<_i4.FormEntity?>);
   @override
-  _i3.Future<void> updateForm(_i4.FormEntity? form) =>
-      (super.noSuchMethod(Invocation.method(#updateForm, [form]),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
+  _i3.Future<void> updateForm(_i4.FormEntity? form) => (super.noSuchMethod(Invocation.method(#updateForm, [form]),
+      returnValue: Future<void>.value(), returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<void> deleteAll() =>
-      (super.noSuchMethod(Invocation.method(#deleteAll, []),
-          returnValue: Future<void>.value(),
-          returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
+  _i3.Future<void> deleteAllForms() => (super.noSuchMethod(Invocation.method(#deleteAll, []),
+      returnValue: Future<void>.value(), returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
 }

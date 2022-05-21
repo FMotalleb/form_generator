@@ -2,19 +2,19 @@
 
 import '../base_entity/base_entity.dart';
 
-abstract class BaseModel extends BaseEntity {
-  BaseModel castToIsarModel();
-  BaseEntity castToEntity();
-  BaseModel();
+abstract class IModel extends IEntity {
+  IModel castToIsarModel();
+  IEntity castToEntity();
+  IModel();
   Map<String, dynamic> toMap();
   String toJson();
-  factory BaseModel.fromMap(Map<String, dynamic> map) {
+  factory IModel.fromMap(Map<String, dynamic> map) {
     throw UnimplementedError();
   }
-  factory BaseModel.fromJson(String source) {
+  factory IModel.fromJson(String source) {
     throw UnimplementedError();
   }
-  factory BaseModel.fromEntity(BaseEntity entity) {
+  factory IModel.fromEntity(IEntity entity) {
     throw UnimplementedError();
   }
 }

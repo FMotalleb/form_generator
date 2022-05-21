@@ -10,7 +10,7 @@ import '../../entities/form_entities/form_entity.dart';
 import 'field_model.dart';
 
 // ignore: must_be_immutable
-class FormModel extends FormEntity implements BaseModel {
+class FormModel extends FormEntity implements IModel {
   FormModel({
     required super.id,
     required super.index,

@@ -32,7 +32,7 @@ class FormManagerRepo implements FormManagerInterface {
       );
 
   @override
-  Future<void> deleteAll() async {
+  Future<void> deleteAllForms() async {
     _formDbDataSource.deleteAllItems();
   }
 }
