@@ -3,7 +3,7 @@ import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.da
 
 import '../base_repository/base_repository.dart';
 
-abstract class BaseUsecases<T, R> implements Equatable {
-  BaseRepository get repository;
+abstract class IUsecases<T, R> implements Equatable {
+  IRepository get repository;
   Future<DataSnapHandler<T>> execute([R params]);
 }

@@ -4,7 +4,7 @@ import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.da
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../repositories/form_manager_interface.dart';
 
-class DeleteAllUsecases with EquatableMixin implements BaseUsecases<void, void> {
+class DeleteAllUsecases with EquatableMixin implements IUsecases<void, void> {
   @override
   List<Object?> get props => [_repository];
   final FormManagerInterface _repository;

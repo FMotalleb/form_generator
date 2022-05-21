@@ -5,7 +5,7 @@ import '../../../../core/models_and_entities/database_models/isar/isar_form_mode
 import '../../../../core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
 import '../../../../core/models_and_entities/models/form_models/form_model.dart';
 
-class IsarFormDbDataSource implements BaseDataSource<FormModel> {
+class IsarFormDbDataSource implements IDataSource<FormModel> {
   final Isar _isar;
   IsarFormDbDataSource({required Isar isar}) : _isar = isar;
 

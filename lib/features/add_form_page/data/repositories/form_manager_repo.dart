@@ -6,7 +6,7 @@ import '../../../../core/models_and_entities/models/form_models/form_model.dart'
 import '../../domain/repositories/form_manager_interface.dart';
 
 class FormManagerRepo implements FormManagerInterface {
-  final BaseDataSource<FormModel> _formDbDataSource;
+  final IDataSource<FormModel> _formDbDataSource;
   FormManagerRepo(this._formDbDataSource);
   @override
   Future<void> addForm(FormEntity form) => _formDbDataSource.write(

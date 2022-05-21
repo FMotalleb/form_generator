@@ -6,7 +6,7 @@ import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../repositories/form_manager_interface.dart';
 
-class EditFormUseCases with EquatableMixin implements BaseUsecases<void, FormEntity> {
+class EditFormUseCases with EquatableMixin implements IUsecases<void, FormEntity> {
   final FormManagerInterface _repository;
   const EditFormUseCases(
     this._repository,

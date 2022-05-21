@@ -1,4 +1,4 @@
-abstract class BaseDataSource<T> {
+abstract class IDataSource<T> {
   Future<void> write(T input);
   Future<void> update(T input);
   Future<void> deleteItem(T input);
