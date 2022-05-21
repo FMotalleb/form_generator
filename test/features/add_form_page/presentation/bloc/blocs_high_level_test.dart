@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:form_generator/core/contracts/typedefs/form_enums/field_types.dart';
+import 'package:form_generator/core/contracts/enums/form_enums/field_types.dart';
+
 import 'package:form_generator/core/models_and_entities/entities/form_entities/field_entity.dart';
 import 'package:form_generator/core/models_and_entities/entities/form_entities/form_entity.dart';
 import 'package:form_generator/core/models_and_entities/models/form_models/form_model.dart';

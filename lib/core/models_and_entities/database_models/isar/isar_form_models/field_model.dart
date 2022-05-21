@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../../../../contracts/typedefs/form_enums/field_types.dart';
+import '../../../../contracts/enums/form_enums/field_types.dart';
 import '../../../models/form_models/field_model.dart';
 import '../type_converter/field_type_converter.dart';
 

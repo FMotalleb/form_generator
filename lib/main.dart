@@ -26,10 +26,15 @@ class AppBlocObserver extends BlocObserver {}
 /// [flutter_bloc](https://pub.dev/packages/flutter_bloc)
 /// to manage the state of a counter and the app theme.
 /// {@endtemplate}
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   /// {@macro app}
   const App({Key? key}) : super(key: key);
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

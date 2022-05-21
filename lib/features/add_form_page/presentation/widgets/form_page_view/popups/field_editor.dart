@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../core/contracts/typedefs/form_enums/field_types.dart';
+import '../../../../../../core/contracts/enums/form_enums/field_types.dart';
 import '../../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
 import '../../../../../../core/services/state/theme_handler.dart';
 
