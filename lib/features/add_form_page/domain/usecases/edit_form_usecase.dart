@@ -38,5 +38,5 @@ class EditFormUseCase with EquatableMixin implements IUsecase<void, FormEntity> 
   List<Object?> get props => [_repository];
 
   @override
-  String get modelName => 'edit form usecase';
+  String get moduleName => 'edit form usecase';
 }

@@ -29,5 +29,5 @@ class DeleteAllFormsUsecases with EquatableMixin implements IUsecase<void, void>
   FormManagerInterface get repository => _repository;
 
   @override
-  String get modelName => 'delete all forms usecase';
+  String get moduleName => 'delete all forms usecase';
 }

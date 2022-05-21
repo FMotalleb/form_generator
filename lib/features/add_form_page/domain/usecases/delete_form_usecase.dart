@@ -36,5 +36,5 @@ class DeleteFormUsecase with EquatableMixin implements IUsecase<void, FormEntity
   FormManagerInterface get repository => _repository;
 
   @override
-  String get modelName => 'delete usecase';
+  String get moduleName => 'delete usecase';
 }

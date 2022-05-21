@@ -40,7 +40,7 @@ class FormManagerRepository implements FormManagerInterface {
   }
 
   @override
-  String get modelName => 'form manager repository';
+  String get moduleName => 'form manager repository';
 
   @override
   Future<DataSnapHandler<T>> executeRequest<T, R>(IUsecase<T, R> usecase, R params) {

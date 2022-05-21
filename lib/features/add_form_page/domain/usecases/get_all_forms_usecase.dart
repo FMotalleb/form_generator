@@ -48,5 +48,5 @@ class GetAllItemsUsecase with EquatableMixin implements IUsecase<void, void> {
   List<Object?> get props => [_repository];
 
   @override
-  String get modelName => 'get all items usecase';
+  String get moduleName => 'get all items usecase';
 }

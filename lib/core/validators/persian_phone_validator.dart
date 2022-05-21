@@ -19,5 +19,5 @@ class PersianPhoneValidator extends IValidator<String, dynamic> {
   String get name => 'Persian Phone Number Validator';
 
   @override
-  String get modelName => 'PersianPhoneValidator';
+  String get moduleName => 'PersianPhoneValidator';
 }

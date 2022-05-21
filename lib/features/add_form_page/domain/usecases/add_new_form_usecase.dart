@@ -42,5 +42,5 @@ class AddNewFormUseCase with EquatableMixin implements IUsecase<void, FormEntity
   FormManagerInterface get repository => _repository;
 
   @override
-  String get modelName => 'add new form usecase';
+  String get moduleName => 'add new form usecase';
 }

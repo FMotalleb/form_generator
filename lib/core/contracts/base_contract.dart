@@ -1,3 +1,3 @@
 abstract class IContract {
-  String get modelName;
+  String get moduleName;
 }
