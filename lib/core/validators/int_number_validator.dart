@@ -16,4 +16,7 @@ class IntNumberValidator extends IValidator<int, dynamic> {
     }
     return null;
   }
+
+  @override
+  String get modelName => 'IntNumberValidator';
 }
