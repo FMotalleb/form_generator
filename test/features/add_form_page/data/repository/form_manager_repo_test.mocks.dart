@@ -47,9 +47,9 @@ class MockIDataSource<T> extends _i1.Mock implements _i2.IDataSource<T> {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<List<T>> getAllItems() =>
+  _i3.Future<List<T>?> getAllItems() =>
       (super.noSuchMethod(Invocation.method(#getAllItems, []),
-          returnValue: Future<List<T>>.value(<T>[])) as _i3.Future<List<T>>);
+          returnValue: Future<List<T>?>.value()) as _i3.Future<List<T>?>);
   @override
   _i3.Future<T?> getItemById(int? id) =>
       (super.noSuchMethod(Invocation.method(#getItemById, [id]),

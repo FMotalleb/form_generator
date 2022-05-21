@@ -39,10 +39,10 @@ class MockFormManagerRepo extends _i1.Mock implements _i2.FormManagerRepo {
           returnValue: Future<void>.value(),
           returnValueForMissingStub: Future<void>.value()) as _i3.Future<void>);
   @override
-  _i3.Future<List<_i4.FormEntity>> getAllForms() => (super.noSuchMethod(
-          Invocation.method(#getAllForms, []),
-          returnValue: Future<List<_i4.FormEntity>>.value(<_i4.FormEntity>[]))
-      as _i3.Future<List<_i4.FormEntity>>);
+  _i3.Future<List<_i4.FormEntity>?> getAllForms() =>
+      (super.noSuchMethod(Invocation.method(#getAllForms, []),
+              returnValue: Future<List<_i4.FormEntity>?>.value())
+          as _i3.Future<List<_i4.FormEntity>?>);
   @override
   _i3.Future<_i4.FormEntity?> getFormById(int? id) =>
       (super.noSuchMethod(Invocation.method(#getFormById, [id]),

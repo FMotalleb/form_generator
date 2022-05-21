@@ -8,7 +8,7 @@ import 'package:form_generator/features/add_form_page/data/repositories/form_man
 import 'package:form_generator/features/add_form_page/presentation/bloc/add_form_page.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'blocs_test.mocks.dart';
+import 'blocs_high_level_test.mocks.dart';
 
 final mockedFormManager = MockFormManagerRepo();
 AddFormBloc get addFormBloc => AddFormBloc(formManager: mockedFormManager, initialLoad: false);
