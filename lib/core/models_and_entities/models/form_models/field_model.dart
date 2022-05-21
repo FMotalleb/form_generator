@@ -18,6 +18,7 @@ class FormFieldModel extends FormFieldEntity implements IModel {
     super.internalValidators = '',
   });
 
+  @override
   IsarFormField castToIsarModel() => IsarFormField(
         id: id,
         index: index,
