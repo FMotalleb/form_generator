@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-import 'package:hemend/extensions/equalizer/equalizer.dart';
 import 'package:isar/isar.dart';
 
 import '../../../../contracts/typedefs/form_enums/field_types.dart';

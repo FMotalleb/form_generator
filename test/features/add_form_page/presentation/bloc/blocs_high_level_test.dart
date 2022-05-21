@@ -15,6 +15,7 @@ AddFormBloc get addFormBloc => AddFormBloc(formManager: mockedFormManager, initi
 
 @GenerateMocks([FormManagerRepo])
 void main() {
+  ///it will test bloc's events and states flow + usecases down to formManagerRepository and not the dataSource since it has it's own unit tests
   group("Testing AddFormPage's bloc", () {
     late FormFieldEntity fieldSample;
     late FormEntity formSample;
@@ -107,7 +108,7 @@ void main() {
       ],
     );
     blocTest(
-      'removing data sources',
+      'removing all forms from sources',
       build: () => addFormBloc,
       setUp: register,
       act: (AddFormBloc bloc) async {
