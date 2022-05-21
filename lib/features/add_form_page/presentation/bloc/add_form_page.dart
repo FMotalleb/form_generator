@@ -40,7 +40,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
   AddNewFormUseCases get _addNewFormUsecases => AddNewFormUseCases(
         formManager,
       );
-  DeleteAllUsecases get _deleteAllUsecases => DeleteAllUsecases(
+  DeleteAllFormsUsecases get _deleteAllUsecases => DeleteAllFormsUsecases(
         formManager,
       );
   EditFormUseCases get _editFormUsecases => EditFormUseCases(

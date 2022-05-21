@@ -6,6 +6,6 @@ abstract class FormManagerInterface implements IRepository {
   Future<void> updateForm(FormEntity form);
   Future<void> deleteForm(FormEntity form);
   Future<void> deleteAllForms();
-  Future<List<FormEntity>> getAllForms();
+  Future<List<FormEntity>?> getAllForms();
   Future<FormEntity?> getFormById(int id);
 }

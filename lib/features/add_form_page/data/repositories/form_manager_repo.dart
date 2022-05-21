@@ -17,8 +17,8 @@ class FormManagerRepo implements FormManagerInterface {
   Future<void> deleteForm(FormEntity form) => _formDbDataSource.deleteItem(FormModel.fromEntity(form));
 
   @override
-  Future<List<FormEntity>> getAllForms() async =>
-      (await _formDbDataSource.getAllItems()).map((e) => e.castToEntity()).toList();
+  Future<List<FormEntity>?> getAllForms() async =>
+      (await _formDbDataSource.getAllItems())?.map((e) => e.castToEntity()).toList();
 
   @override
   Future<FormEntity?> getFormById(int id) async => (await _formDbDataSource.getItemById(
