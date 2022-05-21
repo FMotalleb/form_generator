@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
-import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
+import '../../../../core/contracts/interfaces/base_usecases/base_usecase.dart';
 import '../repositories/form_manager_interface.dart';
 
-class DeleteAllFormsUsecases with EquatableMixin implements IUsecases<void, void> {
+class DeleteAllFormsUsecases with EquatableMixin implements IUsecase<void, void> {
   @override
   List<Object?> get props => [_repository];
   final FormManagerInterface _repository;
@@ -27,4 +27,7 @@ class DeleteAllFormsUsecases with EquatableMixin implements IUsecases<void, void
 
   @override
   FormManagerInterface get repository => _repository;
+
+  @override
+  String get modelName => 'delete all forms usecase';
 }

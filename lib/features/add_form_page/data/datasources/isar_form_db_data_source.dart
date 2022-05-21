@@ -116,4 +116,7 @@ class IsarFormDbDataSource implements IDataSource<FormModel> {
       },
     );
   }
+
+  @override
+  String get modelName => 'IsarDb dataSource';
 }

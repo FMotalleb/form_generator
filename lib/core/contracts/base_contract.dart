@@ -1,3 +1,3 @@
-abstract class Contract {
+abstract class IContract {
   String get modelName;
 }

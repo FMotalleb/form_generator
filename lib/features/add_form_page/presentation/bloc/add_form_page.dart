@@ -11,11 +11,11 @@ import '../../../../core/models_and_entities/entities/form_entities/form_entity.
 import '../../../../core/services/state/theme_handler.dart';
 import '../../../../get_it_registrant.dart';
 import '../../domain/repositories/form_manager_interface.dart';
-import '../../domain/usecases/add_new_form_usecases.dart';
-import '../../domain/usecases/delete_all_forms_usecases.dart';
-import '../../domain/usecases/delete_form_usecases.dart';
-import '../../domain/usecases/edit_form_usecases.dart';
-import '../../domain/usecases/get_all_forms_usecases.dart';
+import '../../domain/usecases/add_new_form_usecase.dart';
+import '../../domain/usecases/delete_all_forms_usecase.dart';
+import '../../domain/usecases/delete_form_usecase.dart';
+import '../../domain/usecases/edit_form_usecase.dart';
+import '../../domain/usecases/get_all_forms_usecase.dart';
 import '../widgets/form_page_view/popups/remove_form_dialog.dart';
 
 part 'add_form_page_event.dart';
@@ -37,19 +37,19 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
   }
 
   final FormManagerInterface formManager;
-  AddNewFormUseCases get _addNewFormUsecases => AddNewFormUseCases(
+  AddNewFormUseCase get _addNewFormUsecases => AddNewFormUseCase(
         formManager,
       );
   DeleteAllFormsUsecases get _deleteAllUsecases => DeleteAllFormsUsecases(
         formManager,
       );
-  EditFormUseCases get _editFormUsecases => EditFormUseCases(
+  EditFormUseCase get _editFormUsecases => EditFormUseCase(
         formManager,
       );
-  GetAllItemsUsecases get _getAllFormsUsecases => GetAllItemsUsecases(
+  GetAllItemsUsecase get _getAllFormsUsecases => GetAllItemsUsecase(
         formManager,
       );
-  DeleteFormUsecases get _deleteFormUsecases => DeleteFormUsecases(
+  DeleteFormUsecase get _deleteFormUsecases => DeleteFormUsecase(
         formManager,
       );
   AddFormPageState getStateForForms() {

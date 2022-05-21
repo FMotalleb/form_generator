@@ -10,13 +10,16 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'blocs_high_level_test.mocks.dart';
 
-final mockedFormManager = MockFormManagerRepo();
-AddFormBloc get addFormBloc => AddFormBloc(formManager: mockedFormManager, initialLoad: false);
-
-@GenerateMocks([FormManagerRepo])
+@GenerateMocks([FormManagerRepository])
 void main() {
   ///it will test bloc's events and states flow + usecases down to formManagerRepository and not the dataSource since it has it's own unit tests
   group("Testing AddFormPage's bloc", () {
+    final mockedFormManager = MockFormManagerRepository();
+    AddFormBloc addFormBlocBuilder() => AddFormBloc(
+          formManager: mockedFormManager,
+          initialLoad: false,
+        );
+
     late FormFieldEntity fieldSample;
     late FormEntity formSample;
     final addedForms = <FormEntity>[];
@@ -76,13 +79,13 @@ void main() {
     blocTest(
       'first state',
       setUp: register,
-      build: () => addFormBloc,
+      build: addFormBlocBuilder,
       expect: () => [],
     );
 
     blocTest(
       'data loading from data source',
-      build: () => addFormBloc,
+      build: addFormBlocBuilder,
       setUp: register,
       act: (AddFormBloc bloc) => bloc.add(const LoadDataFromDataBaseEvent()),
       expect: () => [
@@ -92,7 +95,7 @@ void main() {
     );
     blocTest(
       'add data to from data source',
-      build: () => addFormBloc,
+      build: addFormBlocBuilder,
       setUp: register,
       act: (AddFormBloc bloc) async {
         bloc.add(const LoadDataFromDataBaseEvent());
@@ -109,7 +112,7 @@ void main() {
     );
     blocTest(
       'removing all forms from sources',
-      build: () => addFormBloc,
+      build: addFormBlocBuilder,
       setUp: register,
       act: (AddFormBloc bloc) async {
         bloc.add(const LoadDataFromDataBaseEvent());
@@ -127,7 +130,7 @@ void main() {
     );
     blocTest(
       'editing the data',
-      build: () => addFormBloc,
+      build: addFormBlocBuilder,
       setUp: register,
       act: (AddFormBloc bloc) async {
         bloc.add(const LoadDataFromDataBaseEvent());
@@ -146,7 +149,7 @@ void main() {
     );
     blocTest(
       'removing a form',
-      build: () => addFormBloc,
+      build: addFormBlocBuilder,
       setUp: register,
       act: (AddFormBloc bloc) async {
         bloc.add(const LoadDataFromDataBaseEvent());
@@ -161,24 +164,5 @@ void main() {
         const AddFormPageStateInitial(),
       ],
     );
-    // blocTest(
-    //   'sync data with data source ##<-RESULT IS NOT RELIABLE->##',
-    //   build: () => addFormBloc,
-    //   setUp: register,
-    //   act: (AddFormBloc bloc) async {
-    //     bloc.add(const LoadDataFromDataBaseEvent());
-    //     await Future.delayed(const Duration(milliseconds: 150), () {
-    //       bloc.add(const SyncFormsWithDataBaseEvent());
-    //     });
-    //     bloc.add(const LoadDataFromDataBaseEvent());
-    //   },
-    //   expect: () => [
-    //     const AddFormPageStateInitial(),
-    //     AddFormPageStateValue(forms: [formSample]),
-    //     const AddFormPageStateInitial(),
-    //     // AddFormPageStateValue(forms: [formSample]),
-    //     // const AddFormPageStateInitial(),
-    //   ],
-    // );
   });
 }

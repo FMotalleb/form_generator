@@ -13,7 +13,7 @@ void main() {
   group('Testing FormManager repository', () {
     final _dataSample = FormEntity(id: 0, index: 0);
     final _formDbDataSource = MockIDataSource<FormModel>();
-    final _formManagerRepo = FormManagerRepo(_formDbDataSource);
+    final _formManagerRepo = FormManagerRepository(_formDbDataSource);
     setUp(() {
       when(
         _formDbDataSource.getAllItems(),

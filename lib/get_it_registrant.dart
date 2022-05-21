@@ -9,18 +9,8 @@ import 'core/services/state/theme_handler.dart';
 import 'features/add_form_page/data/datasources/isar_form_db_data_source.dart';
 import 'features/add_form_page/data/repositories/form_manager_repo.dart';
 import 'features/add_form_page/domain/repositories/form_manager_interface.dart';
-// import 'core/services/io/web/request_handlers/http_request_handler.dart';
 
 Future<void> registerDependencies() async {
-  // const baseUrl = 'http://0.0.0.0:3000';
-  // const bypassHttps = false;
-  // const headers = <String, String>{};
-  // const testApiUrl = '/api_test_zone/api_moke.php';
-
-  // final httpRequestHandler = HttpRequestHandler(
-  //   baseUrl: baseUrl,
-  // );
-  // GetIt.I.registerSingleton(httpRequestHandler);
   GetIt.I.registerSingleton(ThemeCubit());
   final isarDbSchemas = [
     IsarFormFieldSchema,
@@ -43,7 +33,7 @@ Future<void> registerDependencies() async {
   }
   // GetIt.I.registerSingleton(IsarFormDbDataSource(isar: GetIt.I.get<Isar>()));
   GetIt.I.registerSingleton<FormManagerInterface>(
-    FormManagerRepo(GetIt.I.get<IsarFormDbDataSource>()),
+    FormManagerRepository(GetIt.I.get<IsarFormDbDataSource>()),
   );
   GetIt.I.registerSingleton<GlobalKey<NavigatorState>>(GlobalKey<NavigatorState>());
   GetIt.I.registerFactory<BuildContext>(() => GetIt.I.get<GlobalKey<NavigatorState>>().currentState!.overlay!.context);
