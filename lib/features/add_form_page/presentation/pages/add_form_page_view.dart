@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../core/custom_widgets/slide_transition.dart';
 import '../../../../core/services/state/theme_handler.dart';
+import '../../../../get_it_registrant.dart';
 import '../bloc/add_form_page.dart';
 import '../widgets/form_page_view/form_page_view.dart';
 
@@ -20,32 +21,24 @@ class AddFormPage extends StatelessWidget {
   }
 }
 
-/// {@template counter_view}
-/// A [StatelessWidget] that:
-/// * demonstrates how to consume and interact with a [AddFormBloc].
-/// {@endtemplate}
 class AddFormView extends StatelessWidget {
-  /// {@macro counter_view}
   const AddFormView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: const Text('AddForm')),
       body: Center(
         child: BlocBuilder<AddFormBloc, AddFormPageState>(
           builder: (context, state) {
             if (state is AddFormPageStateValue && state.forms.isNotEmpty) {
               return SingleChildScrollView(
                 child: Wrap(
-                  // key: ValueKey(state.forms.hashCode),
                   children: state.forms.map(
                     (e) {
                       return FadedSlideAnimation(
                         key: ValueKey(
                           e.id,
                         ),
-                        // beginOffset: const Offset(0, 0.5),
                         child: FormPageView(
                           boundForm: e,
                           onFormRemoved: (form) => context.read<AddFormBloc>().add(
@@ -69,13 +62,12 @@ class AddFormView extends StatelessWidget {
           },
         ),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-
       floatingActionButton: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            tooltip: appLocalization.addForm,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15),
@@ -87,36 +79,36 @@ class AddFormView extends StatelessWidget {
               context.read<AddFormBloc>().add(const AddNewFormEvent());
             },
           ),
-          // const SizedBox(height: 4),
-          // FloatingActionButton(
-          //   child: const Icon(Icons.remove),
-          //   onPressed: () {
-          //     context.read<AddFormBloc>().add(const RemoveLastFormEvent());
-          //   },
-          // ),
-          // const SizedBox(height: 4),
           FloatingActionButton(
+            tooltip: appLocalization.changeTheme,
             child: const Icon(Icons.brightness_6),
             onPressed: () {
               context.read<ThemeCubit>().toggleTheme();
             },
           ),
-          // const SizedBox(height: 4),
           FloatingActionButton(
+            tooltip: appLocalization.changeLanguage,
+            child: const Icon(Icons.language_outlined),
+            onPressed: () {
+              context.read<ThemeCubit>().switchLocale();
+            },
+          ),
+          FloatingActionButton(
+            tooltip: appLocalization.syncWithDb,
             child: const Icon(Icons.sync),
             onPressed: () {
               context.read<AddFormBloc>().add(const SyncFormsWithDataBaseEvent());
             },
           ),
-          // const SizedBox(height: 4),
           FloatingActionButton(
+            tooltip: appLocalization.loadDb,
             child: const Icon(Icons.open_in_browser),
             onPressed: () {
               context.read<AddFormBloc>().add(const LoadDataFromDataBaseEvent());
             },
           ),
-          // const SizedBox(height: 4),
           FloatingActionButton(
+            tooltip: appLocalization.clear,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(15),

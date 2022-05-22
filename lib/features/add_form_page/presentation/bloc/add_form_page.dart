@@ -205,5 +205,5 @@ SnackBar infoSnackbar(String info) {
 }
 
 extension ShowSnack on SnackBar {
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> show() => noContextSnackBar(this);
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> show() => showSnackbar(this);
 }

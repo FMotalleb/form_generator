@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ThemeCubit extends Cubit<ThemeData> {
+import '../../../generated/l10n.dart';
+
+class ThemeCubit extends Cubit<ThemeAndLocaleData> {
   /// {@macro brightness_cubit}
-  ThemeCubit() : super(_darkTheme);
+  ThemeCubit()
+      : super(
+          ThemeAndLocaleData(
+            theme: _darkTheme,
+            locale: locales[0],
+          ),
+        );
 
   static final _lightTheme = ThemeData(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
@@ -138,12 +146,31 @@ class ThemeCubit extends Cubit<ThemeData> {
     ),
     brightness: Brightness.dark,
   );
-  ThemeData get getCurrentTheme => state.brightness == Brightness.dark ? _darkTheme : _lightTheme;
+  ThemeData get getCurrentTheme => state.theme.brightness == Brightness.dark ? _darkTheme : _lightTheme;
+  // Locale _locale = locales[0];
+  static final locales = S.delegate.supportedLocales;
 
   /// Toggles the current brightness between light and dark.
   void toggleTheme() {
-    // infoSnackbar('theme changed').show();
-    emit(state.brightness == Brightness.dark ? _lightTheme : _darkTheme);
+    final data = ThemeAndLocaleData(
+      theme: state.theme.brightness == Brightness.dark ? _lightTheme : _darkTheme,
+      locale: state.locale,
+    );
+    emit(data);
+  }
+
+  void switchLocale([String? locale]) {
+    late Locale _locale;
+    if (locale == null) {
+      _locale = locales[(locales.indexOf(state.locale) + 1) % locales.length];
+    } else {
+      _locale = Locale(locale);
+    }
+    final data = ThemeAndLocaleData(
+      theme: state.theme,
+      locale: _locale,
+    );
+    emit(data);
   }
 }
 
@@ -160,5 +187,14 @@ MaterialStateProperty<T> materialStatePropForElevatedBtn<T>({
     } else {
       return byDefault;
     }
+  });
+}
+
+class ThemeAndLocaleData {
+  final ThemeData theme;
+  final Locale locale;
+  ThemeAndLocaleData({
+    required this.theme,
+    required this.locale,
   });
 }

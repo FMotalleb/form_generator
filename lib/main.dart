@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
-
 import 'core/services/state/theme_handler.dart';
 import 'features/add_form_page/presentation/pages/add_form_page_view.dart';
+import 'generated/l10n.dart';
 import 'get_it_registrant.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -56,24 +55,22 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeData>(
-      builder: (_, theme) {
+    return BlocBuilder<ThemeCubit, ThemeAndLocaleData>(
+      builder: (_, themeAndLocale) {
         return ScrollConfiguration(
           behavior: const ScrollBehaviorModified(),
           child: MaterialApp(
+            locale: themeAndLocale.locale,
             localizationsDelegates: [
-              AppLocalizations.delegate, // Add this line
+              S.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: [
-              const Locale('en', ''),
-              const Locale('fa', ''),
-            ],
+            supportedLocales: ThemeCubit.locales,
             navigatorKey: GetIt.I.get<GlobalKey<NavigatorState>>(),
             scrollBehavior: const ScrollBehaviorModified(),
-            theme: theme,
+            theme: themeAndLocale.theme,
             home: const AddFormPage(),
           ),
         );

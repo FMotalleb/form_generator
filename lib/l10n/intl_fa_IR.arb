@@ -1,0 +1,20 @@
+{
+    "addField": "افزودن فیلد",
+    "delete": "حذف",
+    "edit": "تغییر",
+    "save": "ذخیره",
+    "cancel": "لغو",
+    "add": "افزودن",
+    "fieldsLabel": "عنوان",
+    "fieldsType": "نوع",
+    "fieldsRequired": "اجباری",
+    "fieldsHint": "کاربرد/نمونه",
+    "clear": "پاک کردن",
+    "loadDb": "خواندن از دیتابیس",
+    "syncWithDb": "همگام سازی با دیتابیس",
+    "changeLanguage": "تغییر زبان",
+    "changeTheme": "تغییر تم",
+    "deleteAll": "حذف همه",
+    "addForm": "افزودن فرم",
+    "deleteFormMessage": "از حذف فرم اطمینان دارید؟"
+}

@@ -7,6 +7,7 @@ import '../../../../../core/custom_widgets/slide_transition.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart' as field_entity;
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
+import '../../../../../get_it_registrant.dart';
 import 'popups/field_editor.dart';
 
 class FormPageView extends StatefulWidget {
@@ -90,7 +91,7 @@ class _FormPageViewState extends State<FormPageView> {
                         },
                         style: theme.elevatedButtonTheme.style,
                         child: Text(
-                          'Add Field',
+                          appLocalization.addField,
                           style: theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                         ),
                       ),
@@ -174,7 +175,7 @@ class _FormPageViewState extends State<FormPageView> {
               ),
             );
             if (resultField == null) {
-              _boundForm.fields.remove(e);
+              _boundForm.fields = _boundForm.fields.where((element) => element.id != e.id).toSet();
             }
             _callNullableFunction(widget.onFormChanged, _boundForm);
             setState(() {});

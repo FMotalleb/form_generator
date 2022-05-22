@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
+import '../../../../../../core/services/state/theme_handler.dart';
+import '../../../../../../get_it_registrant.dart';
 import '../form_page_view.dart';
 
 class RemoveFormView extends StatelessWidget {
@@ -29,9 +31,9 @@ class RemoveFormView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            'Are you sure you want to delete this form?',
-            style: TextStyle(
+          Text(
+            appLocalization.deleteFormMessage,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
             ),
@@ -55,7 +57,7 @@ class RemoveFormView extends StatelessWidget {
                   },
                   style: theme.elevatedButtonTheme.style,
                   child: Text(
-                    'Cancel',
+                    appLocalization.cancel,
                     style: theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                   ),
                 ),
@@ -63,9 +65,20 @@ class RemoveFormView extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  style: theme.elevatedButtonTheme.style,
+                  style: ElevatedButtonTheme.of(context).style?.copyWith(
+                        backgroundColor: materialStatePropForElevatedBtn(
+                          byDefault: const Color.fromARGB(255, 230, 125, 118),
+                          onHovered: const Color.fromARGB(255, 255, 17, 0),
+                          onPressed: const Color.fromARGB(255, 126, 16, 8),
+                        ),
+                        overlayColor: materialStatePropForElevatedBtn(
+                          byDefault: const Color.fromARGB(73, 255, 17, 0),
+                          onHovered: const Color.fromARGB(73, 255, 17, 0),
+                          onPressed: const Color.fromARGB(73, 255, 17, 0),
+                        ),
+                      ),
                   child: Text(
-                    'Delete',
+                    appLocalization.delete,
                     style: theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                   ),
                 ),

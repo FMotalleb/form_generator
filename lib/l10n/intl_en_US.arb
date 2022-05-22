@@ -1,0 +1,20 @@
+{
+    "addField": "Add Field",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "add": "Add",
+    "fieldsLabel": "Label",
+    "fieldsType": "Type",
+    "fieldsRequired": "Required",
+    "fieldsHint": "Hint",
+    "clear": "Clear",
+    "loadDb": "Load Database",
+    "syncWithDb": "Sync with Database",
+    "changeLanguage": "Change Language",
+    "changeTheme": "Change Theme",
+    "deleteAll": "Delete All",
+    "addForm": "Add Form",
+    "deleteFormMessage": "Delete This Form?"
+}

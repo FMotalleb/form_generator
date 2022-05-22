@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/contracts/enums/form_enums/field_types.dart';
 import '../../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
 import '../../../../../../core/services/state/theme_handler.dart';
+import '../../../../../../get_it_registrant.dart';
 
 class FieldEditorPopup extends StatefulWidget {
   FieldEditorPopup({
@@ -17,21 +18,49 @@ class FieldEditorPopup extends StatefulWidget {
   State<FieldEditorPopup> createState() => _FieldEditorPopupState();
 }
 
+enum EditableFields {
+  label,
+  hint,
+  required,
+  type;
+
+  const EditableFields();
+
+  String get getLabel {
+    late String result;
+    switch (this) {
+      case EditableFields.label:
+        result = appLocalization.fieldsLabel;
+        break;
+      case EditableFields.hint:
+        result = appLocalization.fieldsHint;
+        break;
+      case EditableFields.required:
+        result = appLocalization.fieldsRequired;
+        break;
+      case EditableFields.type:
+        result = appLocalization.fieldsType;
+        break;
+    }
+    return result;
+  }
+}
+
 class _FieldEditorPopupState extends State<FieldEditorPopup> {
   late final _field = widget.field;
-  Map<String, TextEditingController> get _controllers => _textControllers;
-  late final Map<String, TextEditingController> _textControllers = {
-    'Label': _field.label.textEditingController
+  Map<EditableFields, TextEditingController> get _controllers => _textControllers;
+  late final Map<EditableFields, TextEditingController> _textControllers = {
+    EditableFields.label: _field.label.textEditingController
       ..addListener(() {
-        _field.label = _controllers['Label']!.text;
+        _field.label = _controllers[EditableFields.label]!.text;
       }),
     // 'error': _field.error.textEditingController
     //   ..addListener(() {
     //     _field.error = _controllers['error']!.text;
     //   }),
-    'Hint': _field.hint.textEditingController
+    EditableFields.hint: _field.hint.textEditingController
       ..addListener(() {
-        _field.hint = _controllers['Hint']!.text;
+        _field.hint = _controllers[EditableFields.hint]!.text;
       }),
   };
   @override
@@ -82,7 +111,7 @@ class _FieldEditorPopupState extends State<FieldEditorPopup> {
                     child: Row(
                       children: [
                         Text(
-                          '${e.key}: ',
+                          '${e.key.getLabel}: ',
                           style: widget.theme.primaryTextTheme.displaySmall?.copyWith(
                             fontSize: 14,
                           ),
@@ -134,7 +163,7 @@ class _FieldEditorPopupState extends State<FieldEditorPopup> {
                   children: [
                     ElevatedButton(
                       child: Text(
-                        'Cancel',
+                        appLocalization.cancel,
                         style: widget.theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                       ),
                       onPressed: () {
@@ -155,7 +184,7 @@ class _FieldEditorPopupState extends State<FieldEditorPopup> {
                             ),
                           ),
                       child: Text(
-                        'Delete',
+                        appLocalization.delete,
                         style: widget.theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                       ),
                       onPressed: () {
@@ -164,7 +193,7 @@ class _FieldEditorPopupState extends State<FieldEditorPopup> {
                     ),
                     ElevatedButton(
                       child: Text(
-                        'Save',
+                        appLocalization.save,
                         style: widget.theme.elevatedButtonTheme.style?.textStyle?.resolve({}),
                       ),
                       onPressed: () {
