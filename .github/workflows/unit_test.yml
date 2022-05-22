@@ -3,13 +3,13 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: unit_tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -17,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.0.0"
+          channel: "stable"
       - run: flutter test
-      
