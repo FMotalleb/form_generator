@@ -21,6 +21,7 @@ jobs:
         with:
           flutter-version: "3.0.0"
           channel: "stable"
+      - run: mkdir .dart_tool/
       - run: mkdir .dart_tool/flutter_gen/
       - run: echo dependencies:& > .dart_tool/flutter_gen/pubspec.yaml
       - run: flutter pub get
