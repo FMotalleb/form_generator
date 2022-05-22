@@ -9,7 +9,7 @@ import '../repositories/form_manager_interface.dart';
 class DeleteFormUsecase with EquatableMixin implements IUsecase<void, FormEntity> {
   @override
   List<Object?> get props => [_repository];
-  final FormManagerInterface _repository;
+  final IFormManager _repository;
   const DeleteFormUsecase(this._repository);
   @override
   Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
@@ -33,7 +33,7 @@ class DeleteFormUsecase with EquatableMixin implements IUsecase<void, FormEntity
   }
 
   @override
-  FormManagerInterface get repository => _repository;
+  IFormManager get repository => _repository;
 
   @override
   String get moduleName => 'delete usecase';

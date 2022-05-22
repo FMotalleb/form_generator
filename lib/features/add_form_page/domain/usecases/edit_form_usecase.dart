@@ -7,7 +7,7 @@ import '../../../../core/models_and_entities/entities/form_entities/form_entity.
 import '../repositories/form_manager_interface.dart';
 
 class EditFormUseCase with EquatableMixin implements IUsecase<void, FormEntity> {
-  final FormManagerInterface _repository;
+  final IFormManager _repository;
   const EditFormUseCase(
     this._repository,
   );
@@ -33,7 +33,7 @@ class EditFormUseCase with EquatableMixin implements IUsecase<void, FormEntity> 
   }
 
   @override
-  FormManagerInterface get repository => _repository;
+  IFormManager get repository => _repository;
   @override
   List<Object?> get props => [_repository];
 

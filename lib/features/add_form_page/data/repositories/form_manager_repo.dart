@@ -8,7 +8,7 @@ import '../../../../core/models_and_entities/entities/form_entities/form_entity.
 import '../../../../core/models_and_entities/models/form_models/form_model.dart';
 import '../../domain/repositories/form_manager_interface.dart';
 
-class FormManagerRepository implements FormManagerInterface {
+class FormManagerRepository implements IFormManager {
   final IDataSource<FormModel> _formDbDataSource;
   FormManagerRepository(this._formDbDataSource);
   @override

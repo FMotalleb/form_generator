@@ -7,7 +7,7 @@ import '../repositories/form_manager_interface.dart';
 class DeleteAllFormsUsecases with EquatableMixin implements IUsecase<void, void> {
   @override
   List<Object?> get props => [_repository];
-  final FormManagerInterface _repository;
+  final IFormManager _repository;
   const DeleteAllFormsUsecases(this._repository);
   @override
   Future<DataSnapHandler<void>> execute([void none]) async {
@@ -26,7 +26,7 @@ class DeleteAllFormsUsecases with EquatableMixin implements IUsecase<void, void>
   }
 
   @override
-  FormManagerInterface get repository => _repository;
+  IFormManager get repository => _repository;
 
   @override
   String get moduleName => 'delete all forms usecase';

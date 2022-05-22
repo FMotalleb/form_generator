@@ -36,7 +36,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     return list;
   }
 
-  final FormManagerInterface formManager;
+  final IFormManager formManager;
   AddNewFormUseCase get _addNewFormUsecases => AddNewFormUseCase(
         formManager,
       );

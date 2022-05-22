@@ -24,7 +24,7 @@ Future<void> registerDependencies() async {
     localFormsDataSource,
     instanceName: DataSourceType.database.name,
   );
-  GetIt.I.registerSingleton<FormManagerInterface>(
+  GetIt.I.registerSingleton<IFormManager>(
     formManagerRepo,
   );
   GetIt.I.registerFactory<GlobalKey<NavigatorState>>(() => navigatorKey);
