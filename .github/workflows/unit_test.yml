@@ -24,7 +24,6 @@ jobs:
       - run: mkdir .dart_tool/
       - run: mkdir .dart_tool/flutter_gen/
       - run: "echo dependencies: > .dart_tool/flutter_gen/pubspec.yaml"
-      - run: cat .dart_tool/flutter_gen/pubspec.yaml
       - run: flutter pub get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
       - run: flutter test
