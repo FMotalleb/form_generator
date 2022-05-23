@@ -46,3 +46,9 @@ class RemoveSpecifiedFormEvent extends AddFormEvent {
   @override
   List<Object> get props => [form];
 }
+
+class GotoPreviewFormEvent extends AddFormEvent {
+  const GotoPreviewFormEvent();
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}

@@ -7,7 +7,8 @@ import '../../../../../core/custom_widgets/slide_transition.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart' as field_entity;
 import '../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
 import '../../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
-import '../../../../../get_it_registrant.dart';
+
+import '../../../../../static_tools.dart';
 import 'popups/field_editor.dart';
 
 class FormPageView extends StatefulWidget {
@@ -102,32 +103,35 @@ class _FormPageViewState extends State<FormPageView> {
             // borderOnForeground: true,
           ),
         ),
-        if (!widget.displayOnly)
-          Positioned(
-            child: InkWell(
-              hoverColor: const Color.fromARGB(255, 255, 17, 0),
-              splashColor: const Color.fromARGB(255, 0, 0, 0),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(8),
-              ),
-              onTap: () {
-                _callNullableFunction(widget.onFormRemoved, _boundForm);
-              },
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(193, 255, 24, 8),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                ),
-                child: const Icon(
-                  Icons.close,
-                  size: 25,
-                ),
-              ),
-            ),
-          )
+        if (!widget.displayOnly) generateCloseBtn()
       ],
+    );
+  }
+
+  Positioned generateCloseBtn() {
+    return Positioned(
+      child: InkWell(
+        hoverColor: const Color.fromARGB(255, 255, 17, 0),
+        splashColor: const Color.fromARGB(255, 0, 0, 0),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(8),
+        ),
+        onTap: () {
+          _callNullableFunction(widget.onFormRemoved, _boundForm);
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Color.fromARGB(193, 255, 24, 8),
+            borderRadius: BorderRadius.all(
+              Radius.circular(8),
+            ),
+          ),
+          child: const Icon(
+            Icons.close,
+            size: 25,
+          ),
+        ),
+      ),
     );
   }
 

@@ -13,13 +13,15 @@ import 'core/services/state/theme_handler.dart';
 import 'features/add_form_page/data/datasources/isar_form_db_data_source.dart';
 import 'features/add_form_page/data/repositories/form_manager_repo.dart';
 import 'features/add_form_page/domain/repositories/form_manager_interface.dart';
-import 'generated/l10n.dart';
 
 Future<void> registerDependencies() async {
-  final localFormsDataSource = await createFormsDataSource();
+  final localFormsDataSource = await _createFormsDataSource();
   final formManagerRepo = FormManagerRepository(localFormsDataSource);
-  final navigatorKey = createNavigatorKey();
-  GetIt.I.registerSingleton(createThemeInstance());
+  final navigatorKey = _createNavigatorKey();
+  final themeQubit = _createThemeInstance();
+  GetIt.I.registerSingleton<ThemeCubit>(
+    themeQubit,
+  );
   GetIt.I.registerSingleton<IDataSource<FormModel>>(
     localFormsDataSource,
     instanceName: DataSourceType.database.name,
@@ -27,16 +29,23 @@ Future<void> registerDependencies() async {
   GetIt.I.registerSingleton<IFormManager>(
     formManagerRepo,
   );
-  GetIt.I.registerFactory<GlobalKey<NavigatorState>>(() => navigatorKey);
-  GetIt.I.registerFactory<BuildContext>(() => getCurrentContextOf(navigatorKey));
+  GetIt.I.registerFactory<GlobalKey<NavigatorState>>(
+    () => navigatorKey,
+  );
+  GetIt.I.registerFactory<BuildContext>(
+    () => _getCurrentContextOf(navigatorKey),
+  );
+  GetIt.I.registerFactory<NavigatorState>(
+    () => Navigator.of(GetIt.I.get<BuildContext>()),
+  );
 }
 
-S get appLocalization => S.of(GetIt.I.get<BuildContext>());
-BuildContext getCurrentContextOf(GlobalKey<NavigatorState> navigatorKey) => navigatorKey.currentState!.overlay!.context;
-GlobalKey<NavigatorState> createNavigatorKey() => GlobalKey<NavigatorState>();
-ThemeCubit createThemeInstance() => ThemeCubit();
+BuildContext _getCurrentContextOf(GlobalKey<NavigatorState> navigatorKey) =>
+    navigatorKey.currentState!.overlay!.context;
+GlobalKey<NavigatorState> _createNavigatorKey() => GlobalKey<NavigatorState>();
+ThemeCubit _createThemeInstance() => ThemeCubit();
 
-Future<IDataSource<FormModel>> createFormsDataSource() async {
+Future<IDataSource<FormModel>> _createFormsDataSource() async {
   final isarDbSchemas = [
     IsarFormFieldSchema,
     IsarFormModelSchema,
@@ -56,38 +65,4 @@ Future<IDataSource<FormModel>> createFormsDataSource() async {
     );
     return IsarFormDbDataSource(isar: isar);
   }
-}
-
-Future<T?> noContextDialog<T>({
-  required Widget Function(BuildContext) builder,
-  bool barrierDismissible = true,
-  Color? barrierColor = Colors.black54,
-  String? barrierLabel,
-  bool useSafeArea = true,
-  bool useRootNavigator = true,
-  RouteSettings? routeSettings,
-  Offset? anchorPoint,
-}) =>
-    showDialog<T>(
-      context: GetIt.I.get<BuildContext>(),
-      builder: builder,
-      barrierDismissible: barrierDismissible,
-      barrierColor: barrierColor,
-      barrierLabel: barrierLabel,
-      useSafeArea: useSafeArea,
-      useRootNavigator: useRootNavigator,
-      routeSettings: routeSettings,
-      anchorPoint: anchorPoint,
-    );
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackbar(
-  SnackBar snackBar, {
-  BuildContext? context,
-  bool removeIfExists = true,
-}) {
-  final currentContext = context ?? GetIt.I.get<BuildContext>();
-  final scaffoldMessenger = ScaffoldMessenger.of(currentContext);
-  if (removeIfExists) {
-    scaffoldMessenger.hideCurrentSnackBar(reason: SnackBarClosedReason.remove);
-  }
-  return scaffoldMessenger.showSnackBar(snackBar);
 }

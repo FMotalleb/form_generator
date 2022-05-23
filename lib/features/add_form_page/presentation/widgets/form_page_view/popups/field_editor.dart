@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/contracts/enums/form_enums/field_types.dart';
 import '../../../../../../core/models_and_entities/entities/form_entities/field_entity.dart';
 import '../../../../../../core/services/state/theme_handler.dart';
-import '../../../../../../get_it_registrant.dart';
+import '../../../../../../static_tools.dart';
 
 class FieldEditorPopup extends StatefulWidget {
   FieldEditorPopup({

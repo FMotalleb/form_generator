@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'core/services/navigator/routes.dart';
 import 'core/services/state/theme_handler.dart';
 import 'features/add_form_page/presentation/pages/add_form_page_view.dart';
 import 'generated/l10n.dart';
 import 'get_it_registrant.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerDependencies();
@@ -67,11 +69,13 @@ class AppView extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
+            routes: navigatorRoutes,
+            initialRoute: AppRoutes.initialRoute.pageRoute,
             supportedLocales: ThemeCubit.locales,
             navigatorKey: GetIt.I.get<GlobalKey<NavigatorState>>(),
             scrollBehavior: const ScrollBehaviorModified(),
             theme: themeAndLocale.theme,
-            home: const AddFormPage(),
+            // home: const AddFormPage(),
           ),
         );
       },

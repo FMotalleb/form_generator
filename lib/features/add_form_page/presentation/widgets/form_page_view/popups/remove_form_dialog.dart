@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../../../../../../core/services/state/theme_handler.dart';
-import '../../../../../../get_it_registrant.dart';
+import '../../../../../../static_tools.dart';
 import '../form_page_view.dart';
 
 class RemoveFormView extends StatelessWidget {

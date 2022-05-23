@@ -8,8 +8,9 @@ import 'package:get_it/get_it.dart';
 import 'package:hemend/debug/logger.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
+import '../../../../core/services/navigator/navigator.dart';
 import '../../../../core/services/state/theme_handler.dart';
-import '../../../../get_it_registrant.dart';
+import '../../../../static_tools.dart';
 import '../../domain/repositories/form_manager_interface.dart';
 import '../../domain/usecases/add_new_form_usecase.dart';
 import '../../domain/usecases/delete_all_forms_usecase.dart';
@@ -184,6 +185,11 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         }
       },
     );
+    on<GotoPreviewFormEvent>(
+      (event, emit) {
+        AppRouteNavigator.push(AppRoutes.formPreview);
+      },
+    );
     if (initialLoad) {
       add(const LoadDataFromDataBaseEvent(forcedRefresh: false));
     }
@@ -205,5 +211,5 @@ SnackBar infoSnackbar(String info) {
 }
 
 extension ShowSnack on SnackBar {
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> show() => showSnackbar(this);
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> show() => noContextSnackbar(this);
 }
