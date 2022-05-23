@@ -29,8 +29,8 @@ Future<void> registerDependencies() async {
   GetIt.I.registerSingleton<IFormManager>(
     formManagerRepo,
   );
-  GetIt.I.registerFactory<GlobalKey<NavigatorState>>(
-    () => navigatorKey,
+  GetIt.I.registerSingleton<GlobalKey<NavigatorState>>(
+    navigatorKey,
   );
   GetIt.I.registerFactory<BuildContext>(
     () => _getCurrentContextOf(navigatorKey),
