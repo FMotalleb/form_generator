@@ -12,7 +12,7 @@ class DeleteFormUsecase with EquatableMixin implements IUsecase<void, FormEntity
   final IFormManager _repository;
   const DeleteFormUsecase(this._repository);
   @override
-  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
+  Future<DataSnapHandler<void>> invoke([FormEntity? params]) async {
     try {
       if (params == null) {
         throw ErrorHandler('params cannot be null', {
@@ -31,9 +31,6 @@ class DeleteFormUsecase with EquatableMixin implements IUsecase<void, FormEntity
       );
     }
   }
-
-  @override
-  IFormManager get repository => _repository;
 
   @override
   String get moduleName => 'delete usecase';

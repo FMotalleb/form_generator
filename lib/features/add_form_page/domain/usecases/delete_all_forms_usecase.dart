@@ -10,7 +10,7 @@ class DeleteAllFormsUsecases with EquatableMixin implements IUsecase<void, void>
   final IFormManager _repository;
   const DeleteAllFormsUsecases(this._repository);
   @override
-  Future<DataSnapHandler<void>> execute([void none]) async {
+  Future<DataSnapHandler<void>> invoke([void none]) async {
     try {
       await _repository.deleteAllForms();
       return const DataSnapHandler<bool>.done(
@@ -24,9 +24,6 @@ class DeleteAllFormsUsecases with EquatableMixin implements IUsecase<void, void>
       );
     }
   }
-
-  @override
-  IFormManager get repository => _repository;
 
   @override
   String get moduleName => 'delete all forms usecase';

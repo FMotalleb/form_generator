@@ -12,7 +12,7 @@ class GetAllItemsUsecase with EquatableMixin implements IUsecase<void, void> {
     this._repository,
   );
   @override
-  Future<DataSnapHandler<List<FormEntity>>> execute([void params]) async {
+  Future<DataSnapHandler<List<FormEntity>>> invoke([void params]) async {
     final result = await _repository.getAllForms();
     if (result == null) {
       return DataSnapHandler.error(
@@ -42,8 +42,6 @@ class GetAllItemsUsecase with EquatableMixin implements IUsecase<void, void> {
     }
   }
 
-  @override
-  IFormManager get repository => _repository;
   @override
   List<Object?> get props => [_repository];
 

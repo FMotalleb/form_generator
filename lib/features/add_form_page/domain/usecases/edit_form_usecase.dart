@@ -12,7 +12,7 @@ class EditFormUseCase with EquatableMixin implements IUsecase<void, FormEntity> 
     this._repository,
   );
   @override
-  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
+  Future<DataSnapHandler<void>> invoke([FormEntity? params]) async {
     try {
       if (params == null) {
         throw ErrorHandler('params cannot be null', {
@@ -32,8 +32,6 @@ class EditFormUseCase with EquatableMixin implements IUsecase<void, FormEntity> 
     }
   }
 
-  @override
-  IFormManager get repository => _repository;
   @override
   List<Object?> get props => [_repository];
 

@@ -16,7 +16,7 @@ class AddNewFormUseCase with EquatableMixin implements IUsecase<void, FormEntity
   List<Object?> get props => [_repository];
 
   @override
-  Future<DataSnapHandler<void>> execute([FormEntity? params]) async {
+  Future<DataSnapHandler<void>> invoke([FormEntity? params]) async {
     try {
       if (params == null) {
         throw ErrorHandler('params cannot be null', {
@@ -37,9 +37,6 @@ class AddNewFormUseCase with EquatableMixin implements IUsecase<void, FormEntity
       );
     }
   }
-
-  @override
-  IFormManager get repository => _repository;
 
   @override
   String get moduleName => 'add new form usecase';
