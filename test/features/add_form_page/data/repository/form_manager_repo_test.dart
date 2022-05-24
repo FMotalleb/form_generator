@@ -28,7 +28,11 @@ void main() {
     });
     test('checking addForm method', () async {
       await _formManagerRepo.addForm(_dataSample);
-      verify(_formDbDataSource.write(argThat(isNotNull)));
+      verify(
+        _formDbDataSource.write(
+          argThat(isNotNull),
+        ),
+      );
     });
 
     test('checking deleteForm method', () async {

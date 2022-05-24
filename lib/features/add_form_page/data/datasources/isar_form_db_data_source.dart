@@ -7,7 +7,7 @@ import '../../../../core/models_and_entities/models/form_models/form_model.dart'
 
 class IsarFormDbDataSource implements IDataSource<FormModel> {
   final Isar _isar;
-  IsarFormDbDataSource({required Isar isar}) : _isar = isar;
+  const IsarFormDbDataSource({required Isar isar}) : _isar = isar;
 
   @override
   Future<void> deleteItem(FormModel input) async {

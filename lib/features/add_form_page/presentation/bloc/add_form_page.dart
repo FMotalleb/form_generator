@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hemend/debug/logger.dart';
+import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../../../../core/services/navigator/navigator.dart';
@@ -128,6 +129,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
           emit(getStateForForms());
         }
         final value = await _getAllFormsUsecases.invoke();
+
         value.singleActOnFinished(
           onDone: (d) {
             forms = d!.toSet();

@@ -4,6 +4,7 @@ import '../../../contracts/enums/form_enums/field_types.dart';
 import '../../../contracts/interfaces/base_model/base_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
+import '../../entities/form_entities/form_entity.dart';
 
 // ignore: must_be_immutable
 class FormFieldModel extends FormFieldEntity implements IModel {
@@ -33,27 +34,27 @@ class FormFieldModel extends FormFieldEntity implements IModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'index': index,
+      'item_index': index,
       'key': key,
       'type': type.toMap(),
       'label': label,
       'hint': hint,
       'error': error,
-      'isValid': internalValidators,
+      'internalValidators': internalValidators,
     };
   }
 
   @override
   factory FormFieldModel.fromMap(Map<String, dynamic> map) {
     return FormFieldModel(
-      index: map['index'] as int,
+      index: map['item_index'] as int,
       id: map['id'] as int,
       key: (map['key'] ?? '').toString(),
       type: FieldType.fromMap(map['type'].toString()),
       label: (map['label'] ?? '').toString(),
       hint: (map['hint'] ?? '').toString(),
       error: (map['error'] ?? '').toString(),
-      internalValidators: (map['isValid'] ?? '').toString(),
+      internalValidators: (map['internalValidators'] ?? '').toString(),
     );
   }
   @override

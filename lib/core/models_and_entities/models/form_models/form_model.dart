@@ -37,7 +37,7 @@ class FormModel extends FormEntity implements IModel {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'index': index,
+      'item_index': index,
       'title': title,
       'description': description,
       'fields': fields
@@ -62,7 +62,7 @@ class FormModel extends FormEntity implements IModel {
   @override
   factory FormModel.fromMap(Map<String, dynamic> map) {
     return FormModel(
-      index: map['index'] as int,
+      index: map['item_index'] as int,
       id: map['id'] as int,
       title: (map['title'] ?? '').toString(),
       description: (map['description'] ?? '').toString(),
