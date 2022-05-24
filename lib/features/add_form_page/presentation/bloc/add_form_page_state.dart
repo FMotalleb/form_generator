@@ -3,12 +3,15 @@ part of 'add_form_page.dart';
 abstract class AddFormPageState extends Equatable {
   const AddFormPageState();
 
-  @override
-  List<Object> get props => [];
+  // @override
+  // List<Object> get props => [];
 }
 
 class AddFormPageStateInitial extends AddFormPageState {
   const AddFormPageStateInitial();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class AddFormPageStateValue extends AddFormPageState {

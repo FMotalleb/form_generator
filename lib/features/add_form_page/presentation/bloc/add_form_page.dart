@@ -76,7 +76,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         ...forms,
         newForm,
       };
-      _addNewFormUsecases.execute(newForm).then(
+      _addNewFormUsecases.invoke(newForm).then(
             (value) => value.singleActOnFinished(
               onDone: (d) {
                 'add new form finished'.log();
@@ -104,7 +104,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
 
       if (permission == true) {
         forms = forms.where((element) => element.id != item.id).toSet();
-        _deleteFormUsecases.execute(item).then(
+        _deleteFormUsecases.invoke(item).then(
               (value) => value.singleActOnFinished(
                 onDone: (d) {
                   'delete last finished'.log();
@@ -127,7 +127,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         if (event.forcedRefresh) {
           emit(getStateForForms());
         }
-        final value = await _getAllFormsUsecases.execute();
+        final value = await _getAllFormsUsecases.invoke();
         value.singleActOnFinished(
           onDone: (d) {
             forms = d!.toSet();
@@ -144,7 +144,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     );
     on<DeleteDataBaseEvent>(
       (event, emit) async {
-        await _deleteAllUsecases.execute();
+        await _deleteAllUsecases.invoke();
         forms.clear();
 
         emit(getStateForForms());
@@ -153,7 +153,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
 
     on<EditFormEvent>(
       (event, emit) async {
-        final result = await _editFormUsecases.execute(event.form);
+        final result = await _editFormUsecases.invoke(event.form);
         try {
           addForm(event.form);
 
@@ -179,9 +179,9 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     );
     on<SyncFormsWithDataBaseEvent>(
       (event, emit) async {
-        await _deleteAllUsecases.execute();
+        await _deleteAllUsecases.invoke();
         for (final i in forms) {
-          await _addNewFormUsecases.execute(i);
+          await _addNewFormUsecases.invoke(i);
         }
       },
     );

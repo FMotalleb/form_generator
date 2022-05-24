@@ -1,7 +1,4 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
-
 import '../../../../core/contracts/interfaces/base_usecases/base_usecase.dart';
 import '../../../../core/contracts/interfaces/data_source/db_data_source_base.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
@@ -44,6 +41,6 @@ class FormManagerRepository implements IFormManager {
 
   @override
   Future<DataSnapHandler<T>> executeRequest<T, R>(IUsecase<T, R> usecase, R params) {
-    return usecase.execute(params);
+    return usecase.invoke(params);
   }
 }
