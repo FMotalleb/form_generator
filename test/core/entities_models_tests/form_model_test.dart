@@ -17,7 +17,6 @@ void main() {
         hint: 'test hint',
         internalValidators: '',
         type: FieldType.string,
-        key: 'test key',
         label: 'test label',
       );
       formSample = FormEntity(
@@ -25,7 +24,7 @@ void main() {
         index: 0,
         title: 'test title',
         description: 'test description',
-        fields: {fieldSample},
+        fields: [fieldSample],
       );
     });
 
