@@ -27,7 +27,7 @@ class GetAllItemsUsecase with EquatableMixin implements IUsecase<void, void> {
       tempList.sort((a, b) {
         return a.index.compareTo(b.index);
       });
-      item.fields = tempList.toSet();
+      item.fields = tempList.toList();
     }
     try {
       return DataSnapHandler.done(

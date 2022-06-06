@@ -45,7 +45,7 @@ class IsarFormDbDataSource implements IDataSource<FormModel> {
       await item.isarFields.load();
       final sortedProps = item.isarFields.toList();
       sortedProps.sort((a, b) => a.index.compareTo(b.index));
-      item.fields = sortedProps.toSet();
+      item.fields = sortedProps.toList();
     }
     return items.map((e) => e.castToModel()).toList();
   }
@@ -60,7 +60,7 @@ class IsarFormDbDataSource implements IDataSource<FormModel> {
 
     if (item != null) {
       await item.isarFields.load();
-      item.fields = item.isarFields.toSet();
+      item.fields = item.isarFields.toList();
     }
     return item?.castToModel();
   }

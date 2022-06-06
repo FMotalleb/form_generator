@@ -4,10 +4,13 @@ import '../base_entity/base_entity.dart';
 
 abstract class IModel extends IEntity {
   IModel castToIsarModel();
+  IModel castToHiveModel();
   IEntity castToEntity();
+
   IModel();
   Map<String, dynamic> toMap();
   String toJson();
+
   factory IModel.fromMap(Map<String, dynamic> map) {
     throw UnimplementedError();
   }

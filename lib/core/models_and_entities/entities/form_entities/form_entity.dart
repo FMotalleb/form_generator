@@ -7,13 +7,13 @@ class FormEntity extends IEntity {
   int index;
   String title;
   String description;
-  Set<FormFieldEntity> fields;
+  List<FormFieldEntity> fields;
   FormEntity({
     required this.id,
     required this.index,
     this.title = '',
     this.description = '',
-    this.fields = const {},
+    this.fields = const [],
   });
   @override
   List<Object> get equalCheckItems => [title, description, ...fields];

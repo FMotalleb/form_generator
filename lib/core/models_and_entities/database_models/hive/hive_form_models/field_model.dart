@@ -3,17 +3,17 @@ import 'package:hive_flutter/adapters.dart';
 import '../../../../contracts/enums/form_enums/field_types.dart';
 import '../../../models/form_models/field_model.dart';
 
+part 'field_model.g.dart';
+
 @HiveType(typeId: 1)
-class HiveFormField extends FormFieldModel {
+class HiveFormField extends FormFieldModel with HiveObjectMixin {
   @HiveField(0)
   @override
   int id;
   @HiveField(1)
   @override
   int index;
-  @HiveField(2)
-  @override
-  String key;
+
   @HiveField(3)
   @override
   FieldType type;
@@ -32,7 +32,6 @@ class HiveFormField extends FormFieldModel {
   HiveFormField({
     required this.id,
     required this.index,
-    required this.key,
     required this.type,
     required this.label,
     required this.hint,
@@ -44,7 +43,6 @@ class HiveFormField extends FormFieldModel {
           error: error,
           hint: hint,
           label: label,
-          key: key,
           type: type,
           internalValidators: internalValidators,
         );

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../../../contracts/enums/form_enums/field_types.dart';
 import '../../../contracts/interfaces/base_model/base_model.dart';
+import '../../database_models/hive/hive_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
 import '../../entities/form_entities/form_entity.dart';
@@ -11,19 +12,17 @@ class FormFieldModel extends FormFieldEntity implements IModel {
   FormFieldModel({
     required super.id,
     required super.index,
-    super.key = '',
-    super.type = FieldType.number,
-    super.label = '',
-    super.hint = '',
-    super.error = '',
-    super.internalValidators = '',
+    required super.type,
+    required super.label,
+    required super.hint,
+    required super.error,
+    required super.internalValidators,
   });
 
   @override
   IsarFormField castToIsarModel() => IsarFormField(
         id: id,
         index: index,
-        key: key,
         type: type,
         label: label,
         hint: hint,
@@ -35,7 +34,6 @@ class FormFieldModel extends FormFieldEntity implements IModel {
     return {
       'id': id,
       'item_index': index,
-      'key': key,
       'type': type.toMap(),
       'label': label,
       'hint': hint,
@@ -49,7 +47,6 @@ class FormFieldModel extends FormFieldEntity implements IModel {
     return FormFieldModel(
       index: map['item_index'] as int,
       id: map['id'] as int,
-      key: (map['key'] ?? '').toString(),
       type: FieldType.fromMap(map['type'].toString()),
       label: (map['label'] ?? '').toString(),
       hint: (map['hint'] ?? '').toString(),
@@ -68,7 +65,6 @@ class FormFieldModel extends FormFieldEntity implements IModel {
     return FormFieldModel(
       index: entity.index,
       id: entity.id,
-      key: entity.key,
       type: entity.type,
       label: entity.label,
       hint: entity.hint,
@@ -80,7 +76,6 @@ class FormFieldModel extends FormFieldEntity implements IModel {
   FormFieldEntity castToEntity() {
     return FormFieldEntity(
       id: id,
-      key: key,
       index: index,
       type: type,
       label: label,
@@ -89,4 +84,31 @@ class FormFieldModel extends FormFieldEntity implements IModel {
       internalValidators: internalValidators,
     );
   }
+
+  @override
+  HiveFormField castToHiveModel() {
+    return HiveFormField(
+      id: id,
+      index: index,
+      type: type,
+      label: label,
+      hint: hint,
+      error: error,
+      internalValidators: internalValidators,
+    );
+  }
+
+  // @override
+  // HiveFormField castToHiveModel() {
+  //   return HiveFormField(
+  //     id: id,
+  //     index: index,
+  //     key: key,
+  //     type: type,
+  //     label: label,
+  //     hint: hint,
+  //     error: error,
+  //     internalValidators: internalValidators,
+  //   );
+  // }
 }

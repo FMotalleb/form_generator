@@ -55,6 +55,7 @@ class _FormPageViewState extends State<FormPageView> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Stack(
+      key: ValueKey(_boundForm.id),
       children: [
         SizedBox(
           width: 360,
@@ -139,7 +140,7 @@ class _FormPageViewState extends State<FormPageView> {
     final index = _boundForm.fields.isEmpty
         ? 0
         : (_boundForm.fields.toList()..sort((a, b) => a.index.compareTo(b.index))).last.index + 1;
-    _boundForm.fields = {
+    _boundForm.fields = [
       ..._boundForm.fields,
       field_entity.FormFieldEntity(
         id: int.parse(
@@ -151,9 +152,8 @@ class _FormPageViewState extends State<FormPageView> {
         error: '',
         hint: '',
         internalValidators: '',
-        key: StringToolkit.getRandomString(15),
       ),
-    };
+    ];
   }
 
   Widget createFieldView(
@@ -179,7 +179,7 @@ class _FormPageViewState extends State<FormPageView> {
               ),
             );
             if (resultField == null) {
-              _boundForm.fields = _boundForm.fields.where((element) => element.id != e.id).toSet();
+              _boundForm.fields = _boundForm.fields.where((element) => element.id != e.id).toList();
             }
             _callNullableFunction(widget.onFormChanged, _boundForm);
             setState(() {});

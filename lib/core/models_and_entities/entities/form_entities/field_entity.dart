@@ -5,7 +5,6 @@ import '../../../contracts/interfaces/base_entity/base_entity.dart';
 class FormFieldEntity extends IEntity {
   int id;
   int index;
-  String key;
   FieldType type;
   String label;
   String hint;
@@ -14,7 +13,6 @@ class FormFieldEntity extends IEntity {
 
   FormFieldEntity({
     required this.id,
-    required this.key,
     required this.index,
     required this.type,
     required this.label,
@@ -24,5 +22,5 @@ class FormFieldEntity extends IEntity {
   });
 
   @override
-  List<Object> get equalCheckItems => [id, key, type, label, hint, error, internalValidators];
+  List<Object> get equalCheckItems => [id, type, label, hint, error, internalValidators];
 }

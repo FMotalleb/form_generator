@@ -27,9 +27,13 @@ part 'add_form_page_state.dart';
 /// A simple [Bloc] that manages an `int` as its state.
 /// {@endtemplate}
 class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
-  Set<FormEntity> forms;
+  List<FormEntity> forms;
   void addForm(FormEntity form) {
-    forms = {...sortedForms.where((element) => element.id != form.id), form};
+    forms = [...sortedForms.where((element) => element.id != form.id), form];
+  }
+
+  void updateWith(FormEntity form) {
+    forms.setValueWhere((element) => element.id == form.id, form, true);
   }
 
   List<FormEntity> get sortedForms {
@@ -64,7 +68,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
 
   /// {@macro counter_bloc}
   AddFormBloc({required this.formManager, bool initialLoad = true})
-      : forms = {},
+      : forms = [],
         super(const AddFormPageStateInitial()) {
     on<AddNewFormEvent>((event, emit) async {
       final index = forms.isEmpty ? 0 : sortedForms.last.index + 1;
@@ -73,10 +77,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         index: index,
         title: 'test form $index',
       );
-      forms = {
-        ...forms,
-        newForm,
-      };
+      updateWith(newForm);
       _addNewFormUsecases.invoke(newForm).then(
             (value) => value.singleActOnFinished(
               onDone: (d) {
@@ -104,7 +105,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       }
 
       if (permission == true) {
-        forms = forms.where((element) => element.id != item.id).toSet();
+        forms = forms.where((element) => element.id != item.id).toList();
         _deleteFormUsecases.invoke(item).then(
               (value) => value.singleActOnFinished(
                 onDone: (d) {
@@ -124,7 +125,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
 
     on<LoadDataFromDataBaseEvent>(
       (event, emit) async {
-        forms = {};
+        forms = [];
         if (event.forcedRefresh) {
           emit(getStateForForms());
         }
@@ -132,7 +133,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
 
         value.singleActOnFinished(
           onDone: (d) {
-            forms = d!.toSet();
+            forms = d!;
             emit(getStateForForms());
           },
           onError: (e) {
@@ -157,7 +158,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
       (event, emit) async {
         final result = await _editFormUsecases.invoke(event.form);
         try {
-          addForm(event.form);
+          updateWith(event.form);
 
           result.singleActOnFinished(
             onDone: (d) {
@@ -214,4 +215,17 @@ SnackBar infoSnackbar(String info) {
 
 extension ShowSnack on SnackBar {
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> show() => noContextSnackbar(this);
+}
+
+extension SetValue<T> on List<T> {
+  void setValueWhere(bool Function(T) test, T value, [bool addIfNotFound = false]) {
+    final currentPos = indexWhere(test);
+    if (currentPos != -1) {
+      this[currentPos] = value;
+    } else if (addIfNotFound) {
+      add(value);
+    } else {
+      throw Exception('test failed ');
+    }
+  }
 }

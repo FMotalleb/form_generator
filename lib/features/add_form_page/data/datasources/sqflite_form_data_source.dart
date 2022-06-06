@@ -41,7 +41,7 @@ class SqfLiteFormDataSource implements IDataSource<FormModel> {
     for (final form in forms) {
       final fields = await getAllFieldsFor(form.id);
       if (fields != null) {
-        form.fields = fields.toSet();
+        form.fields = fields.toList();
       }
     }
     return forms;
@@ -56,12 +56,10 @@ class SqfLiteFormDataSource implements IDataSource<FormModel> {
     ))
         .first;
     final form = FormModel.fromMap(formMap);
-
     final fields = await getAllFieldsFor(form.id);
     if (fields != null) {
-      form.fields = fields.toSet();
+      form.fields = fields.toList();
     }
-
     return form;
   }
 
@@ -71,24 +69,16 @@ class SqfLiteFormDataSource implements IDataSource<FormModel> {
   @override
   Future<void> update(FormModel input) async {
     final formMap = mapNormalizer(input.toMap());
-    final fieldsMap = input.fields.map((e) => mapNormalizer(FormFieldModel.fromEntity(e).toMap(), input.id)).toList();
     formMap.remove('fields');
+    final fieldsMap = input.fields.map((e) => mapNormalizer(FormFieldModel.fromEntity(e).toMap(), input.id)).toList();
     try {
       await _sqfLiteDb.delete(_kFieldsTableName, where: 'form_id = ?', whereArgs: [input.id]);
     } catch (e) {
-      // rethrow;
+      rethrow;
     }
 
     for (final field in fieldsMap) {
       await _sqfLiteDb.insert(_kFieldsTableName, field);
-      // } else {
-      //   await _sqfLiteDb.update(
-      //     _kFieldsTableName,
-      //     field,
-      //     where: 'field_id = ?',
-      //     whereArgs: [field['field_id']],
-      //   );
-      // }
     }
     await _sqfLiteDb.update(
       _kFormsTableName,

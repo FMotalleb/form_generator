@@ -19,7 +19,7 @@ class IsarFormModel extends FormModel {
     required super.index,
     required super.title,
     required super.description,
-    super.fields = const {},
+    super.fields = const [],
   }) : super(
           id: id,
         ) {
@@ -40,6 +40,6 @@ class IsarFormModel extends FormModel {
         title: title,
         index: index,
         description: description,
-        fields: isarFields.map((e) => e.castToModel().castToEntity()).toSet(),
+        fields: isarFields.map((e) => e.castToModel().castToEntity()).toList(),
       );
 }

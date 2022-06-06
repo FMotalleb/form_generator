@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:isar/isar.dart';
 
 import '../../../contracts/interfaces/base_model/base_model.dart';
+import '../../database_models/hive/hive_form_models/form_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/form_model.dart';
 import '../../entities/form_entities/field_entity.dart';
@@ -22,7 +23,7 @@ class FormModel extends FormEntity implements IModel {
   FormModel copyWith({
     String? title,
     String? description,
-    Set<FormFieldModel>? fields,
+    List<FormFieldModel>? fields,
   }) {
     return FormModel(
       id: id,
@@ -54,10 +55,11 @@ class FormModel extends FormEntity implements IModel {
         index: index,
         title: title,
         description: description,
-        fields: IsarLinks<IsarFormField>()
-          ..addAll(
-            fields.map((e) => FormFieldModel.fromEntity(e).castToIsarModel()),
-          ),
+        fields: (IsarLinks<IsarFormField>()
+              ..addAll(
+                fields.map((e) => FormFieldModel.fromEntity(e).castToIsarModel()),
+              ))
+            .toList(),
       );
   @override
   factory FormModel.fromMap(Map<String, dynamic> map) {
@@ -66,7 +68,7 @@ class FormModel extends FormEntity implements IModel {
       id: map['id'] as int,
       title: (map['title'] ?? '').toString(),
       description: (map['description'] ?? '').toString(),
-      fields: Set<FormFieldEntity>.from(
+      fields: List<FormFieldEntity>.from(
         List<Map<String, dynamic>>.from((map['fields'] ?? []) as Iterable).map(
           (e) => FormFieldModel.fromMap(e).castToEntity(),
         ),
@@ -90,7 +92,7 @@ class FormModel extends FormEntity implements IModel {
           .map(
             FormFieldModel.fromEntity,
           )
-          .toSet(),
+          .toList(),
     );
   }
   @override
@@ -102,9 +104,31 @@ class FormModel extends FormEntity implements IModel {
     return FormEntity(
       id: id,
       index: index,
-      fields: fields.map((e) => FormFieldModel.fromEntity(e).castToEntity()).toSet(),
+      fields: fields.map((e) => FormFieldModel.fromEntity(e).castToEntity()).toList(),
       description: description,
       title: title,
     );
   }
+
+  @override
+  HiveFormModel castToHiveModel() {
+    return HiveFormModel(
+      id: id,
+      index: index,
+      title: title,
+      description: description,
+      fields: fields.map((e) => FormFieldModel.fromEntity(e).castToHiveModel()).toList(),
+    );
+  }
+
+  // @override
+  // HiveFormModel castToHiveModel() {
+  //   return HiveFormModel(
+  //     id: id,
+  //     index: index,
+  //     title: title,
+  //     description: description,
+  //     fields: fields.map((e) => FormFieldModel.fromEntity(e).castToHiveModel()).toSet(),
+  //   );
+  // }
 }

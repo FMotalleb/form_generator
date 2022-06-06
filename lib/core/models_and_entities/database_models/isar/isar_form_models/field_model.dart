@@ -18,14 +18,22 @@ class IsarFormField extends FormFieldModel {
   FormFieldModel castToModel() => this;
   IsarFormField({
     required this.id,
-    super.key = '',
     required super.index,
     this.type = FieldType.number,
     super.label = '',
     super.hint = '',
     super.error = '',
     super.internalValidators = '',
-  }) : super(id: id);
+  }) : super(
+          id: id,
+          // index: index,
+          // key: key,
+          type: type,
+          // label: label,
+          // hint: hint,
+          // error: error,
+          // internalValidators: internalValidators,
+        );
 
   // @override
   // List get equalCheckItems => equalCheckItems;
