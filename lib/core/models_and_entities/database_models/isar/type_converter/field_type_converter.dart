@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import 'package:form_generator/core/contracts/enums/form_enums/field_types.dart';
+import '../../../../contracts/enums/form_enums/field_types.dart';
 
 class FieldTypeConverter extends TypeConverter<FieldType, int> {
   const FieldTypeConverter();

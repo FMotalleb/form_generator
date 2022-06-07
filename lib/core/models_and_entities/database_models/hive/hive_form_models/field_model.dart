@@ -2,18 +2,18 @@ import 'package:hive_flutter/adapters.dart';
 
 import '../../../../contracts/enums/form_enums/field_types.dart';
 import '../../../models/form_models/field_model.dart';
+import '../../base_database/base_hive_model.dart';
 
 part 'field_model.g.dart';
 
 @HiveType(typeId: 1)
-class HiveFormField extends FormFieldModel with HiveObjectMixin {
+class HiveFormField extends FormFieldModel with HiveObjectMixin implements IHiveModel {
   @HiveField(0)
   @override
   int id;
   @HiveField(1)
   @override
   int index;
-
   @HiveField(3)
   @override
   FieldType type;

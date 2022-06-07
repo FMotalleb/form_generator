@@ -2,10 +2,11 @@ import 'package:hive/hive.dart';
 
 import '../../../entities/form_entities/field_entity.dart';
 import '../../../models/form_models/form_model.dart';
+import '../../base_database/base_hive_model.dart';
 part 'form_model.g.dart';
 
 @HiveType(typeId: 0)
-class HiveFormModel extends FormModel with HiveObjectMixin {
+class HiveFormModel extends FormModel with HiveObjectMixin implements IHiveModel {
   @HiveField(0)
   @override
   int id;

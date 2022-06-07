@@ -5,7 +5,7 @@ import '../../../../core/models_and_entities/database_models/hive/hive_form_mode
 import '../../../../core/models_and_entities/models/form_models/form_model.dart';
 
 class HiveFormDataSource implements IDataSource<FormModel> {
-  final Box hive;
+  final Box<HiveFormModel> hive;
 
   HiveFormDataSource(this.hive);
   @override
@@ -24,13 +24,12 @@ class HiveFormDataSource implements IDataSource<FormModel> {
 
   @override
   Future<List<FormModel>?> getAllItems() async {
-    return hive.values.map((e) => e as HiveFormModel).toList();
+    return hive.values.map((e) => e).toList();
   }
 
   @override
   Future<FormModel?> getItemById(int id) async {
-    // ignore: avoid_dynamic_calls
-    return hive.values.firstWhere((element) => element.id == id) as HiveFormModel;
+    return hive.values.firstWhere((element) => element.id == id);
   }
 
   @override

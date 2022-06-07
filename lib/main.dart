@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'core/services/navigator/routes.dart';
 import 'core/services/state/theme_handler.dart';
@@ -13,8 +13,35 @@ import 'get_it_registrant.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
+class ScreenSizeCubit extends Cubit<Size> {
+  Size currentSize;
+  void setSize(Size size) {
+    currentSize = size;
+    log(currentSize.toString());
+
+    emit(currentSize);
+  }
+
+  ScreenSizeCubit(super.initialState) : currentSize = initialState;
+}
+
+class WidgetBindingObserverInternal extends WidgetsBindingObserver {
+  static final screenSizeCubit = ScreenSizeCubit(Size.zero);
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+
+    screenSizeCubit.setSize(WidgetsBinding.instance.window.physicalSize);
+  }
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  WidgetBindingObserverInternal.screenSizeCubit.stream.listen((event) {
+    log(event.toString());
+  });
+  final observer = WidgetBindingObserverInternal();
+  WidgetsBinding.instance.addObserver(observer);
 
   await registerDependencies();
   BlocOverrides.runZoned(

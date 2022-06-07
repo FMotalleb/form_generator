@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -9,15 +11,11 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'core/contracts/enums/data_source_type/data_source_type.dart';
 import 'core/contracts/enums/form_enums/field_types.dart';
 import 'core/contracts/interfaces/data_source/db_data_source_base.dart';
-import 'core/models_and_entities/database_models/hive/hive_form_models/field_model.dart';
-import 'core/models_and_entities/database_models/hive/hive_form_models/form_model.dart';
-import 'core/models_and_entities/database_models/isar/isar_form_models/field_model.dart';
-import 'core/models_and_entities/database_models/isar/isar_form_models/form_model.dart';
+import 'core/models_and_entities/database_models/database_models.dart';
 import 'core/models_and_entities/models/form_models/form_model.dart';
 import 'core/services/state/theme_handler.dart';
-import 'features/add_form_page/data/datasources/hive_form_db_data_source.dart';
-import 'features/add_form_page/data/datasources/isar_form_db_data_source.dart';
-import 'features/add_form_page/data/datasources/sqflite_form_data_source.dart';
+
+import 'features/add_form_page/data/datasources/datasources.dart';
 import 'features/add_form_page/data/repositories/form_manager_repo.dart';
 import 'features/add_form_page/domain/repositories/form_manager_interface.dart';
 
@@ -29,10 +27,7 @@ Future<void> registerDependencies() async {
   GetIt.I.registerSingleton<ThemeCubit>(
     themeQubit,
   );
-  GetIt.I.registerSingleton<IDataSource<FormModel>>(
-    localFormsDataSource,
-    instanceName: DataSourceType.database.name,
-  );
+
   GetIt.I.registerSingleton<IFormManager>(
     formManagerRepo,
   );
@@ -94,7 +89,10 @@ CREATE TABLE forms (
 )
 ''',
     );
-  } catch (e) {}
+  } catch (e) {
+    log('error executing create table forms');
+    rethrow;
+  }
   try {
     await db.execute(
       '''
@@ -111,7 +109,10 @@ CREATE TABLE fields (
 )
 ''',
     );
-  } catch (e) {}
+  } catch (e) {
+    log('error executing create table forms');
+    rethrow;
+  }
 
   // await db.close();
   return SqfLiteFormDataSource(db);

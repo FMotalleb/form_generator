@@ -6,18 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hemend/debug/logger.dart';
-import 'package:hemend/object_controllers/data_snap_handler/data_snap_handler.dart';
 
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
 import '../../../../core/services/navigator/navigator.dart';
 import '../../../../core/services/state/theme_handler.dart';
 import '../../../../static_tools.dart';
 import '../../domain/repositories/form_manager_interface.dart';
-import '../../domain/usecases/add_new_form_usecase.dart';
-import '../../domain/usecases/delete_all_forms_usecase.dart';
-import '../../domain/usecases/delete_form_usecase.dart';
-import '../../domain/usecases/edit_form_usecase.dart';
-import '../../domain/usecases/get_all_forms_usecase.dart';
+import '../../domain/usecases/usecases.dart';
 import '../widgets/form_page_view/popups/remove_form_dialog.dart';
 
 part 'add_form_page_event.dart';

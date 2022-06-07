@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import '../../../contracts/enums/form_enums/field_types.dart';
 import '../../../contracts/interfaces/base_model/base_model.dart';
 import '../../database_models/hive/hive_form_models/field_model.dart';
 import '../../database_models/isar/isar_form_models/field_model.dart';
 import '../../entities/form_entities/field_entity.dart';
-import '../../entities/form_entities/form_entity.dart';
 
 // ignore: must_be_immutable
 class FormFieldModel extends FormFieldEntity implements IModel {
