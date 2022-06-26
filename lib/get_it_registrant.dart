@@ -28,7 +28,7 @@ Future<void> registerDependencies() async {
   ];
   if (kIsWeb) {
     final isar = await Isar.open(
-      schemas: isarDbSchemas,
+      isarDbSchemas,
       relaxedDurability: false,
     );
 
@@ -36,7 +36,7 @@ Future<void> registerDependencies() async {
   } else {
     final dir = await path_provider.getApplicationSupportDirectory();
     final isar = await Isar.open(
-      schemas: isarDbSchemas,
+      isarDbSchemas,
       directory: dir.path,
     );
     GetIt.I.registerSingleton(IsarFormDbDataSource(isar: isar));

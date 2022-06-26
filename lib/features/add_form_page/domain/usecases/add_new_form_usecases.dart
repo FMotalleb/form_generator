@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/contracts/interfaces/base_usecases/base_usecases.dart';
 import '../../../../core/models_and_entities/entities/form_entities/form_entity.dart';
+import '../../../../core/models_and_entities/models/form_models/form_model.dart';
 import '../repositories/form_manager_interface.dart';
 
 class AddNewFormUseCases with EquatableMixin implements BaseUsecases<void, FormEntity> {
@@ -15,6 +16,7 @@ class AddNewFormUseCases with EquatableMixin implements BaseUsecases<void, FormE
 
   @override
   Future<void> execute([FormEntity? params]) async {
+    // print(FormModel.fromEntity(params!).toJson());
     try {
       if (params == null) {
         throw Exception(

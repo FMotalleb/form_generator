@@ -121,18 +121,8 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
         forms = {};
         emit(AddFormPageStateValue(forms: sortedForms));
         final value = await _getAllFormsUsecases.execute();
-        // value.singleActOnFinished(
-        //   onDone: (d) {
-        //     forms = d!.toSet();
-        //     emit(AddFormPageStateValue(forms: sortedForms));
-        //   },
-        //   onError: (e) {
-        //     'error loading all items'.log(
-        //       error: e,
-        //       stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
-        //     );
-        //   },
-        // );
+        forms = value.toSet();
+        emit(AddFormPageStateValue(forms: value));
       },
     );
     on<DeleteDataBaseEvent>(
@@ -163,7 +153,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
     );
     on<SyncFormsWithDataBaseEvent>(
       (event, emit) async {
-        await _deleteAllUsecases.execute();
+        // await _deleteAllUsecases.execute();
         for (final i in forms) {
           await _addNewFormUsecases.execute(i);
         }

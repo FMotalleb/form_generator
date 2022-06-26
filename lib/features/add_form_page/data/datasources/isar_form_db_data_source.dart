@@ -12,14 +12,15 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   @override
   Future<void> deleteItem(FormModel input) async {
     final isarModel = input.asIsarModel;
-    await _isar.writeTxn((isar) async {
+    await _isar.writeTxn(() async {
       isarModel.isarFields.clear();
-      await isarModel.isarFields.save();
+      return isarModel.isarFields.save();
     });
+
     for (final field in input.fields) {
       await _isar.writeTxn(
-        (isar) async {
-          await isar.isarFormFields.buildQuery(
+        () async {
+          await _isar.isarFormFields.buildQuery(
             whereClauses: [
               IdWhereClause.equalTo(value: field.id),
             ],
@@ -27,13 +28,16 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
         },
       );
     }
+
     await _isar.writeTxn(
-      (isar) async {
-        await isar.isarFormModels.buildQuery(
+      () async {
+        final items = _isar.isarFormModels.buildQuery(
           whereClauses: [
             IdWhereClause.equalTo(value: input.id),
           ],
-        ).deleteAll();
+        );
+
+        await items.deleteFirst();
       },
     );
   }
@@ -73,31 +77,32 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
     final placeHolder = input.asIsarModel;
 
     final currentItem = await getItemById(input.id);
-
+    print('deleting');
     if (currentItem != null) {
       await deleteItem(currentItem);
     }
+    print('inserting item');
+    final formId = await _isar.writeTxn(
+      () async {
+        return _isar.isarFormModels.put(
+          placeHolder,
+        );
+      },
+    );
+    print('inserting fields');
     if (placeHolder.isarFields.isNotEmpty) {
       final fields = placeHolder.isarFields.toList();
 
       await _isar.writeTxn(
-        (isar) async {
+        () async {
           await _isar.isarFormFields.putAll(
             fields,
-            saveLinks: true,
           );
         },
       );
     }
-    final formId = await _isar.writeTxn(
-      (isar) async {
-        return isar.isarFormModels.put(
-          placeHolder,
-          saveLinks: true,
-        );
-      },
-    );
-    await _isar.writeTxn((isar) async {
+    print('saving links');
+    await _isar.writeTxn(() async {
       await placeHolder.isarFields.save();
     });
     return formId;
@@ -106,14 +111,14 @@ class IsarFormDbDataSource implements BaseDataSource<FormModel> {
   @override
   Future<void> deleteAllItems() async {
     await _isar.writeTxn(
-      (isar) async {
-        await isar.isarFormFields.where().deleteAll();
+      () async {
+        await _isar.clear();
       },
     );
-    await _isar.writeTxn(
-      (isar) async {
-        await isar.isarFormModels.where().deleteAll();
-      },
-    );
+    // await _isar.writeTxn(
+    //   () async {
+    //     await _isar.isarFormModels.where().deleteAll();
+    //   },
+    // );
   }
 }
