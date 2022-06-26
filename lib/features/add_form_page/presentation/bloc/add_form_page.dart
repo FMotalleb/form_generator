@@ -78,7 +78,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
               onDone: (d) {
                 'add new form finished'.log();
               },
-              onError: (e) {
+              onError: (e, st) {
                 'add new form error'.log();
               },
             ),
@@ -106,7 +106,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
                 onDone: (d) {
                   'delete last finished'.log();
                 },
-                onError: (e) {
+                onError: (e, st) {
                   'delete last error'.log(
                     error: e,
                     stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
@@ -131,7 +131,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
             forms = d!;
             emit(getStateForForms());
           },
-          onError: (e) {
+          onError: (e, st) {
             'error loading all items'.log(
               error: e,
               stackTrace: (value.sender as StackTrace?) ?? StackTrace.current,
@@ -159,7 +159,7 @@ class AddFormBloc extends Bloc<AddFormEvent, AddFormPageState> {
             onDone: (d) {
               'edit form finished'.log();
             },
-            onError: (e) {
+            onError: (e, st) {
               'edit form has error'.log(
                 error: e,
                 stackTrace: (result.sender as StackTrace?) ?? StackTrace.current,

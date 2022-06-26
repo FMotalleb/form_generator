@@ -19,7 +19,7 @@ import 'features/add_form_page/data/repositories/form_manager_repo.dart';
 import 'features/add_form_page/domain/repositories/form_manager_interface.dart';
 
 Future<void> registerDependencies() async {
-  final localFormsDataSource = await _createHiveFormsDataSource();
+  final localFormsDataSource = await _createIsarFormsDataSource();
   final formManagerRepo = FormManagerRepository(localFormsDataSource);
   final navigatorKey = _createNavigatorKey();
   final themeQubit = _createThemeInstance();
@@ -52,9 +52,10 @@ Future<IDataSource<FormModel>> _createIsarFormsDataSource() async {
     IsarFormFieldSchema,
     IsarFormModelSchema,
   ];
+
   if (kIsWeb) {
     final isar = await Isar.open(
-      schemas: isarDbSchemas,
+      isarDbSchemas,
       relaxedDurability: false,
     );
 
@@ -62,7 +63,7 @@ Future<IDataSource<FormModel>> _createIsarFormsDataSource() async {
   } else {
     final dir = await path_provider.getApplicationSupportDirectory();
     final isar = await Isar.open(
-      schemas: isarDbSchemas,
+      isarDbSchemas,
       directory: dir.path,
     );
     return IsarFormDbDataSource(isar: isar);
