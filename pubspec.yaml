@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  font_awesome_flutter: ^10.1.0
   get_it: ^7.2.0
   google_fonts: ^3.0.0
   hemend:
@@ -40,6 +41,7 @@ dev_dependencies:
   isar_generator: ^2.5.0
   mockito: ^5.1.0
   sqflite_common_ffi: ^2.1.1
+
 flutter_intl:
   main_locale: en_US
   enabled: true

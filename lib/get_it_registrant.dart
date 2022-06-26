@@ -8,7 +8,6 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import 'core/contracts/enums/data_source_type/data_source_type.dart';
 import 'core/contracts/enums/form_enums/field_types.dart';
 import 'core/contracts/interfaces/data_source/db_data_source_base.dart';
 import 'core/models_and_entities/database_models/database_models.dart';
@@ -120,8 +119,9 @@ CREATE TABLE fields (
 
 // ignore: unused_element
 Future<IDataSource<FormModel>> _createHiveFormsDataSource() async {
+  final dir = await path_provider.getApplicationDocumentsDirectory();
   if (!kIsWeb) {
-    Hive.init('forms_box');
+    Hive.init(dir.path);
   }
   Hive.registerAdapter(HiveFormFieldAdapter());
   Hive.registerAdapter(HiveFormModelAdapter());
